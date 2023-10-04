@@ -1,0 +1,6 @@
+!peer.env
+!scripts/
+*_sk
+*.pem
+*.crt
+*.key
