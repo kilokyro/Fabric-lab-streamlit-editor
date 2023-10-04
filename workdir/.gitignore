@@ -1,5 +1,5 @@
-!channel-artifacts
-!system-genesis-block
+!channel-artifacts/README
+!system-genesis-block/README
 !chaincode
 channel-artifacts/*
 system-genesis-block/*
