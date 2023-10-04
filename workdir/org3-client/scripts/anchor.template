@@ -1,0 +1,14 @@
+{
+  "AnchorPeers": {
+    "mod_policy": "Admins",
+    "value": {
+      "anchor_peers": [
+         { "host": "peer0.org1.com",
+           "port": "7051"
+         }
+      ]
+    },
+    "version": "0"
+  }
+}
+
