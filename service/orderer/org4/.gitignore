@@ -1,0 +1,12 @@
+!docker-compose.yaml
+!orderer0/
+!orderer1/
+!orderer2/
+!orderer3/
+!orderer4/
+orderer0/*
+orderer1/*
+orderer2/*
+orderer3/*
+orderer4/*
+genesis.block
