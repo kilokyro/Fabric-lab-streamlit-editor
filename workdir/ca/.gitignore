@@ -5,4 +5,4 @@ Organizations
 localMSP/*
 channelMSP/*
 *.json
-tls/*/*.pem
+*/tls-cert.pem
