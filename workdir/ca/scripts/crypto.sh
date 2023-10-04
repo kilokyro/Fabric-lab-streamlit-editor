@@ -165,7 +165,7 @@ EOF
 						if test  -z "$identity_check"; then
 							$FABRIC_CA_CLIENT register -u https://$tlsServer:$tlsport --tls.certfiles $tlscert -H $FABRIC_CA_CLIENT_HOME --id.name ${array[$d.identity]} --id.secret ${array[$d.secret]}
 						fi
-						$FABRIC_CA_CLIENT enroll -u https://${array[$d.identity]}:${array[$d.secret]}@$tlsServer:$tlsport --tls.certfiles $tlscert -H $FABRIC_CA_CLIENT_HOME -M ${array[$d.mdir]}/tls --enrollment.profile tls $TLS_ARG
+						$FABRIC_CA_CLIENT enroll -u https://${array[$d.identity]}:${array[$d.secret]}@$tlsServer:$tlsport --tls.certfiles $tlscert --csr.names $csrname -H $FABRIC_CA_CLIENT_HOME -M ${array[$d.mdir]}/tls --enrollment.profile tls $TLS_ARG
 						LOCALMSP=$(sed 's/\/Organizations/\/localMSP/g' <<< $(echo ${array[$d.mdir]}/tls))
 						mkdir -p $LOCALMSP
 						cp ${array[$d.mdir]}/tls/tlscacerts/* $LOCALMSP/ca.crt
