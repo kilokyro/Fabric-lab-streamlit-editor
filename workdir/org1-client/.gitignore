@@ -1,6 +1,6 @@
 !peer.env
 !scripts/
-*_sk
-*.pem
+*/msp/*
+*/tls/*
 *.crt
 *.key
