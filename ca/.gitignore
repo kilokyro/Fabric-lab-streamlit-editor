@@ -1,4 +1,7 @@
 !fabric-ca-server-config.yaml
+*/msp/*
+IssuerPublicKey
+IssuerRevocationPublicKey
 *_sk
 *.pem
 *.db
