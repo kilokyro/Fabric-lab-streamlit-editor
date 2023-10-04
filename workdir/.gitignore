@@ -5,8 +5,3 @@ channel-artifacts/*.json
 channel-artifacts/*.tx
 system-genesis-block/*.json
 system-genesis-block/*.block
-!org*-client/peer.env
-!org*-client/scripts/
-org*-client/users/*/msp/*
-org*-client/users/*/tls/*
-org*-client/tmp/*
