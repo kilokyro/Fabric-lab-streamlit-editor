@@ -4,3 +4,5 @@
 */tls/*
 *.crt
 *.key
+*_sk
+*.pem
