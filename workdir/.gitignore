@@ -1,5 +1,7 @@
 !channel-artifacts/README
 !system-genesis-block/README
 !chaincode
-channel-artifacts/*
-system-genesis-block/*
+channel-artifacts/*.json
+channel-artifacts/*.tx
+system-genesis-block/*.json
+system-genesis-block/*.block
