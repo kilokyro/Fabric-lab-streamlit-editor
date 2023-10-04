@@ -24,7 +24,9 @@
             "type": "peer",
             "attrs": "",
             "sans": "peer0.org1.com"
-          },
+          }
+        },
+        {
           "peer1": {
             "identity": "peer1.org1.com",
             "secret": "ZjE0ZDU3ZDU0YTdhMDdhZWQ0OTRjMzYzMWE3OTViMjcK",
