@@ -1,0 +1,7 @@
+!msp-template/*
+!scripts/*
+msp/*
+Organizations
+localMSP/*
+channelMSP/*
+*.json
