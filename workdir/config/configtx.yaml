@@ -141,7 +141,7 @@ Orderer: &OrdererDefaults
     BatchTimeout: 2s
 
     BatchSize:
-        MaxMessageCount: 10
+        MaxMessageCount: 100
         AbsoluteMaxBytes: 99 MB
         PreferredMaxBytes: 512 KB
 
@@ -192,6 +192,10 @@ Profiles:
                     - *Org1
                     - *Org2
                     - *Org3
+            techCOnsortium:
+                Organizations:
+                    - *Org1
+                    - *Org2
 
     Channel12:
         Consortium: financeConsortium
@@ -226,4 +230,12 @@ Profiles:
                 - *Org3
             Capabilities:
                 <<: *ApplicationCapabilities
-
+    
+    TechChannel:
+        Consortium: techCOnsortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Org1
+                - *Org2

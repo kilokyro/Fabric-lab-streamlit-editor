@@ -129,7 +129,7 @@ registry:
   # Contains identity information which is used when LDAP is disabled
   identities:
      - name: admin
-       pass: 79c9d12b80598ca50bd1
+       pass: ZGEwMTBlMWY0MjRjMjk5OTM1NjE4OWVlODZhMTJmOWUwYjVhMDgK
        type: client
        affiliation: ""
        attrs:

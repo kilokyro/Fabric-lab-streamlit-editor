@@ -1,0 +1,6 @@
+=============== Oct 15, 2023 (UTC) ===============
+09:45:50.906886 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+09:45:50.911141 db@open opening
+09:45:50.911618 version@stat F·[] S·0B[] Sc·[]
+09:45:50.912446 db@janitor F·2 G·0
+09:45:50.912530 db@open done T·1.335146ms
