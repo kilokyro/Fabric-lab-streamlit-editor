@@ -1,0 +1,263 @@
+{
+  "Organizations": [
+    {
+      "ordererOrganizations": [
+        {
+          "ordererMSP": {
+            "domain": "org4.com",
+            "csrname": "C=TW,ST=Taiwan,O=org4.com,OU=Fabric",
+            "caServer": {
+              "identity": "admin",
+              "secret": "ZGEwMTBlMWY0MjRjMjk5OTM1NjE4OWVlODZhMTJmOWUwYjVhMDgK",
+              "host": "ca.org4.com",
+              "port": 4054,
+              "tlscert": "Organizations/ordererOrganizations/org4.com/ca/tls-cert.pem"
+            },
+            "tlsServer": {
+              "identity": "admin",
+              "secret": "ZDA2YTg4YWM5MGRkNzg5Yjc4ZGEyMDkyYzc5NTc1MzY0M2ZjMDEK",
+              "host": "tls.org4.com",
+              "port": 4154,
+              "tlscert": "Organizations/ordererOrganizations/org4.com/tls/tls-cert.pem"
+            },
+            "orderers": [
+              {
+                "orderer0": {
+                  "identity": "orderer0.org4.com",
+                  "secret": "MGJhMzc3NGY5NDc1N2EyOGE1ZDA3NzEzMzE3ZjE0ZjdhYjJmYWYK",
+                  "type": "orderer",
+                  "attrs": "",
+                  "sans": "orderer0.org4.com"
+                },
+                "orderer1": {
+                  "identity": "orderer1.org4.com",
+                  "secret": "OWQyZTUyY2I5NjgzYzI5ZWJiZjUzN2JhOTdhMjYwZTdlNWFlNDQK",
+                  "type": "orderer",
+                  "attrs": "",
+                  "sans": "orderer1.org4.com"
+                },
+                "orderer2": {
+                  "identity": "orderer2.org4.com",
+                  "secret": "NWJhNDUyMWI2OTgzMTgxODFkN2QxNzdlNjgwMGI4YThlNTM5ZDEK",
+                  "type": "orderer",
+                  "attrs": "",
+                  "sans": "orderer2.org4.com"
+                },
+                "orderer3": {
+                  "identity": "orderer3.org4.com",
+                  "secret": "ZDVlMWQ3YTE1NWRmYmNlNWRlNDE5MTZiNjIwZjhkYTBlOWM3ZDIK",
+                  "type": "orderer",
+                  "attrs": "",
+                  "sans": "orderer3.org4.com"
+                },
+                "orderer4": {
+                  "identity": "orderer4.org4.com",
+                  "secret": "ZWJhNTQ2NGMzYzJmMzAyNjM1ZDJiYmRkNThlMGU2OWZlZDY2ZjYK",
+                  "type": "orderer",
+                  "attrs": "",
+                  "sans": "orderer4.org4.com"
+                }
+              }
+            ],
+            "users": [
+              {
+                "Admin": {
+                  "identity": "Admin@org4.com",
+                  "secret": "NTBhNzdjZDk1YTljMzI4MjZmMTFkYTA0YTZiODc5MzYwNWViNmEK",
+                  "affiliation": "",
+                  "attrs": "",
+                  "sans": "",
+                  "type": "admin"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "peerOrganizations": [
+        {
+          "org1MSP": {
+            "domain": "org1.com",
+            "csrname": "C=TW,ST=Taiwan,O=org1.com,OU=Fabric",
+            "caServer": {
+              "identity": "admin",
+              "secret": "NzZiMzM4OTYxMDI0ZDQzZGMzNWI1NmI1MDkzNjgzMTE1OGMyM2QK",
+              "host": "ca.org1.com",
+              "port": 1054,
+              "tlscert": "Organizations/peerOrganizations/org1.com/ca/tls-cert.pem"
+            },
+            "tlsServer": {
+              "identity": "admin",
+              "secret": "ZTllZWQyMDI5NDQ3ZDMxNWFiYTA3NDZhNjhkMTJmY2M0Mzk5MmUK",
+              "host": "tls.org1.com",
+              "port": 1154,
+              "tlscert": "Organizations/peerOrganizations/org1.com/tls/tls-cert.pem"
+            },
+            "peers": [
+              {
+                "peer0": {
+                  "identity": "peer0.org1.com",
+                  "secret": "OTEwNDQ3YzI2MGQ4ZDRhNDA5NTAyNjU3NjIzODRiOWNmMzIyMzIK",
+                  "type": "peer",
+                  "attrs": "",
+                  "sans": "peer0.org1.com"
+                },
+                "peer1": {
+                  "identity": "peer1.org1.com",
+                  "secret": "OTI3MDc3ZjI0Zjg5M2E1ZGU1YTI3ZjVjNjhiOWY2MjY3ODk4M2EK",
+                  "type": "peer",
+                  "attrs": "",
+                  "sans": "peer1.org1.com"
+                }
+              }
+            ],
+            "users": [
+              {
+                "Admin": {
+                  "identity": "Admin@org1.com",
+                  "secret": "Njg3NTQ4NjA2ZDQwN2E3NjBkMGJmZTY4ZjMxZDc0NDJmNWQxYzMK",
+                  "affiliation": "",
+                  "attrs": "",
+                  "sans": "",
+                  "type": "admin"
+                }
+              },
+              {
+                "user1": {
+                  "identity": "user1@org1.com",
+                  "secret": "ZDUwZjU5N2UzYjBlYmEwMGVkNGZlMzJjZjA4Njc3Yzk2MmNiNTgK",
+                  "affiliation": "",
+                  "attrs": "",
+                  "sans": "",
+                  "type": "client"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "org2MSP": {
+            "domain": "org2.com",
+            "csrname": "C=TW,ST=Taiwan,O=org2.com,OU=Fabric",
+            "caServer": {
+              "identity": "admin",
+              "secret": "MDFkMzJmYzMxNWUxMjBhMTQxYmY5MDZiOTc4MGM1MWRlMjMzODkK",
+              "host": "ca.org2.com",
+              "port": 2054,
+              "tlscert": "Organizations/peerOrganizations/org2.com/ca/tls-cert.pem"
+            },
+            "tlsServer": {
+              "identity": "admin",
+              "secret": "ZGRjNWIwZDY4YmJjNzk5MDJiZDk2MTVjNjFjNThjNTJiOTExNjMK",
+              "host": "tls.org2.com",
+              "port": 2154,
+              "tlscert": "Organizations/peerOrganizations/org2.com/tls/tls-cert.pem"
+            },
+            "peers": [
+              {
+                "peer0": {
+                  "identity": "peer0.org2.com",
+                  "secret": "NDYyZjQxMzBhMGY4OGRjMmI2NmExOWY4NjE1YTYxOWM2ODA1MzIK",
+                  "type": "peer",
+                  "attrs": "",
+                  "sans": "peer0.org2.com"
+                },
+                "peer1": {
+                  "identity": "peer1.org2.com",
+                  "secret": "ZDQxODVjMDMwYTg5Y2I3ZWY5NjFkZGQ1NGNjZjcxY2I2Y2U4ODEK",
+                  "type": "peer",
+                  "attrs": "",
+                  "sans": "peer1.org2.com"
+                }
+              }
+            ],
+            "users": [
+              {
+                "Admin": {
+                  "identity": "Admin@org2.com",
+                  "secret": "ZjY4MzkzNWI4MDMzZTlkMDU0OTZlMDRkNGRhMzA1Nzc0NDZjYmUK",
+                  "affiliation": "",
+                  "attrs": "",
+                  "sans": "",
+                  "type": "admin"
+                }
+              },
+              {
+                "user1": {
+                  "identity": "user1@org2.com",
+                  "secret": "Mjk4YWMyMGU2Mzc3YmNkNGY4MDZiYjBiYmJkMjZmODEyMjBhOTgK",
+                  "affiliation": "",
+                  "attrs": "",
+                  "sans": "",
+                  "type": "client"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "org3MSP": {
+            "domain": "org3.com",
+            "csrname": "C=TW,ST=Taiwan,O=org3.com,OU=Fabric",
+            "caServer": {
+              "identity": "admin",
+              "secret": "MjU0YThlYTU0NjQ2NjgwZDIzZWQwYjRiMzdmM2MzMzBlMWQ3ZjQK",
+              "host": "ca.org3.com",
+              "port": 3054,
+              "tlscert": "Organizations/peerOrganizations/org3.com/ca/tls-cert.pem"
+            },
+            "tlsServer": {
+              "identity": "admin",
+              "secret": "YjE1NGJjNGM2MTgwMTExMDlkN2M0MzU0NTMxZjNmODA1YmJiYzAK",
+              "host": "tls.org3.com",
+              "port": 3154,
+              "tlscert": "Organizations/peerOrganizations/org3.com/tls/tls-cert.pem"
+            },
+            "peers": [
+              {
+                "peer0": {
+                  "identity": "peer0.org3.com",
+                  "secret": "ZjE5ZmY4NjZkZjcxMjNjOTE1MzRjZDJkOTkxNWZjOTZkMDAwNDUK",
+                  "type": "peer",
+                  "attrs": "",
+                  "sans": "peer0.org3.com"
+                },
+                "peer1": {
+                  "identity": "peer1.org3.com",
+                  "secret": "ODg3ZmU3NGRkZDYxYjA3NjUzZmNiYzBjMjdlY2IwMzQwMDI2MzgK",
+                  "type": "peer",
+                  "attrs": "",
+                  "sans": "peer1.org3.com"
+                }
+              }
+            ],
+            "users": [
+              {
+                "Admin": {
+                  "identity": "Admin@org3.com",
+                  "secret": "ZGJiMTNiM2Q3YjBkZWU4YTJmY2QxM2ZiY2YwN2E0MmJjOTdkOTQK",
+                  "affiliation": "",
+                  "attrs": "",
+                  "sans": "",
+                  "type": "admin"
+                }
+              },
+              {
+                "user1": {
+                  "identity": "user1@org3.com",
+                  "secret": "MzI2ZjQyZWJkOGJiZDRkMzYxYmI2NjU3ZmM5NjM5ZjhkNjAwOGYK",
+                  "affiliation": "",
+                  "attrs": "",
+                  "sans": "",
+                  "type": "client"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

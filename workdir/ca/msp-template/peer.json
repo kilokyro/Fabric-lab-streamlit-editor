@@ -50,7 +50,7 @@
             "identity": "user1@org1.com",
             "secret": "YzMzMGVkMmY1Y2M4NTE0NDk1NDYK",
             "affiliation": "",
-            "attrs": "role=manager:ecert",
+            "attrs": "",
             "sans": "",
             "type": "client"
           }
