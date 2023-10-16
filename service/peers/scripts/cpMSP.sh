@@ -18,4 +18,3 @@ for org in $ORG_NAMES; do
         cp -R $SRC_DIR/$org/peers/$peer/* $DST_DIR/$org/$peer/$peer
     done
 done
-

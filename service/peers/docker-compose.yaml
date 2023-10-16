@@ -5,8 +5,6 @@ networks:
     name: main_network
 
 services:
-
-
   peer0.org1.com:
     container_name: peer0.org1.com
     image: hyperledger/fabric-peer:2.2.12
@@ -54,7 +52,7 @@ services:
   couchdb0.org1.com:
     container_name: couchdb0.org1.com
     hostname: couchdb0.org1.com
-    image: couchdb:3.1.1
+    image: couchdb:3.2.2
     environment:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=adminpw    
@@ -112,7 +110,7 @@ services:
   couchdb1.org1.com:
     container_name: couchdb1.org1.com
     hostname: couchdb1.org1.com
-    image: couchdb:3.1.1
+    image: couchdb:3.2.2
     environment:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=adminpw
@@ -122,6 +120,7 @@ services:
       - "1184:5984"
     networks:
       - fabric
+
   peer0.org2.com:
     container_name: peer0.org2.com
     image: hyperledger/fabric-peer:2.2.12
@@ -155,9 +154,9 @@ services:
       - couchdb0.org2.com
     volumes:
         - /var/run/docker.sock:/host/var/run/docker.sock
-        - ./org2.com/peer0.org2.com//peer0.org2.com/msp:/etc/hyperledger/fabric/msp
-        - ./org2.com/peer0.org2.com//peer0.org2.com/tls:/etc/hyperledger/fabric/tls
-        - ./org2.com/peer0.org2.com//peer0-data:/var/hyperledger/production
+        - ./org2.com/peer0.org2.com/peer0.org2.com/msp:/etc/hyperledger/fabric/msp
+        - ./org2.com/peer0.org2.com/peer0.org2.com/tls:/etc/hyperledger/fabric/tls
+        - ./org2.com/peer0.org2.com/peer0-data:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     ports:
@@ -169,12 +168,12 @@ services:
   couchdb0.org2.com:
     container_name: couchdb0.org2.com
     hostname: couchdb0.org2.com
-    image: couchdb:3.1.1
+    image: couchdb:3.2.2
     environment:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=adminpw
     volumes:
-      - ./org2.com/peer0.org2.com//couchdb-data:/opt/couchdb/data
+      - ./org2.com/peer0.org2.com/couchdb-data:/opt/couchdb/data
     ports:
       - "2084:5984"
     networks:
@@ -228,7 +227,7 @@ services:
   couchdb1.org2.com:
     container_name: couchdb1.org2.com
     hostname: couchdb1.org2.com
-    image: couchdb:3.1.1
+    image: couchdb:3.2.2
     environment:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=adminpw
@@ -272,9 +271,9 @@ services:
       - couchdb0.org3.com
     volumes:
         - /var/run/docker.sock:/host/var/run/docker.sock
-        - ./org3.com/peer0.org3.com//peer0.org3.com/msp:/etc/hyperledger/fabric/msp
-        - ./org3.com/peer0.org3.com//peer0.org3.com/tls:/etc/hyperledger/fabric/tls
-        - ./org3.com/peer0.org3.com//peer0-data:/var/hyperledger/production
+        - ./org3.com/peer0.org3.com/peer0.org3.com/msp:/etc/hyperledger/fabric/msp
+        - ./org3.com/peer0.org3.com/peer0.org3.com/tls:/etc/hyperledger/fabric/tls
+        - ./org3.com/peer0.org3.com/peer0-data:/var/hyperledger/production
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     ports:
@@ -286,12 +285,12 @@ services:
   couchdb0.org3.com:
     container_name: couchdb0.org3.com
     hostname: couchdb0.org3.com
-    image: couchdb:3.1.1
+    image: couchdb:3.2.2
     environment:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=adminpw    
     volumes:
-      - ./org3.com/peer0.org3.com//couchdb-data:/opt/couchdb/data
+      - ./org3.com/peer0.org3.com/couchdb-data:/opt/couchdb/data
     ports:
       - "3084:5984"
     networks:
@@ -344,7 +343,7 @@ services:
   couchdb1.org3.com:
     container_name: couchdb1.org3.com
     hostname: couchdb1.org3.com
-    image: couchdb:3.1.1
+    image: couchdb:3.2.2
     environment:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=adminpw

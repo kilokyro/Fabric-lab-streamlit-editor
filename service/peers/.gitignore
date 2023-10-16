@@ -1,4 +1,5 @@
 !**/.gitkeep
+!scripts/*
 **/msp
 **/tls
 **/*-data/
