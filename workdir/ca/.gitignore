@@ -1,8 +1,7 @@
 !msp-template/*
 !scripts/*
-msp/*
-Organizations
+msp/*.json
+Organizations/
 localMSP/*
 channelMSP/*
-*.json
 */tls-cert.pem
