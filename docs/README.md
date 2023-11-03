@@ -163,4 +163,17 @@ f64ee0982d6d   couchdb:3.1.1                       "tini -- /docker-ent…"   21
 >    ```bash
 >    cp -a $HOME/workspaces/fabric-lab/workdir/ca/channelMSP $HOME/workspaces/fabric-lab/workdir/config/organizations
 >    ```
-> 2. 
+> 2. 執行scripts 生成 system channel genesis block, 以及  channel1, channel2. channel3 的 config block (channel`N`.tx)
+
+## Orderer Service
+
+> **工作目錄: $HOME/workspaces/fabric-lab/service/orderer**
+> 1. 複製 $HOME/workdir/fabric-lab/workdir/ca/localMSP/ordererOrganizations/org4.com/orderers/orderer`N`.org4.com 到 $HOME/workspaces/fabric-lab/service/orderer/org4.com/orderer`N`.org4.com/orderer`N`.org4.com
+>  ```bash
+>  cd $HOME/workspaces/fabric-lab/service/orderer
+>  ./scripts/cpMSP.sh
+>  ```
+> 2. **啟動 orderer service (3 orderer nodes)**
+> ```bash
+>  ./docker-compose up -d
+> ```
