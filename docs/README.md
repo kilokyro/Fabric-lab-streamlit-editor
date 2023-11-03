@@ -141,7 +141,7 @@ f64ee0982d6d   couchdb:3.1.1                       "tini -- /docker-ent…"   21
 ### 執行 ../scripts/networkgen.sh 生成  network.json
 
 ```bash
-../scripts/networkgen.sh -t organizations.json -o org4.jsom -p org1.json -p org2.json -p org3.json -O ../network.json
+../scripts/networkgen.sh -t organizations.json -o org4.json -p org1.json -p org2.json -p org3.json -O ../network.json
 ```
 ### 生成加密文件
 

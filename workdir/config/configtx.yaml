@@ -17,8 +17,6 @@ Organizations:
             - orderer0.org4.com:4050
             - orderer1.org4.com:4150
             - orderer2.org4.com:4250
-            - orderer3.org4.com:4350
-            - orderer4.org4.com:4450
     - &Org1
         Name: Org1MSP
         ID: Org1MSP
@@ -108,8 +106,6 @@ Orderer: &OrdererDefaults
         - orderer0.org4.com:4050
         - orderer1.org4.com:4150
         - orderer2.org4.com:4250
-        - orderer3.org4.com:4350
-        - orderer4.org4.com:4450
 
     EtcdRaft:
         Consenters:
@@ -127,16 +123,6 @@ Orderer: &OrdererDefaults
           Port: 4250
           ClientTLSCert: ./organizations/ordererOrganizations/org4.com/orderers/orderer2.org4.com/tls/server.crt
           ServerTLSCert: ./organizations/ordererOrganizations/org4.com/orderers/orderer2.org4.com/tls/server.crt
-
-        - Host: orderer3.org4.com
-          Port: 4350
-          ClientTLSCert: ./organizations/ordererOrganizations/org4.com/orderers/orderer3.org4.com/tls/server.crt
-          ServerTLSCert: ./organizations/ordererOrganizations/org4.com/orderers/orderer3.org4.com/tls/server.crt
-
-        - Host: orderer4.org4.com
-          Port: 4450
-          ClientTLSCert: ./organizations/ordererOrganizations/org4.com/orderers/orderer4.org4.com/tls/server.crt
-          ServerTLSCert: ./organizations/ordererOrganizations/org4.com/orderers/orderer4.org4.com/tls/server.crt
 
     BatchTimeout: 2s
 

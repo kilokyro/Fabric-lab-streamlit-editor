@@ -24,38 +24,28 @@
               {
                 "orderer0": {
                   "identity": "orderer0.org4.com",
-                  "secret": "MGJhMzc3NGY5NDc1N2EyOGE1ZDA3NzEzMzE3ZjE0ZjdhYjJmYWYK",
+                  "secret": "bd888d50f686df1f5d9ff22b",
                   "type": "orderer",
                   "attrs": "",
                   "sans": "orderer0.org4.com"
-                },
+                }
+              },
+              {
                 "orderer1": {
                   "identity": "orderer1.org4.com",
-                  "secret": "OWQyZTUyY2I5NjgzYzI5ZWJiZjUzN2JhOTdhMjYwZTdlNWFlNDQK",
+                  "secret": "4edc3e1aadbf6b7d28c14a48",
                   "type": "orderer",
                   "attrs": "",
                   "sans": "orderer1.org4.com"
-                },
+                }
+              },
+              {
                 "orderer2": {
                   "identity": "orderer2.org4.com",
-                  "secret": "NWJhNDUyMWI2OTgzMTgxODFkN2QxNzdlNjgwMGI4YThlNTM5ZDEK",
+                  "secret": "b1703b0d17c46d4903417f2e",
                   "type": "orderer",
                   "attrs": "",
                   "sans": "orderer2.org4.com"
-                },
-                "orderer3": {
-                  "identity": "orderer3.org4.com",
-                  "secret": "ZDVlMWQ3YTE1NWRmYmNlNWRlNDE5MTZiNjIwZjhkYTBlOWM3ZDIK",
-                  "type": "orderer",
-                  "attrs": "",
-                  "sans": "orderer3.org4.com"
-                },
-                "orderer4": {
-                  "identity": "orderer4.org4.com",
-                  "secret": "ZWJhNTQ2NGMzYzJmMzAyNjM1ZDJiYmRkNThlMGU2OWZlZDY2ZjYK",
-                  "type": "orderer",
-                  "attrs": "",
-                  "sans": "orderer4.org4.com"
                 }
               }
             ],
@@ -63,8 +53,8 @@
               {
                 "Admin": {
                   "identity": "Admin@org4.com",
-                  "secret": "NTBhNzdjZDk1YTljMzI4MjZmMTFkYTA0YTZiODc5MzYwNWViNmEK",
-                  "affiliation": "",
+                  "secret": "",
+                  "affiliation": "ffec7e93d91c22b420ff47ad",
                   "attrs": "",
                   "sans": "",
                   "type": "admin"
@@ -99,14 +89,14 @@
               {
                 "peer0": {
                   "identity": "peer0.org1.com",
-                  "secret": "OTEwNDQ3YzI2MGQ4ZDRhNDA5NTAyNjU3NjIzODRiOWNmMzIyMzIK",
+                  "secret": "9c6705804df4a12b8a6f17df",
                   "type": "peer",
                   "attrs": "",
                   "sans": "peer0.org1.com"
                 },
                 "peer1": {
                   "identity": "peer1.org1.com",
-                  "secret": "OTI3MDc3ZjI0Zjg5M2E1ZGU1YTI3ZjVjNjhiOWY2MjY3ODk4M2EK",
+                  "secret": "317ea6759c9a4861dd861009",
                   "type": "peer",
                   "attrs": "",
                   "sans": "peer1.org1.com"
@@ -117,7 +107,7 @@
               {
                 "Admin": {
                   "identity": "Admin@org1.com",
-                  "secret": "Njg3NTQ4NjA2ZDQwN2E3NjBkMGJmZTY4ZjMxZDc0NDJmNWQxYzMK",
+                  "secret": "496eae67d3155676af793c0a",
                   "affiliation": "",
                   "attrs": "",
                   "sans": "",
@@ -127,7 +117,7 @@
               {
                 "user1": {
                   "identity": "user1@org1.com",
-                  "secret": "ZDUwZjU5N2UzYjBlYmEwMGVkNGZlMzJjZjA4Njc3Yzk2MmNiNTgK",
+                  "secret": "4503bedb8067011af478e24f",
                   "affiliation": "",
                   "attrs": "",
                   "sans": "",
@@ -159,14 +149,14 @@
               {
                 "peer0": {
                   "identity": "peer0.org2.com",
-                  "secret": "NDYyZjQxMzBhMGY4OGRjMmI2NmExOWY4NjE1YTYxOWM2ODA1MzIK",
+                  "secret": "481c2ff9e6cfbb3e112b3e7c",
                   "type": "peer",
                   "attrs": "",
                   "sans": "peer0.org2.com"
                 },
                 "peer1": {
                   "identity": "peer1.org2.com",
-                  "secret": "ZDQxODVjMDMwYTg5Y2I3ZWY5NjFkZGQ1NGNjZjcxY2I2Y2U4ODEK",
+                  "secret": "77bff06f5897a5909af89eeb",
                   "type": "peer",
                   "attrs": "",
                   "sans": "peer1.org2.com"
@@ -177,7 +167,7 @@
               {
                 "Admin": {
                   "identity": "Admin@org2.com",
-                  "secret": "ZjY4MzkzNWI4MDMzZTlkMDU0OTZlMDRkNGRhMzA1Nzc0NDZjYmUK",
+                  "secret": "f0b7dd31f6a07921cf237381",
                   "affiliation": "",
                   "attrs": "",
                   "sans": "",
@@ -187,7 +177,7 @@
               {
                 "user1": {
                   "identity": "user1@org2.com",
-                  "secret": "Mjk4YWMyMGU2Mzc3YmNkNGY4MDZiYjBiYmJkMjZmODEyMjBhOTgK",
+                  "secret": "19a7c73b539d28c2dabbfa18",
                   "affiliation": "",
                   "attrs": "",
                   "sans": "",
@@ -219,14 +209,14 @@
               {
                 "peer0": {
                   "identity": "peer0.org3.com",
-                  "secret": "ZjE5ZmY4NjZkZjcxMjNjOTE1MzRjZDJkOTkxNWZjOTZkMDAwNDUK",
+                  "secret": "ZjE0ZDU3ZDU0YTdhMDdhZWQ0OTRjMzYzMWE3OTViMjcK",
                   "type": "peer",
                   "attrs": "",
                   "sans": "peer0.org3.com"
                 },
                 "peer1": {
                   "identity": "peer1.org3.com",
-                  "secret": "ODg3ZmU3NGRkZDYxYjA3NjUzZmNiYzBjMjdlY2IwMzQwMDI2MzgK",
+                  "secret": "ZjE0ZDU3ZDU0YTdhMDdhZWQ0OTRjMzYzMWE3OTViMjcK",
                   "type": "peer",
                   "attrs": "",
                   "sans": "peer1.org3.com"
@@ -237,7 +227,7 @@
               {
                 "Admin": {
                   "identity": "Admin@org3.com",
-                  "secret": "ZGJiMTNiM2Q3YjBkZWU4YTJmY2QxM2ZiY2YwN2E0MmJjOTdkOTQK",
+                  "secret": "ODg1YmIyOGE0MzIzNTdiNzc4NzEK",
                   "affiliation": "",
                   "attrs": "",
                   "sans": "",
@@ -247,7 +237,7 @@
               {
                 "user1": {
                   "identity": "user1@org3.com",
-                  "secret": "MzI2ZjQyZWJkOGJiZDRkMzYxYmI2NjU3ZmM5NjM5ZjhkNjAwOGYK",
+                  "secret": "YzMzMGVkMmY1Y2M4NTE0NDk1NDYK",
                   "affiliation": "",
                   "attrs": "",
                   "sans": "",
