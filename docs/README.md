@@ -294,7 +294,89 @@ f64ee0982d6d   couchdb:3.1.1                       "tini -- /docker-ent…"   21
    > 2023-11-03 18:26:07.274 CST [channelCmd] update -> INFO 002 Successfully submitted channel update
    > ```
 
-   ### Deploy chaincode
+### Deploy chaincode
 
-   **工作目錄: $HOME/workspaces/fabric-lab/workdir/org1-client/tmp**
-   
+#### Deploy on org1
+
+   **工作目錄: $HOME/workspaces/fabric-lab/workdir/org1-client/**
+   1. 設定環境變數
+      ```bash
+      cd $HOME/workspaces/fabric-lab/workdir/org1-client/
+      source peer.env peer0 1051
+      ```
+   2. package chaincode
+      ```bash
+      peer lifecycle chaincode package basid.tar.gz --path ../../chaincode/asset-transfer-basic/chaincode-go/ --lang golang --label basic_1.0
+      ```
+   3. install chaincode
+      ```bash
+      peer lifecycle chaincode install basid.tar.gz
+      ```
+      > ```log
+      > 2023-11-03 20:36:38.648 CST [cli.lifecycle.chaincode] submitInstallProposal -> INFO 001 Installed remotely: response:<status:200 payload:"\nJbasic_1.0:ab5445336ed6be64b8e567ed267c88631da6bfafefd805187e4919abc8bc7376\022\tbasic_1.0" > 
+      > 2023-11-03 20:36:38.648 CST [cli.lifecycle.chaincode] submitInstallProposal -> INFO 002 Chaincode code package identifier: basic_1.0:ab5445336ed6be64b8e567ed267c88631da6bfafefd805187e4919abc8bc7376
+      export CC_PACKAGE_ID=basic_1.0:ab5445336ed6be64b8e567ed267c88631da6bfafefd805187e4919abc8bc7376
+      > ```
+   4. approve chaincode
+      ```bash
+      peer lifecycle chaincode approveformyorg -C channel1 -n basic --version 1.0 --sequence 1 -o orderer1.org4.com:4150 --tls --cafile $ORDERER_TLS_CA --package-id $CC_PACKAGE_ID
+      ```
+      > ```bash  
+      > 2023-11-03 20:45:29.937 CST [chaincodeCmd] ClientWait -> INFO 001 txid[eae5a6d4199f7573eb4cccfce08bd1c57df79397d39eaad040f9843d4c4e1ab3] committed with status (VALID) at peer0.org1.com:1051
+      ```
+   5. chech commit readiness
+      ```bash
+       peer lifecycle chaincode checkcommitreadiness -C channel1 --name basic --version 1.0 --sequence 1 
+      ```
+      > ```bash
+      >Chaincode definition for chaincode 'basic', version '1.0', sequence '1' on channel 'channel1' approval status by org:
+      > Org1MSP: true
+      > Org2MSP: false
+      > ```
+
+#### deploy on org2
+
+   **工作目錄: $HOME/workspaces/fabric-lab/workdir/org2-client/**
+
+   1. 設定環境變數
+      ```bash
+      cd $HOME/workspaces/fabric-lab/workdir/org2-client/
+      source peer.env peer0 2051
+      ```
+   2. package chaincode
+      ```bash
+      peer lifecycle chaincode package basid.tar.gz --path ../../chaincode/asset-transfer-basic/chaincode-go/ --lang golang --label basic_1.0
+      ```
+   3. install chaincode
+      ```bash
+      peer lifecycle chaincode install basid.tar.gz
+      ```
+      > ```log
+      > 2023-11-03 20:36:38.648 CST [cli.lifecycle.chaincode] submitInstallProposal -> INFO 001 Installed remotely: response:<status:200 payload:"\nJbasic_1.0:ab5445336ed6be64b8e567ed267c88631da6bfafefd805187e4919abc8bc7376\022\tbasic_1.0" > 
+      > 2023-11-03 20:36:38.648 CST [cli.lifecycle.chaincode] submitInstallProposal -> INFO 002 Chaincode code package identifier: basic_1.0:ab5445336ed6be64b8e567ed267c88631da6bfafefd805187e4919abc8bc7376
+      export CC_PACKAGE_ID=basic_1.0:ab5445336ed6be64b8e567ed267c88631da6bfafefd805187e4919abc8bc7376
+      > ```
+   4. approve chaincode
+      ```bash
+      peer lifecycle chaincode approveformyorg -C channel1 -n basic --version 1.0 --sequence 1 -o orderer1.org4.com:4150 --tls --cafile $ORDERER_TLS_CA --package-id $CC_PACKAGE_ID
+      ```
+      > ```bash  
+      > 2023-11-03 20:45:29.937 CST [chaincodeCmd] ClientWait -> INFO 001 txid[eae5a6d4199f7573eb4cccfce08bd1c57df79397d39eaad040f9843d4c4e1ab3] committed with status (VALID) at peer0.org2.com:1051
+      ```
+   5. chech commit readiness
+      ```bash
+       peer lifecycle chaincode checkcommitreadiness -C channel1 --name basic --version 1.0 --sequence 1 -o orderer1.org4.com:4150 --tls --cafile $ORDERER_TLS_CA
+      ```
+      > ```bash
+      >Chaincode definition for chaincode 'basic', version '1.0', sequence '1' on channel 'channel1' approval status by org:
+      > org2MSP: true
+      > Org2MSP: false
+      > ```
+   6. commit chaincode
+      ```bash
+      peer lifecycle chaincode commit -C channel1 --name basic --version 1.0 --sequence 1 -o orderer1.org4.com:4150 --tls --cafile $ORDERER_TLS_CA --peerAddresses peer0.org1.com:1051 --tlsRootCertFiles $PWD/../tlsca/tlsca.org1.com-cert.pem --peerAddresses peer0.org2.com:2051 --tlsRootCertFiles $PWD/../tlsca/tlsca.org2.com-cert.pem
+      ```
+      > ```bash
+      > 2023-11-03 21:13:30.644 CST [chaincodeCmd] ClientWait -> INFO 001 txid [02402f0e4419aa226375a210a91b659a1154835224cada7f3c62ac13e1ef6036] committed with status (VALID) at peer0.org1.com:1051
+      > 2023-11-03 21:13:30.646 CST [chaincodeCmd] ClientWait -> INFO 002 txid [02402f0e4419aa226375a210a91b659a1154835224cada7f3c62ac13e1ef6036] committed with status (VALID) at peer0.org2.com:2051
+      > ```
