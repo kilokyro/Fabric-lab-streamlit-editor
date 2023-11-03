@@ -95,41 +95,41 @@ f64ee0982d6d   couchdb:3.1.1                       "tini -- /docker-ent…"   21
 > 6. 依序修改檔案
 >
 >    *org1.json
-> 
+>
 >    2054 -> 1054
-> 
+>
 >    2154 -> 1154
-> 
+>
 >    caServer.secret  修改 和 $HOME/workspaces/fabric-lab/ca/config/org1.com/ca/fabric-ca-server-config.yaml 的 pass: 相同
-> 
+>
 >    tlsServer.secret  修改 和 $HOME/workspaces/fabric-lab/ca/config/org1.com/tls/fabric-ca-server-config.yaml 的 pass: 相同
 >
 >    ![1698995165285](image/README/1698995165285.png)
 >
 >    *org2.json*
-> 
+>
 >    org1.com -> org2.com
-> 
+>
 >    caServer.secret  修改 和 $HOME/workspaces/fabric-lab/ca/config/org2.com/ca/fabric-ca-server-config.yaml 的 pass: 相同
-> 
+>
 >    tlsServer.secret  修改 和 $HOME/workspaces/fabric-lab/ca/config/org2.com/tls/fabric-ca-server-config.yaml 的 pass: 相同
 >
 >    *org3.com*
-> 
+>
 >    org1.com -> org3.com
-> 
+>
 >    2054 -> 3054
-> 
+>
 >    2154 -> 3154
-> 
+>
 >    caServer.secret  修改 和 $HOME/workspaces/fabric-lab/ca/config/org3.com/ca/fabric-ca-server-config.yaml 的 pass: 相同
-> 
+>
 >    tlsServer.secret  修改 和 $HOME/workspaces/fabric-lab/ca/config/org3.com/tls/fabric-ca-server-config.yaml 的 pass: 相同
 >
 >    org4.com
-> 
+>
 >    caServer.secret  修改 和 $HOME/workspaces/fabric-lab/ca/config/org4.com/ca/fabric-ca-server-config.yaml 的 pass: 相同
-> 
+>
 >    tlsServer.secret  修改 和 $HOME/workspaces/fabric-lab/ca/config/org4.com/tls/fabric-ca-server-config.yaml 的 pass: 相同
 >
 > ***PS:***
@@ -143,15 +143,19 @@ f64ee0982d6d   couchdb:3.1.1                       "tini -- /docker-ent…"   21
 ```bash
 ../scripts/networkgen.sh -t organizations.json -o org4.json -p org1.json -p org2.json -p org3.json -O ../network.json
 ```
+
 ### 生成加密文件
 
 > **工作目錄: $HOME/workspaces/fabric-lab/workdir/ca**
 >
 > *註冊 fabric-ca server 的 admin 帳號*
+>
 > ```bash
 > ./scripts/enroll.sh ./network.json 
 > ```
+>
 > *registry & enroll 所有的檵構，參與個體的加密材料*
+>
 > ```bash
 > ./scripts/crypto.sh ./network.json
 > ```
@@ -159,21 +163,138 @@ f64ee0982d6d   couchdb:3.1.1                       "tini -- /docker-ent…"   21
 ## 創世塊 (Genesis Block)
 
 > **工作目錄: $HOME/workspaces/fabric-lab/workdir/config**
+>
 > 1. 將 $HOME/workspaces/fabric-lab/workdir/ca/channelMSP 複製到 $HOME/workspaces/fabric-lab/workdir/config/organizations
 >    ```bash
 >    cp -a $HOME/workspaces/fabric-lab/workdir/ca/channelMSP $HOME/workspaces/fabric-lab/workdir/config/organizations
 >    ```
-> 2. 執行scripts 生成 system channel genesis block, 以及  channel1, channel2. channel3 的 config block (channel`N`.tx)
+> 2. 執行scripts 生成 system channel genesis block, 以及  channel1, channel2. channel3 的 config block (channel `N`.tx)
 
 ## Orderer Service
 
 > **工作目錄: $HOME/workspaces/fabric-lab/service/orderer**
-> 1. 複製 $HOME/workdir/fabric-lab/workdir/ca/localMSP/ordererOrganizations/org4.com/orderers/orderer`N`.org4.com 到 $HOME/workspaces/fabric-lab/service/orderer/org4.com/orderer`N`.org4.com/orderer`N`.org4.com
->  ```bash
->  cd $HOME/workspaces/fabric-lab/service/orderer
->  ./scripts/cpMSP.sh
->  ```
+>
+> 1. 複製 $HOME/workdir/fabric-lab/workdir/ca/localMSP/ordererOrganizations/org4.com/orderers/orderer`N`.org4.com 到 $HOME/workspaces/fabric-lab/service/orderer/org4.com/orderer `N`.org4.com/orderer `N`.org4.com
+>
+> ```bash
+> cd $HOME/workspaces/fabric-lab/service/orderer
+> ./scripts/cpMSP.sh
+> ```
+>
 > 2. **啟動 orderer service (3 orderer nodes)**
+>
 > ```bash
 >  ./docker-compose up -d
 > ```
+
+## Peer Service
+
+> **工作目錄: $HOME/workspaces/fabric-lab/service/peer**
+>
+> 1. 執行script 將 $HOME/workspaces/fabric-lab/workdir/ca/localMSP/peerOrganizations/org`x`.com/peer`y.`org`x`.com/ 複製到 $HOME/workspaces/fabric-lab/service/peers/org`x`.com/peer`y`.org`x`.com/peer`y`.org`x`.com/ 目錄
+>
+> ```bash
+> cd $HOME/workspaces/fabric-lab/service/peers
+> ./scripts/cpMSP.sh
+> ```
+
+2. 啟動 peer service (with couchdb)
+> ```bash
+> docker-compose up -d
+> ```
+
+## Create channel & join channel
+
+**工作目錄: $HOME/workspaces/fabric-lab/workdir/org1-client**
+1. 啟始環境
+   1. 複製相關檔案
+      1. 管理者的加密材料檔案 (MSP, TLS)
+      2. 每一參與機構的 TLS Root CA, 
+   ```bash
+   ./scripts/init.sh
+   ```
+   2. 設定環境變數
+   ```bash
+   source ./peer.env peer0 1051
+   ```
+2. Create channel1 
+   ```bash
+   cd tmp
+   peer channel create -f ../../channel-artifacts/channel1.tx -c channel1 -o orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA
+   ```
+3. join channel1
+   ```bash
+   ls
+   ```
+   > ```sh
+   > channel1.block
+   > ```
+   >
+   > ```bash
+   > peer channel join -b channel1.block
+   > ```
+
+4. org2 join channel1
+   
+   **工作目錄: $HOME/workspaces/fabric-lab/workdir/org2-client**
+      1. 複製相關檔案
+      2. 管理者的加密材料檔案 (MSP, TLS)
+      3. 每一參與機構的 TLS Root CA, 
+   ```bash
+   ./scripts/init.sh
+   ```
+   1. 設定環境變數
+   ```bash
+   source ./peer.env peer0 2051
+   ```
+   2. Fetch channel1 的 **`config block`** 
+   ```bash
+   cd tmp
+   peer channel fetch config -c channel1 -o orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA
+   ```
+   3. 使用 config_block join channel 
+   ```bash
+   ls 
+   ```
+   ```bash
+   channel1_config.block
+   ```
+   ```bash
+   peer channel join -b channel1_config.block 
+   ```
+   > ```log
+   > 2023-11-03 18:09:42.322 CST [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
+   > 2023-11-03 18:09:42.483 CST [channelCmd] executeJoin -> INFO 002 Successfully submitted proposal to join channel
+   > ```
+   4. 檢查 channel 列表
+   ```bash
+   peer channel list
+   ```
+   > ```
+   > 2023-11-03 18:10:48.678 CST [channelCmd] InitCmdFactory -> INFO 001 Endorser > and orderer connections initialized
+   > Channels peers has joined: 
+   > channel1
+   > ```
+### 設定 anchor peer
+**工作目錄: $HOME/workspaces/fabric-lab/workdir/org1-client/**
+
+1. 設定 org1.com 的環境變數
+   ```bash
+   cd $HOME/workspaces/fabric-lab/workdir/org1-client/
+   source peer.env peer0 1051
+   cd tmp/
+   ../scripts/setAnchorPeer.sh channel1
+   ```
+   > ```bash
+   > 2023-11-03 18:26:07.174 CST [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
+   > 2023-11-03 18:26:07.176 CST [cli.common] readBlock -> INFO 002 Received block: 1
+   > 2023-11-03 18:26:07.176 CST [channelCmd] fetch -> INFO 003 Retrieving last config block: 1
+   > 2023-11-03 18:26:07.177 CST [cli.common] readBlock -> INFO 004 Received block: 1
+   > 2023-11-03 18:26:07.268 CST [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
+   > 2023-11-03 18:26:07.274 CST [channelCmd] update -> INFO 002 Successfully submitted channel update
+   > ```
+
+   ### Deploy chaincode
+
+   **工作目錄: $HOME/workspaces/fabric-lab/workdir/org1-client/tmp**
+   
