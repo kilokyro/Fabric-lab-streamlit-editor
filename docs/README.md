@@ -163,3 +163,4 @@ f64ee0982d6d   couchdb:3.1.1                       "tini -- /docker-ent…"   21
 >    ```bash
 >    cp -a $HOME/workspaces/fabric-lab/workdir/ca/channelMSP $HOME/workspaces/fabric-lab/workdir/config/organizations
 >    ```
+> 2. 
