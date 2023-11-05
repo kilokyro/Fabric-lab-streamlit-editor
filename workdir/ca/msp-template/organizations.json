@@ -6,6 +6,5 @@
     {
       "peerOrganizations": []
     }
-  ],
-  "secret": "adminpw"
+  ]
 }

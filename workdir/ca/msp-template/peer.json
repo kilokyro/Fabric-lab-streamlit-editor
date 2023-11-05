@@ -6,14 +6,14 @@
       "identity": "admin",
       "secret": "adminpw",
       "host": "ca.org1.com",
-      "port": 2054,
+      "port": 1054,
       "tlscert": "Organizations/peerOrganizations/org1.com/ca/tls-cert.pem"
     },
     "tlsServer": {
       "identity": "admin",
       "secret": "adminpw",
       "host": "tls.org1.com",
-      "port": 2154,
+      "port": 1154,
       "tlscert": "Organizations/peerOrganizations/org1.com/tls/tls-cert.pem"
     },
     "peers": [
@@ -24,7 +24,9 @@
           "type": "peer",
           "attrs": "",
           "sans": "peer0.org1.com"
-        },
+        }
+      },
+      {
         "peer1": {
           "identity": "peer1.org1.com",
           "secret": "adminpw",
@@ -56,6 +58,5 @@
         }
       }
     ]
-  },
-  "secret": "adminpw"
+  }
 }
