@@ -4,14 +4,14 @@
       "csrname": "C=TW,ST=Taiwan,O=org4.com,OU=Fabric",
       "caServer": {
         "identity": "admin",
-        "secret": "adminpw",
+        "secret": "NzZiMzM4OTYxMDI0ZDQzZGMzNWI1NmI1MDkzNjgzMTE1OGMyM2QK",
         "host": "ca.org4.com",
         "port": 4054,
         "tlscert": "Organizations/ordererOrganizations/org4.com/ca/tls-cert.pem"
       },
       "tlsServer": {
         "identity": "admin",
-        "secret": "adminpw",
+        "secret": "ZTllZWQyMDI5NDQ3ZDMxNWFiYTA3NDZhNjhkMTJmY2M0Mzk5MmUK",
         "host": "tls.org4.com",
         "port": 4154,
         "tlscert": "Organizations/ordererOrganizations/org4.com/tls/tls-cert.pem"
