@@ -1,60 +1,61 @@
 {
-    "org1MSP": {
-      "domain": "org1.com",
-      "csrname": "C=TW,ST=Taiwan,O=org1.com,OU=Fabric",
-      "caServer": {
-        "identity": "admin",
-        "secret": "adminpw",
-        "host": "ca.org1.com",
-        "port": 2054,
-        "tlscert": "Organizations/peerOrganizations/org1.com/ca/tls-cert.pem"
-      },
-      "tlsServer": {
-        "identity": "admin",
-        "secret": "adminpw",
-        "host": "tls.org1.com",
-        "port": 2154,
-        "tlscert": "Organizations/peerOrganizations/org1.com/tls/tls-cert.pem"
-      },
-      "peers": [
-        {
-          "peer0": {
-            "identity": "peer0.org1.com",
-            "secret": "ZjE0ZDU3ZDU0YTdhMDdhZWQ0OTRjMzYzMWE3OTViMjcK",
-            "type": "peer",
-            "attrs": "",
-            "sans": "peer0.org1.com"
-          },
-          "peer1": {
-            "identity": "peer1.org1.com",
-            "secret": "ZjE0ZDU3ZDU0YTdhMDdhZWQ0OTRjMzYzMWE3OTViMjcK",
-            "type": "peer",
-            "attrs": "",
-            "sans": "peer1.org1.com"
-          }
-        }
-      ],
-      "users": [
-        {
-          "Admin": {
-            "identity": "Admin@org1.com",
-            "secret": "ODg1YmIyOGE0MzIzNTdiNzc4NzEK",
-            "affiliation": "",
-            "attrs": "",
-            "sans": "",
-            "type": "admin"
-          }
+  "org1MSP": {
+    "domain": "org1.com",
+    "csrname": "C=TW,ST=Taiwan,O=org1.com,OU=Fabric",
+    "caServer": {
+      "identity": "admin",
+      "secret": "adminpw",
+      "host": "ca.org1.com",
+      "port": 2054,
+      "tlscert": "Organizations/peerOrganizations/org1.com/ca/tls-cert.pem"
+    },
+    "tlsServer": {
+      "identity": "admin",
+      "secret": "adminpw",
+      "host": "tls.org1.com",
+      "port": 2154,
+      "tlscert": "Organizations/peerOrganizations/org1.com/tls/tls-cert.pem"
+    },
+    "peers": [
+      {
+        "peer0": {
+          "identity": "peer0.org1.com",
+          "secret": "adminpw",
+          "type": "peer",
+          "attrs": "",
+          "sans": "peer0.org1.com"
         },
-        {
-          "user1": {
-            "identity": "user1@org1.com",
-            "secret": "YzMzMGVkMmY1Y2M4NTE0NDk1NDYK",
-            "affiliation": "",
-            "attrs": "",
-            "sans": "",
-            "type": "client"
-          }
+        "peer1": {
+          "identity": "peer1.org1.com",
+          "secret": "adminpw",
+          "type": "peer",
+          "attrs": "",
+          "sans": "peer1.org1.com"
         }
-      ]
-    }
-  }
+      }
+    ],
+    "users": [
+      {
+        "Admin": {
+          "identity": "Admin@org1.com",
+          "secret": "adminpw",
+          "affiliation": "",
+          "attrs": "",
+          "sans": "",
+          "type": "admin"
+        }
+      },
+      {
+        "user1": {
+          "identity": "user1@org1.com",
+          "secret": "adminpw",
+          "affiliation": "",
+          "attrs": "",
+          "sans": "",
+          "type": "client"
+        }
+      }
+    ]
+  },
+  "secret": "adminpw"
+}

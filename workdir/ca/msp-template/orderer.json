@@ -1,61 +1,62 @@
 {
-    "ordererMSP": {
-      "domain": "org4.com",
-      "csrname": "C=TW,ST=Taiwan,O=org4.com,OU=Fabric",
-      "caServer": {
-        "identity": "admin",
-        "secret": "NzZiMzM4OTYxMDI0ZDQzZGMzNWI1NmI1MDkzNjgzMTE1OGMyM2QK",
-        "host": "ca.org4.com",
-        "port": 4054,
-        "tlscert": "Organizations/ordererOrganizations/org4.com/ca/tls-cert.pem"
-      },
-      "tlsServer": {
-        "identity": "admin",
-        "secret": "ZTllZWQyMDI5NDQ3ZDMxNWFiYTA3NDZhNjhkMTJmY2M0Mzk5MmUK",
-        "host": "tls.org4.com",
-        "port": 4154,
-        "tlscert": "Organizations/ordererOrganizations/org4.com/tls/tls-cert.pem"
-      },
-      "orderers": [
-        {
-          "orderer0": {
-            "identity": "orderer0.org4.com",
-            "secret": "ZjE0ZDU3ZDU0YTdhMDdhZWQ0OTRjMzYzMWE3OTViMjcK",
-            "type": "orderer",
-            "attrs": "",
-            "sans": "orderer0.org4.com"
-          }
-        },
-        {
-          "orderer1": {
-            "identity": "orderer1.org4.com",
-            "secret": "ZjE0ZDU3ZDU0YTdhMDdhZWQ0OTRjMzYzMWE3OTViMjcK",
-            "type": "orderer",
-            "attrs": "",
-            "sans": "orderer1.org4.com"
-          }
-        },
-        {
-          "orderer2": {
-            "identity": "orderer2.org4.com",
-            "secret": "ZjE0ZDU3ZDU0YTdhMDdhZWQ0OTRjMzYzMWE3OTViMjcK",
-            "type": "orderer",
-            "attrs": "",
-            "sans": "orderer2.org4.com"
-          }
+  "ordererMSP": {
+    "domain": "org4.com",
+    "csrname": "C=TW,ST=Taiwan,O=org4.com,OU=Fabric",
+    "caServer": {
+      "identity": "admin",
+      "secret": "adminpw",
+      "host": "ca.org4.com",
+      "port": 4054,
+      "tlscert": "Organizations/ordererOrganizations/org4.com/ca/tls-cert.pem"
+    },
+    "tlsServer": {
+      "identity": "admin",
+      "secret": "adminpw",
+      "host": "tls.org4.com",
+      "port": 4154,
+      "tlscert": "Organizations/ordererOrganizations/org4.com/tls/tls-cert.pem"
+    },
+    "orderers": [
+      {
+        "orderer0": {
+          "identity": "orderer0.org4.com",
+          "secret": "adminpw",
+          "type": "orderer",
+          "attrs": "",
+          "sans": "orderer0.org4.com"
         }
-      ],
-      "users": [
-        {
-          "Admin": {
-            "identity": "Admin@org4.com",
-            "secret": "ODg1YmIyOGE0MzIzNTdiNzc4NzEK",
-            "affiliation": "",
-            "attrs": "",
-            "sans": "",
-            "type": "admin"
-          }
+      },
+      {
+        "orderer1": {
+          "identity": "orderer1.org4.com",
+          "secret": "adminpw",
+          "type": "orderer",
+          "attrs": "",
+          "sans": "orderer1.org4.com"
         }
-      ]
-    }
-  }
+      },
+      {
+        "orderer2": {
+          "identity": "orderer2.org4.com",
+          "secret": "adminpw",
+          "type": "orderer",
+          "attrs": "",
+          "sans": "orderer2.org4.com"
+        }
+      }
+    ],
+    "users": [
+      {
+        "Admin": {
+          "identity": "Admin@org4.com",
+          "secret": "adminpw",
+          "affiliation": "",
+          "attrs": "",
+          "sans": "",
+          "type": "admin"
+        }
+      }
+    ]
+  },
+  "secret": "adminpw"
+}
