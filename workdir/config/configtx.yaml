@@ -51,23 +51,7 @@ Organizations:
             Endorsement:
                 Type: Signature
                 Rule: "OR('Org2MSP.peer')"
-    - &Org3
-        Name: Org3MSP
-        ID: Org3MSP
-        MSPDir: ./organizations/peerOrganizations/org3.com/msp
-        Policies:
-            Readers:
-                Type: Signature
-                Rule: "OR('Org3MSP.admin', 'Org3MSP.peer', 'Org3MSP.client')"
-            Writers:
-                Type: Signature
-                Rule: "OR('Org3MSP.admin', 'Org3MSP.client')"
-            Admins:
-                Type: Signature
-                Rule: "OR('Org3MSP.admin')"
-            Endorsement:
-                Type: Signature
-                Rule: "OR('Org3MSP.peer')"
+
 
 Capabilities:
     Channel: &ChannelCapabilities
@@ -177,11 +161,6 @@ Profiles:
                 Organizations:
                     - *Org1
                     - *Org2
-                    - *Org3
-            techConsortium:
-                Organizations:
-                    - *Org1
-                    - *Org2
 
     Channel12:
         Consortium: financeConsortium
@@ -193,35 +172,3 @@ Profiles:
                 - *Org2
             Capabilities:
                 <<: *ApplicationCapabilities
-
-    Channel23:
-        Consortium: financeConsortium
-        <<: *ChannelDefaults
-        Application:
-            <<: *ApplicationDefaults
-            Organizations:
-                - *Org2
-                - *Org3
-            Capabilities:
-                <<: *ApplicationCapabilities
-
-    AllChannel:
-        Consortium: financeConsortium
-        <<: *ChannelDefaults
-        Application:
-            <<: *ApplicationDefaults
-            Organizations:
-                - *Org1
-                - *Org2
-                - *Org3
-            Capabilities:
-                <<: *ApplicationCapabilities
-    
-    TechChannel:
-        Consortium: techCOnsortium
-        <<: *ChannelDefaults
-        Application:
-            <<: *ApplicationDefaults
-            Organizations:
-                - *Org1
-                - *Org2
