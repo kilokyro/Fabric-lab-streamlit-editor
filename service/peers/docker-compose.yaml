@@ -238,118 +238,118 @@ services:
     networks:
       - fabric
 
-  peer0.org3.com:
-    container_name: peer0.org3.com
-    image: hyperledger/fabric-peer:2.2.12
-    environment:
-      #Generic peer variables
-      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=main_network
-      - FABRIC_LOGGING_SPEC=INFO
-      #- FABRIC_LOGGING_SPEC=DEBUG
-      - CORE_PEER_TLS_ENABLED=true
-      - CORE_PEER_PROFILE_ENABLED=true
-      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
-      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
-      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
-      # Peer specific variabes
-      - CORE_PEER_ID=peer0.org3.com
-      - CORE_PEER_ADDRESS=peer0.org3.com:3051
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:3051
-      - CORE_PEER_CHAINCODEADDRESS=peer0.org3.com:3052
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:3052
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org3.com:3051
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org3.com:3051
-      - CORE_PEER_LOCALMSPID=Org3MSP
-      - CORE_OPERATIONS_LISTENADDRESS=peer0.org3.com:13051
-      # CouchDB Connection
-      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0.org3.com:5984
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
-    depends_on:
-      - couchdb0.org3.com
-    volumes:
-        - /var/run/docker.sock:/host/var/run/docker.sock
-        - ./org3.com/peer0.org3.com/peer0.org3.com/msp:/etc/hyperledger/fabric/msp
-        - ./org3.com/peer0.org3.com/peer0.org3.com/tls:/etc/hyperledger/fabric/tls
-        - ./org3.com/peer0.org3.com/peer0-data:/var/hyperledger/production
-    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
-    command: peer node start
-    ports:
-      - 3051:3051
-      - 13051:13051
-    networks:
-      - fabric
-
-  couchdb0.org3.com:
-    container_name: couchdb0.org3.com
-    hostname: couchdb0.org3.com
-    image: couchdb:3.2.2
-    environment:
-      - COUCHDB_USER=admin
-      - COUCHDB_PASSWORD=adminpw    
-    volumes:
-      - ./org3.com/peer0.org3.com/couchdb-data:/opt/couchdb/data
-    ports:
-      - "3084:5984"
-    networks:
-      - fabric
-
-  peer1.org3.com:
-    container_name: peer1.org3.com
-    image: hyperledger/fabric-peer:2.2.12
-    environment:
-      #Generic peer variables
-      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=main_network
-      - FABRIC_LOGGING_SPEC=INFO
-      #- FABRIC_LOGGING_SPEC=DEBUG
-      - CORE_PEER_TLS_ENABLED=true
-      - CORE_PEER_PROFILE_ENABLED=true
-      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
-      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
-      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
-      # Peer specific variabes
-      - CORE_PEER_ID=peer1.org3.com
-      - CORE_PEER_ADDRESS=peer1.org3.com:3151
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:3151
-      - CORE_PEER_CHAINCODEADDRESS=peer1.org3.com:3152
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:3152
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org3.com:3151
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org3.com:3151
-      - CORE_PEER_LOCALMSPID=Org3MSP
-      - CORE_OPERATIONS_LISTENADDRESS=peer1.org3.com:13151
-      # CouchDB Connection
-      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1.org3.com:5984
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
-    depends_on:
-      - couchdb1.org3.com
-    volumes:
-        - /var/run/docker.sock:/host/var/run/docker.sock
-        - ./org3.com/peer1.org3.com/peer1.org3.com/msp:/etc/hyperledger/fabric/msp
-        - ./org3.com/peer1.org3.com/peer1.org3.com/tls:/etc/hyperledger/fabric/tls
-        - ./org3.com/peer1.org3.com/peer1-data:/var/hyperledger/production
-    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
-    command: peer node start
-    ports:
-      - 3151:3151
-      - 13151:13151
-    networks:
-      - fabric
-
-  couchdb1.org3.com:
-    container_name: couchdb1.org3.com
-    hostname: couchdb1.org3.com
-    image: couchdb:3.2.2
-    environment:
-      - COUCHDB_USER=admin
-      - COUCHDB_PASSWORD=adminpw
-    volumes:
-        - ./org3.com/peer1.org3.com/couchdb-data:/opt/couchdb/data
-    ports:
-      - "3184:5984"
-    networks:
-      - fabric
+#   peer0.org3.com:
+#     container_name: peer0.org3.com
+#     image: hyperledger/fabric-peer:2.2.12
+#     environment:
+#       #Generic peer variables
+#       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+#       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=main_network
+#       - FABRIC_LOGGING_SPEC=INFO
+#       #- FABRIC_LOGGING_SPEC=DEBUG
+#       - CORE_PEER_TLS_ENABLED=true
+#       - CORE_PEER_PROFILE_ENABLED=true
+#       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+#       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+#       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+#       # Peer specific variabes
+#       - CORE_PEER_ID=peer0.org3.com
+#       - CORE_PEER_ADDRESS=peer0.org3.com:3051
+#       - CORE_PEER_LISTENADDRESS=0.0.0.0:3051
+#       - CORE_PEER_CHAINCODEADDRESS=peer0.org3.com:3052
+#       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:3052
+#       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org3.com:3051
+#       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org3.com:3051
+#       - CORE_PEER_LOCALMSPID=Org3MSP
+#       - CORE_OPERATIONS_LISTENADDRESS=peer0.org3.com:13051
+#       # CouchDB Connection
+#       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+#       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0.org3.com:5984
+#       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+#       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+#     depends_on:
+#       - couchdb0.org3.com
+#     volumes:
+#         - /var/run/docker.sock:/host/var/run/docker.sock
+#         - ./org3.com/peer0.org3.com/peer0.org3.com/msp:/etc/hyperledger/fabric/msp
+#         - ./org3.com/peer0.org3.com/peer0.org3.com/tls:/etc/hyperledger/fabric/tls
+#         - ./org3.com/peer0.org3.com/peer0-data:/var/hyperledger/production
+#     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+#     command: peer node start
+#     ports:
+#       - 3051:3051
+#       - 13051:13051
+#     networks:
+#       - fabric
+# 
+#   couchdb0.org3.com:
+#     container_name: couchdb0.org3.com
+#     hostname: couchdb0.org3.com
+#     image: couchdb:3.2.2
+#     environment:
+#       - COUCHDB_USER=admin
+#       - COUCHDB_PASSWORD=adminpw    
+#     volumes:
+#       - ./org3.com/peer0.org3.com/couchdb-data:/opt/couchdb/data
+#     ports:
+#       - "3084:5984"
+#     networks:
+#       - fabric
+# 
+#   peer1.org3.com:
+#     container_name: peer1.org3.com
+#     image: hyperledger/fabric-peer:2.2.12
+#     environment:
+#       #Generic peer variables
+#       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+#       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=main_network
+#       - FABRIC_LOGGING_SPEC=INFO
+#       #- FABRIC_LOGGING_SPEC=DEBUG
+#       - CORE_PEER_TLS_ENABLED=true
+#       - CORE_PEER_PROFILE_ENABLED=true
+#       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
+#       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
+#       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
+#       # Peer specific variabes
+#       - CORE_PEER_ID=peer1.org3.com
+#       - CORE_PEER_ADDRESS=peer1.org3.com:3151
+#       - CORE_PEER_LISTENADDRESS=0.0.0.0:3151
+#       - CORE_PEER_CHAINCODEADDRESS=peer1.org3.com:3152
+#       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:3152
+#       - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.org3.com:3151
+#       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org3.com:3151
+#       - CORE_PEER_LOCALMSPID=Org3MSP
+#       - CORE_OPERATIONS_LISTENADDRESS=peer1.org3.com:13151
+#       # CouchDB Connection
+#       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+#       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1.org3.com:5984
+#       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
+#       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
+#     depends_on:
+#       - couchdb1.org3.com
+#     volumes:
+#         - /var/run/docker.sock:/host/var/run/docker.sock
+#         - ./org3.com/peer1.org3.com/peer1.org3.com/msp:/etc/hyperledger/fabric/msp
+#         - ./org3.com/peer1.org3.com/peer1.org3.com/tls:/etc/hyperledger/fabric/tls
+#         - ./org3.com/peer1.org3.com/peer1-data:/var/hyperledger/production
+#     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+#     command: peer node start
+#     ports:
+#       - 3151:3151
+#       - 13151:13151
+#     networks:
+#       - fabric
+# 
+#   couchdb1.org3.com:
+#     container_name: couchdb1.org3.com
+#     hostname: couchdb1.org3.com
+#     image: couchdb:3.2.2
+#     environment:
+#       - COUCHDB_USER=admin
+#       - COUCHDB_PASSWORD=adminpw
+#     volumes:
+#         - ./org3.com/peer1.org3.com/couchdb-data:/opt/couchdb/data
+#     ports:
+#       - "3184:5984"
+#     networks:
+#       - fabric
