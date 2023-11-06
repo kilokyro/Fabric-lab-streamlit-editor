@@ -8,14 +8,14 @@
             "csrname": "C=TW,ST=Taiwan,O=org4.com,OU=Fabric",
             "caServer": {
               "identity": "admin",
-              "secret": "byUElrDXRhZ9",
+              "secret": "adminpw",
               "host": "ca.org4.com",
               "port": 4054,
               "tlscert": "Organizations/ordererOrganizations/org4.com/ca/tls-cert.pem"
             },
             "tlsServer": {
               "identity": "admin",
-              "secret": "LqCy40EV0tW/",
+              "secret": "adminpw",
               "host": "tls.org4.com",
               "port": 4154,
               "tlscert": "Organizations/ordererOrganizations/org4.com/tls/tls-cert.pem"
@@ -24,7 +24,7 @@
               {
                 "orderer0": {
                   "identity": "orderer0.org4.com",
-                  "secret": "x3ib6qMmW7ep",
+                  "secret": "adminpw",
                   "type": "orderer",
                   "attrs": "",
                   "sans": "orderer0.org4.com"
@@ -33,7 +33,7 @@
               {
                 "orderer1": {
                   "identity": "orderer1.org4.com",
-                  "secret": "o7igbpDcUya+",
+                  "secret": "adminpw",
                   "type": "orderer",
                   "attrs": "",
                   "sans": "orderer1.org4.com"
@@ -42,7 +42,7 @@
               {
                 "orderer2": {
                   "identity": "orderer2.org4.com",
-                  "secret": "UkEcQ5aONE2/",
+                  "secret": "adminpw",
                   "type": "orderer",
                   "attrs": "",
                   "sans": "orderer2.org4.com"
@@ -53,7 +53,7 @@
               {
                 "Admin": {
                   "identity": "Admin@org4.com",
-                  "secret": "ov3/ch2CX0UY",
+                  "secret": "adminpw",
                   "affiliation": "",
                   "attrs": "",
                   "sans": "",
@@ -73,14 +73,14 @@
             "csrname": "C=TW,ST=Taiwan,O=org1.com,OU=Fabric",
             "caServer": {
               "identity": "admin",
-              "secret": "c0rNCw5uHeCo",
+              "secret": "adminpw",
               "host": "ca.org1.com",
               "port": 1054,
               "tlscert": "Organizations/peerOrganizations/org1.com/ca/tls-cert.pem"
             },
             "tlsServer": {
               "identity": "admin",
-              "secret": "kpFtfzSAl54O",
+              "secret": "adminpw",
               "host": "tls.org1.com",
               "port": 1154,
               "tlscert": "Organizations/peerOrganizations/org1.com/tls/tls-cert.pem"
@@ -89,7 +89,7 @@
               {
                 "peer0": {
                   "identity": "peer0.org1.com",
-                  "secret": "ZzhPaPcLCgq8",
+                  "secret": "adminpw",
                   "type": "peer",
                   "attrs": "",
                   "sans": "peer0.org1.com"
@@ -98,7 +98,7 @@
               {
                 "peer1": {
                   "identity": "peer1.org1.com",
-                  "secret": "bp8m0QHNF0Bg",
+                  "secret": "adminpw",
                   "type": "peer",
                   "attrs": "",
                   "sans": "peer1.org1.com"
@@ -109,7 +109,7 @@
               {
                 "Admin": {
                   "identity": "Admin@org1.com",
-                  "secret": "I92ZUZYd7Urp",
+                  "secret": "adminpw",
                   "affiliation": "",
                   "attrs": "",
                   "sans": "",
@@ -119,8 +119,8 @@
               {
                 "user1": {
                   "identity": "user1@org1.com",
-                  "secret": "",
-                  "affiliation": "maLRNXZxJD5k",
+                  "secret": "adminpw",
+                  "affiliation": "",
                   "attrs": "",
                   "sans": "",
                   "type": "client"
@@ -135,14 +135,14 @@
             "csrname": "C=TW,ST=Taiwan,O=org2.com,OU=Fabric",
             "caServer": {
               "identity": "admin",
-              "secret": "dIYGKjwJJU/g",
+              "secret": "adminpw",
               "host": "ca.org2.com",
               "port": 2054,
               "tlscert": "Organizations/peerOrganizations/org2.com/ca/tls-cert.pem"
             },
             "tlsServer": {
               "identity": "admin",
-              "secret": "XlJnj3y+WSIo",
+              "secret": "adminpw",
               "host": "tls.org2.com",
               "port": 2154,
               "tlscert": "Organizations/peerOrganizations/org2.com/tls/tls-cert.pem"
@@ -151,7 +151,7 @@
               {
                 "peer0": {
                   "identity": "peer0.org2.com",
-                  "secret": "nza9YcHzEije",
+                  "secret": "adminpw",
                   "type": "peer",
                   "attrs": "",
                   "sans": "peer0.org2.com"
@@ -160,7 +160,7 @@
               {
                 "peer1": {
                   "identity": "peer1.org2.com",
-                  "secret": "Egi6+0Qz2I9M",
+                  "secret": "adminpw",
                   "type": "peer",
                   "attrs": "",
                   "sans": "peer1.org2.com"
@@ -171,7 +171,7 @@
               {
                 "Admin": {
                   "identity": "Admin@org2.com",
-                  "secret": "WlPdU6yDwBtC",
+                  "secret": "adminpw",
                   "affiliation": "",
                   "attrs": "",
                   "sans": "",
@@ -181,69 +181,7 @@
               {
                 "user1": {
                   "identity": "user1@org2.com",
-                  "secret": "Xp/OGnMEnQ5h",
-                  "affiliation": "",
-                  "attrs": "",
-                  "sans": "",
-                  "type": "client"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "org3MSP": {
-            "domain": "org3.com",
-            "csrname": "C=TW,ST=Taiwan,O=org3.com,OU=Fabric",
-            "caServer": {
-              "identity": "admin",
-              "secret": "eaDOZGQo3vUh",
-              "host": "ca.org3.com",
-              "port": 3054,
-              "tlscert": "Organizations/peerOrganizations/org3.com/ca/tls-cert.pem"
-            },
-            "tlsServer": {
-              "identity": "admin",
-              "secret": "5Hx49Oq4Gkxc",
-              "host": "tls.org3.com",
-              "port": 3154,
-              "tlscert": "Organizations/peerOrganizations/org3.com/tls/tls-cert.pem"
-            },
-            "peers": [
-              {
-                "peer0": {
-                  "identity": "peer0.org3.com",
-                  "secret": "2TaQlKf52g4z",
-                  "type": "peer",
-                  "attrs": "",
-                  "sans": "peer0.org3.com"
-                }
-              },
-              {
-                "peer1": {
-                  "identity": "peer1.org3.com",
-                  "secret": "po7Lw8PWBCd0",
-                  "type": "peer",
-                  "attrs": "",
-                  "sans": "peer1.org3.com"
-                }
-              }
-            ],
-            "users": [
-              {
-                "Admin": {
-                  "identity": "Admin@org3.com",
-                  "secret": "mMVatVrPN5Gs",
-                  "affiliation": "",
-                  "attrs": "",
-                  "sans": "",
-                  "type": "admin"
-                }
-              },
-              {
-                "user1": {
-                  "identity": "user1@org3.com",
-                  "secret": "QWUPZtdOgI6T",
+                  "secret": "adminpw",
                   "affiliation": "",
                   "attrs": "",
                   "sans": "",
