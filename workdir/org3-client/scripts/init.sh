@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-cp -a ../ca/localMSP/peerOrganizations/org3.com/users/Admin@org3.com .
+cp -a ../ca/localMSP/peerOrganizations/org3.com/users .
 if [ ! -d "tlsca" ]; then
-	mkdir tlsca
+        mkdir tlsca
 fi
 if [ ! -d "tmp" ]; then
-	mkdir tmp
+        mkdir tmp
 fi
 find ../ca/localMSP/*/*/msp/tlscacerts/*.pem -exec cp {} tlsca/ \;

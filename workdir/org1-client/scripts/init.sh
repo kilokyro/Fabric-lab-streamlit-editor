@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-cp -a ../ca/localMSP/peerOrganizations/org1.com/users/Admin@org1.com .
+cp -a ../ca/localMSP/peerOrganizations/org1.com/users .
 if [ ! -d "tlsca" ]; then
         mkdir tlsca
 fi

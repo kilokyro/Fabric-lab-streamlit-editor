@@ -2,7 +2,7 @@ version: '2.1'
 
 networks:
   fabric:
-    name: main_network
+    name: peers_network
 
 services:
   peer0.org1.com:

@@ -8,9 +8,9 @@ configtxgen -inspectBlock ../system-genesis-block/genesis.block > ../system-gene
 # 產生應用頻道 (Application Channel) 的設定區塊 ()
 configtxgen -profile Channel12 -configPath . -channelID channel1 -outputCreateChannelTx ../channel-artifacts/channel1.tx
 # 將應用頻道 的設定區塊 檔案格式由 protobuf 轉換成 json
-# configtxgen -inspectChannelCreateTx ../channel-artifacts/channel1.tx > ../channel-artifacts/channel1.json
+configtxgen -inspectChannelCreateTx ../channel-artifacts/channel1.tx > ../channel-artifacts/channel1.json
 
-configtxgen -profile Channel23 -configPath . -channelID channel2 -outputCreateChannelTx ../channel-artifacts/channel2.tx
+# configtxgen -profile Channel23 -configPath . -channelID channel2 -outputCreateChannelTx ../channel-artifacts/channel2.tx
 # 將應用頻道 的設定區塊 檔案格式由 protobuf 轉換成 json
 # configtxgen -inspectChannelCreateTx ../channel-artifacts/channel2.tx > ../channel-artifacts/channel2.json
 
