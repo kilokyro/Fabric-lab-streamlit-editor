@@ -13,7 +13,7 @@
 ***先期準備環境***
 
 ### 1. 下載 fabric-lab 材料
-
+***`[command]`***
    ```bash
    mkdir $HOME/workspaces
    cd $HOME/workspaces
@@ -33,26 +33,31 @@
    > 8. 配置 fabric-samples 工作環境
    
    > 工作目錄: $HOME/workspaces/fabric-lab 
+   >
+   > ***`[command]`***
    > ```bash
    > ./env-deploy.sh
    > ```
 ### 3. 斷開與 vscode 的連線
 
+   ***`[command]`***
    ```bash
    ps -ef |grep vscode|grep code|awk '{print $1}'|xargs kill -9
    ```
 ### 4. 重新載入 vsocde
 
-   > #### 4-1 由 vscode 圖形介面開啟資料夾 $HOME/workspaces/fabric-lab
+   > #### 4-1 由 vscode 圖形介面開啟資料夾 
+   >> **工作目錄: $HOME/workspaces/fabric-lab**
 
    > #### 4-2 測試 docker 指令是否可以正常運作
-
+   > ***`[command]`***
    > ```bash
    > docker ps
    > ```
+   > `System Response:`
    >
-   > ```bash
-   > `CONTAINER ID   IMAGE                               COMMAND                  CREATED          STATUS          PORTS                                                                                        NAMES`
+   > ```docker
+   > CONTAINER ID   IMAGE                               COMMAND                  CREATED          STATUS          PORTS                                                                                        NAMES
    > ```
 
 ### 5. 測試下載套件及材料的可用性及完整性
@@ -60,17 +65,19 @@
    > **工作目錄: $HOME/fabric-lab/fabric-samples/test-network**
    > 
    > #### 5-1 啟動 test network
-   >
+   > ***`[command]`***
    > ```bash
    > cd $HOME/fabric-lab/fabric-samples/test-network
    > ./network up createChannel -c channel1 -s couchdb -ca
    >```
    >
    > 最終啟動成功的結果:
-
+   > ***`[command]`***
    > ```docker
    >docker ps
-   > 
+   > ```
+   > `System Response`
+   > ```bash
    > CONTAINER ID   IMAGE                               COMMAND                  CREATED          STATUS          PORTS                                                                                                NAMES
    > 9e2b138448a1   hyperledger/fabric-tools:latest     "/bin/bash"              32 minutes ago   Up 32 minutes                                                                                                        cli
    > 39a0bc11b2db   hyperledger/fabric-peer:latest      "peer node start"        32 minutes ago   Up 32 minutes   0.0.0.0:9051->9051/tcp, :::9051->9051/tcp, 7051/tcp, 0.0.0.0:9445->9445/tcp, :::9445->9445/tcp       peer0.org2.example.com
@@ -82,25 +89,31 @@
    > 39ef69bd3771   hyperledger/fabric-ca:latest        "sh -c 'fabric-ca-se…"   32 minutes ago   Up 32 minutes   0.0.0.0:8054->8054/tcp, :::8054->8054/tcp, 7054/tcp, 0.0.0.0:18054->18054/tcp, :::18054->18054/tcp   ca_org2
    > 6e098d6ba063   hyperledger/fabric-ca:latest        "sh -c 'fabric-ca-se…"   32 minutes ago   Up 32 minutes   0.0.0.0:9054->9054/tcp, :::9054->9054/tcp, 7054/tcp, 0.0.0.0:19054->19054/tcp, :::19054->19054/tcp   ca_orderer
    > ```
-   
+   > ***`[command]`***
    > ```docker
    > docker ps |wc -l
    > ```
-   > 回應結果 應為 10 個服務
+   > `System Response`
    > ```bash
    > 10
    > ```
    >
    > #### 5-2 shutdown test-network
-   >
+   > ***`[command]`***
    > ```bash
    > ./network.sh down
    > ```
 
 ***創建原始環境***
 ### 6. 啟動 fabric-ca server
+  >
   > **工作目錄: $HOME/workspaces/fabric-lab/ca**
+  >
+  > ***`[command]`***
+  > ```bash
   > tree config/
+  > ``````
+  `System Response:`
   > ```bash
   >  config/
   >  ├── org1.com
@@ -133,10 +146,12 @@
   > 以 org1.com/ca/fabric-ca-server-config.yaml 為例, 使用 vscode 編輯修改
   > 1. 修改密碼
   >> 第 132 行, 將 adminpw 修改為較強密碼
+  >>
+  >> ***`[command]`***
   >> ```bash
   >> openssl rand -hex 11|base64
   >>```
-  >
+  > **`[設定檔內容]`**
   >> 第 310 行，修改 csr
   >> ```yaml
   >> csr:
@@ -158,9 +173,10 @@
   >>    pathlength: 1
   >> ```
   >
-  > ***重覆操作，修改 ca.org1.com, tls.org1.com, ca.org2.com, tls.org2.com, ca.org3.com, tls.org3.com, ca.org4.com, tls.org4.com 共 8 個服務
+  > ***重覆操作，修改 ca.org1.com, tls.org1.com, ca.org2.com, tls.org2.com, ca.org3.com, tls.org3.com, ca.org4.com, tls.org4.com 共 8 個服務***
   > 
   > #### 6-2 啟動 fabric-ca-server docker instances,
+  > ***`[command]`***
   >> ```bash
   >> cd $HOME/workspaces/fabric-lab/ca/
   >> docker-compose up -d
@@ -173,6 +189,7 @@
 >
 >> **工作目錄: $HOME/workspaces/fabric-lab/workdir/ca/msp**
 > #### 7.2 將範本檔複製到工作目錄
+> ***`[command]`***
 >> ```bash
 >> cd $HOME/workspaces/fabric-lab/workdir/ca/msp
 >> cp ../msp-template/orrderer.json org4.com
@@ -192,6 +209,7 @@
 > #### 7-4 組合
 >> 執行 ../script/networkgen.sh 將三個機構的設定檔組合成一個檔案
 >>
+>> ***`[command]`***
 >> ```bash
 >> cd  $HOME/workspaces/fabric-lab/workdir/ca/msp
 >> ../scropts/networkgen.sh -t organizations.json -o org4.json -p org1.json -p org2.json -O ../network.json
@@ -207,16 +225,18 @@
 > #### 7-5 註冊 fabric-ca server 的 admin 管理者
 >> **工作目錄: $HOME/workspaces/fabric-lab/workdir/ca**
 >>
+>> ***`[command]`***
 >> ```bash
 >> cd $HOME/workspaces/fabric-lab/workdir/ca/
 >> ./scripts/enroll.sh ./network.json
 >> ```
 >>
 >> 執行完成後，在 $HOME/workspaces/fabric-lab/workdir/ca 會產生 出 Organizations 目錄，結構如下
+>> ***`[command]`***
 >>> ```bash
 >>> tree -d Organizations
 >>>```
->>
+>> `System Response:`
 >>> ```bash
 >>> Organizations/
 >>> ├── ordererOrganizations
@@ -264,10 +284,11 @@
 >> 每一 organization 目錄下，有二個目錄 (ca,tls), 分別代表 每一 organization 的 ca 以笗 tls 的管理者 admin 的 identity (身份識別)加密文件
 >> 檢查每一個 admin 的檔案架構，以 `$HOME/workspaces/fabric-lab/workdir/ca/Organizations/ordererOrganizations/org4.com/ca` 為例
 >>
+>> ***`[command]`***
 >>> ```bash
 >>> tree Organizations/ordererOrganizations/org4.com/ca/
 >>> ```
-
+>> `System Response:`
 >>> ```bash
 >>> Organizations/ordererOrganizations/org4.com/ca/
 >>> ├── fabric-ca-client-config.yaml
@@ -286,12 +307,16 @@
 
 > #### 7-6 生成加密材料
 >> 登錄以及註冊 Fabric Network 所有 Organizations 以及每一 Organization 的參與者的 identity (身份識別) 加密文件 MSP, TLS
+>>
 >> **工作目錄: $HOME/workspaces/fabric-lab/workdir/ca**
 >>
+>> ***`[command]`***
 >>> ```bash
 >>>./scripts/crypto.sh network.json
 >>> ```
 >> 第一次登錄，會出現 `Error: Response from server: Error Code: 63 - Failed to get User: sql: no rows in result set` 的錯誤訊息，這是因為在登錄前 script 先檢查該 entity 是否已登錄，若沒登錄會收到這個錯誤，並重新登錄。
+>>
+>>> `System Response:`
 >>> ```bash
 >>> Error: Response from server: Error Code: 63 - Failed to get User: sql: no rows in result set
 >>> 
@@ -323,10 +348,12 @@
 
 >> 執行後，Organization 的目錄結構如下
 >>
+>> ***`[command]`***
 >>>```bash
 >>> tree -d Organizations
 >>> ```
 >>
+>> `System Response:`
 >>> ```bash
 >>> Organizations/
 >>> ├── ordererOrganizations
@@ -524,9 +551,11 @@
 >> 
 >> 執行完成後， script 會依 Organizations 目錄內容產出 channelMSP, localMSP 二個目錄，channelMSP 為提供區塊鏈設定以及其他機構驗證我機構的 entity 使用， localMSP 為我方各 entity (orderer,peer, admin, client) 參與 Fabric network 的身份識別、簽章使用
 >> 檢查 channelMSP 的檔案內容
+>>> ***`[command]`***
 >>> ```bash
 >>> tree channelMSP
 >>> ```
+>>> `System Response:`
 >>> ```bash
 >>> channelMSP
 >>> ├── ordererOrganizations
@@ -569,10 +598,12 @@
 >> 
 >> 檢查 localMSP 的內容
 >>
+>> ***`[command]`***
 >>> ```bash
 >>> tree -d localMSP/
 >>>```
 >>
+>> `System Response:`
 >>> ```bash
 >>> localMSP/
 >>> ├── ordererOrganizations
@@ -697,10 +728,11 @@
 >>> ```
 >> 檢查 localMSP 目錄下每一 entity 的加密文件是否齊全完整
 >>
+>> ***`[command]`***
 >>> ```bash
 >>> tree localMSP/peerOrganizations/org1.com/peers/peer0.org1.com/
 >>> ```
->>
+>> `System Response:`
 >>> ```bash
 >>> localMSP/peerOrganizations/org1.com/peers/peer0.org1.com/
 >>> ├── msp
@@ -724,12 +756,15 @@
 > **工作目錄: $HOME/workspaces/fabric-lab/workdir/config**
 
 >> #### 8-1 將 section 7 產出的  `channelMSP` 複製到工作目錄 organizations
+>>
+>>> ***`[command]`***
 >>> ```bash
 >>> cd $HOME/workspaces/fabric-lab/workdir/config
 >>> cp -a $HOME/workspaces/fabric-lab/workdir/ca/channelMSP $HOME/workspaces/fabric-lab/workdir/config/organizations
->>>```
+>>> ```
 >> #### 8-2 編輯 configtx.yaml
 >>
+>> **`[設定檔內容]`**`
 >>> ```yaml
 >>> Organizations:
 >>>     - &OrdererOrg
@@ -909,12 +944,15 @@
 >> #### 8-3 由 configtx.yaml 中的 OrdererGenesis profile 生成 system-channel 的創世區塊
 >> **工作目錄: $HOWM/workspaces/fabric-lab/workdir/config**
 >> 執行下列指令生成 創世區塊
+>>
+>> ***`[command]`***
 >>> ```bash
 >>> cd $HOWM/workspaces/fabric-lab/workdir/config
 >>> configtxgen -profile OrdererGenesis -configPath $PWD -channelID system-channel -outputBlock ../system-genesis-block/genesis.block
 >>>```
 >> 將 protobuf 檔案格式 轉換成 json 格式 (option)
 >>
+>> ***`[command]`***
 >>> ```bash
 >>> configtxgen -inspectBlock ../system-genesis-block/genesis.block > ../system-genesis-block/genesis.json
 >>> ```
@@ -923,11 +961,15 @@
 
 > **工作目錄: $HOME/workspaces/fabric-lab/workdir/config**
 >> 使用 configtx.yaml 中的 Channel12 profile 生成 channel1 的 config block
+>>
+>> ***`[command]`***
 >>> ```bash
 >>> configtxgen -profile Channel12 -configPath $PWD  -channelID channel1 -outputCreateChannelTx ../channel-artifacts/channel1.tx
 >>> ```
->>
+>> 
 >> 將 protobuf 檔案格式 轉換成 json 格式 (option)
+>>
+>> ***`[command]`***
 >>> ```bash
 >>> configtxgen -inspectChannelCreateTx ../channel-artifacts/channel1.tx > ../channel-artifacts/channel1.json
 >>> ```
@@ -937,87 +979,98 @@
 > **工作目錄: $HOME/workspaces/fabric-lab/service/orderer**
 >> 10-1 環境部署
 >>
->>  1. 創建每一orderer 服務的工作目錄
->>     ```bash
->>     cd $HOME/workspaces/fabric-lab/service/orderer
->>     mkdir -p $HOME/workspaces/fabric-lab/service/orderer/org4.com/{orderer0.org4.com,orderer1.org4.com,orderer2.org4.com}
->>     ```
->>  2. 複製創世區塊
->>     ```bash
->>     cp $HOME/workspaces/fabric-lab/workdir/system-genesis-block/genesis.block $HOME/workspaces/fabric-lab/service/orderer
->>     ```
->>   3. 由 $HOME/workspaces/fabric-lab/workdir/ca/localMSP/ordererOrganizations/org4.com/orderers/ 複製 每一 orderer 服務的 `localMSP` 的資料夾到對應的工作目錄
->>      ```bash
->>       tree -d $HOME/workspaces/fabric-lab/workdir/ca/localMSP/ordererOrganizations/org4.com/orderers/
->>      ```
->>      ```bash
->>      $HOME/workspaces/fabric-lab/workdir/ca/localMSP/ordererOrganizations/org4.com/orderers/
->>      ├── orderer0.org4.com
->>      │   ├── msp
->>      │   │   ├── admincerts
->>      │   │   ├── cacerts
->>      │   │   ├── keystore
->>      │   │   ├── signcerts
->>      │   │   └── tlscacerts
->>      │   └── tls
->>      ├── orderer1.org4.com
->>      │   ├── msp
->>      │   │   ├── admincerts
->>      │   │   ├── cacerts
->>      │   │   ├── keystore
->>      │   │   ├── signcerts
->>      │   │   └── tlscacerts
->>      │   └── tls
->>      └── orderer2.org4.com
->>          ├── msp
->>          │   ├── admincerts
->>          │   ├── cacerts
->>          │   ├── keystore
->>          │   ├── signcerts
->>          │   └── tlscacerts
->>          └── tls
->>      ```
->>   4. 或直接執行以下 script 完成
->>      ```bash
->>      $HOME/workspaces/fabric-lab/service/orderer/scripts/cpMSP.sh 
->>      ```
+>> 1. 創建每一orderer 服務的工作目錄
+>>> ***`[command]`***
+>>> ```bash
+>>> cd $HOME/workspaces/fabric-lab/service/orderer
+>>> mkdir -p $HOME/workspaces/fabric-lab/service/orderer/org4.com/{orderer0.org4.com,orderer1.org4.com,orderer2.org4.com}
+>>>  ```
+>> 2. 複製創世區塊
+>>> ***`[command]`***
+>>> ```bash
+>>> cp $HOME/workspaces/fabric-lab/workdir/system-genesis-block/genesis.block $HOME/workspaces/fabric-lab/service/orderer
+>>> ```
+>> 3. 由 $HOME/workspaces/fabric-lab/workdir/ca/localMSP/ordererOrganizations/org4.com/orderers/ 複製 每一 orderer 服務的 `localMSP` 的資料夾到對應的工作目錄
+>>> ***`[command]`***
+>>> ```bash
+>>>  tree -d $HOME/workspaces/fabric-lab/workdir/ca/localMSP/ordererOrganizations/org4.com/orderers/
+>>> ```
+>>> `System Response:`
+>>> ```bash
+>>> $HOME/workspaces/fabric-lab/workdir/ca/localMSP/ordererOrganizations/org4.com/orderers/
+>>> ├── orderer0.org4.com
+>>> │   ├── msp
+>>> │   │   ├── admincerts
+>>> │   │   ├── cacerts
+>>> │   │   ├── keystore
+>>> │   │   ├── signcerts
+>>> │   │   └── tlscacerts
+>>> │   └── tls
+>>> ├── orderer1.org4.com
+>>> │   ├── msp
+>>> │   │   ├── admincerts
+>>> │   │   ├── cacerts
+>>> │   │   ├── keystore
+>>> │   │   ├── signcerts
+>>> │   │   └── tlscacerts
+>>> │   └── tls
+>>> └── orderer2.org4.com
+>>>     ├── msp
+>>>     │   ├── admincerts
+>>>     │   ├── cacerts
+>>>     │   ├── keystore
+>>>     │   ├── signcerts
+>>>     │   └── tlscacerts
+>>>     └── tls
+>>> ```
+>> 4. 或直接執行以下 script 完成
+>>> ***`[command]`***
+>>> ```bash
+>>> $HOME/workspaces/fabric-lab/service/orderer/scripts/cpMSP.sh 
+>>> ```
 >>   
 >>   5. 最終部署完成的架構
->>      ```bash
->>      $HOME/workspaces/fabric-lab/service/orderer
->>      ├── org4.com
->>      │   ├── orderer0.org4.com
->>      │   │   └── orderer0.org4.com
->>      │   │       ├── msp
->>      │   │       │   ├── admincerts
->>      │   │       │   ├── cacerts
->>      │   │       │   ├── keystore
->>      │   │       │   ├── signcerts
->>      │   │       │   └── tlscacerts
->>      │   │       └── tls
->>      │   ├── orderer1.org4.com
->>      │   │   └── orderer1.org4.com
->>      │   │       ├── msp
->>      │   │       │   ├── admincerts
->>      │   │       │   ├── cacerts
->>      │   │       │   ├── keystore
->>      │   │       │   ├── signcerts
->>      │   │       │   └── tlscacerts
->>      │   │       └── tls
->>      │   └── orderer2.org4.com
->>      │       └── orderer2.org4.com
->>      │           ├── msp
->>      │           │   ├── admincerts
->>      │           │   ├── cacerts
->>      │           │   ├── keystore
->>      │           │   ├── signcerts
->>      │           │   └── tlscacerts
->>      │           └── tls
->>      └── scripts
->>      ```
+>>> ***`[command]`***
+>>> ```bash
+>>> tree -d $HOME/workspaces/fabric-lab/service/orderer
+>>> ```
+>>>> `System Response:`
+>>>> ```bash
+>>>> $HOME/workspaces/fabric-lab/service/orderer
+>>>> ├── org4.com
+>>>> │   ├── orderer0.org4.com
+>>>> │   │   └── orderer0.org4.com
+>>>> │   │       ├── msp
+>>>> │   │       │   ├── admincerts
+>>>> │   │       │   ├── cacerts
+>>>> │   │       │   ├── keystore
+>>>> │   │       │   ├── signcerts
+>>>> │   │       │   └── tlscacerts
+>>>> │   │       └── tls
+>>>> │   ├── orderer1.org4.com
+>>>> │   │   └── orderer1.org4.com
+>>>> │   │       ├── msp
+>>>> │   │       │   ├── admincerts
+>>>> │   │       │   ├── cacerts
+>>>> │   │       │   ├── keystore
+>>>> │   │       │   ├── signcerts
+>>>> │   │       │   └── tlscacerts
+>>>> │   │       └── tls
+>>>> │   └── orderer2.org4.com
+>>>> │       └── orderer2.org4.com
+>>>> │           ├── msp
+>>>> │           │   ├── admincerts
+>>>> │           │   ├── cacerts
+>>>> │           │   ├── keystore
+>>>> │           │   ├── signcerts
+>>>> │           │   └── tlscacerts
+>>>> │           └── tls
+>>>> └── scripts
+>>>> ```
 >>
 >> 10-2 啟動 orderer service
 >>
+>>> ***`[command]`***
 >>> ```bash
 >>> cd $HOME/workspaces/fabric-lab/service/orderer
 >>> docker-compose up -d
@@ -1026,11 +1079,13 @@
 >> 10-3 檢查 各 orderer 服務的 docker instance 是否正常啟動
 >>
 >>> 檢查每一 orderer 服務的 log 是否選舉 leader 完成
->>>     
+>>> 
+>>> ***`[command]`***    
 >>> ```bash
 >>> docker logs -f orderer0.org4.com
 >>> ``````
 >>>
+>>> `System Response:`
 >>> ```bash
 >>>  2023-11-11 03:35:38.005 UTC [orderer.consensus.etcdraft] campaign -> INFO 030 1 [logterm: 1, index: 3] sent MsgVote request to 2 at term 2 channel=system-channel node=1
 >>>  2023-11-11 03:35:38.005 UTC [orderer.consensus.etcdraft] campaign -> INFO 031 1 [logterm: 1, index: 3] sent MsgVote request to 3 at term 2 channel=system-channel node=1
@@ -1046,18 +1101,20 @@
 
 > **工作目錄: $HOME/workspaces/fabric-lab/service/peers**
 >> 11-1 環境部署配置
->>
 >>> 1. 創建每一organization 的 peer node 的工作目錄
->>>    ```bash
->>>    mkdir -p $HOME/workspaces/fabric-lab/service/peers/org1.com/{peer0.org1.com,peer1.org1.com}
->>>    mkdir -p $HOME/workspaces/fabric-lab/service/peers/org2.com/{peer0.org2.com,peer1.org2.com}
-
->>>    ```
+>>>
+>>> ***`[command]`***
+>>>> ```bash
+>>>> mkdir -p $HOME/workspaces/fabric-lab/service/peers/org1.com/{peer0.org1.com,peer1.org1.com}
+>>>> mkdir -p $HOME/workspaces/fabric-lab/service/peers/org2.com/{peer0.org2.com,peer1.org2.c> 
+>>>> ```
 >>> 2. 複製每一 peer organizations 的 peers/pee{0,1}/ 到對應的目錄位置
 >>>
+>>> ***`[command]`***
 >>> ```bash
 >>> tree -d $HOME/workspaces/fabric-lab/workdir/ca/localMSP/peerOrganizations/*/peers/peer*
 >>> ```
+>>> `System Response:`
 >>> ```bash
 >>> $homeworkspaces/fabric-lab/workdir/ca/localMSP/peerOrganizations/org1.com/peers/peer0.org1.com
 >>> ├── msp
@@ -1068,6 +1125,7 @@
 >>> │   └── tlscacerts
 >>> └── tls
 >>> ```
+>>> `System Response:`
 >>> ```bash
 >>> $homeworkspaces/fabric-lab/workdir/ca/localMSP/peerOrganizations/org1.com/peers/peer1.org1.com
 >>> ├── msp
@@ -1078,6 +1136,8 @@
 >>> │   └── tlscacerts
 >>> └── tls
 >>> ```
+>>>
+>>> `System Response:`
 >>> ```bash
 >>> $homeworkspaces/fabric-lab/workdir/ca/localMSP/peerOrganizations/org2.com/peers/peer0.org2.com
 >>> ├── msp
@@ -1088,6 +1148,7 @@
 >>> │   └── tlscacerts
 >>> └── tls
 >>> ```
+>>> `System Response:`
 >>> ```bash
 >>> $homeworkspaces/fabric-lab/workdir/ca/localMSP/peerOrganizations/org2.com/peers/peer1.org2.com
 >>> ├── msp
@@ -1099,90 +1160,100 @@
 >>> └── tls
 >>> ```
 >>> 3. 替代方案, 執行 $HOME/workspaces/fabric-lab/service/peers/scripts/cpMSP.sh
->>> ```bash
->>> $HOME/workspaces/fabric-lab/service/peers/scripts/cpMSP.sh
->>>```
+>>>
+>>>> ***`[command]`***
+>>>> ```bash
+>>>> $HOME/workspaces/fabric-lab/service/peers/scripts/cpMSP.sh
+>>>> ```
 >>> 4. 檢查結果:
+>>>
+>>> ***`[command]`***
 >>> ```bash
 >>> tree */
 >>> ```
+>>>> `System Response:`
+>>>> ```bash
+>>>> org1.com/
+>>>> ├── peer0.org1.com
+>>>> │   └── peer0.org1.com
+>>>> │       ├── msp
+>>>> │       │   ├── admincerts
+>>>> │       │   ├── cacerts
+>>>> │       │   │   └── ca.pem
+>>>> │       │   ├── config.yaml
+>>>> │       │   ├── keystore
+>>>> │       │   │   └── priv_sk
+>>>> │       │   ├── signcerts
+>>>> │       │   │   └── peer0.org1.com-cert.pem
+>>>> │       │   └── tlscacerts
+>>>> │       │       └── tlsca.org1.com-cert.pem
+>>>> │       └── tls
+>>>> │           ├── ca.crt
+>>>> │           ├── server.crt
+>>>> │           └── server.key
+>>>> └── peer1.org1.com
+>>>>     └── peer1.org1.com
+>>>>         ├── msp
+>>>>         │   ├── admincerts
+>>>>         │   ├── cacerts
+>>>>         │   │   └── ca.pem
+>>>>         │   ├── config.yaml
+>>>>         │   ├── keystore
+>>>>         │   │   └── priv_sk
+>>>>         │   ├── signcerts
+>>>>         │   │   └── peer1.org1.com-cert.pem
+>>>>         │   └── tlscacerts
+>>>>         │       └── tlsca.org1.com-cert.pem
+>>>>         └── tls
+>>>>             ├── ca.crt
+>>>>             ├── server.crt
+>>>>             └── server.key
+>>>> ```
+>>> `System Response:`
 >>> ```bash
->>> org1.com/
->>> ├── peer0.org1.com
->>> │   └── peer0.org1.com
->>> │       ├── msp
->>> │       │   ├── admincerts
->>> │       │   ├── cacerts
->>> │       │   │   └── ca.pem
->>> │       │   ├── config.yaml
->>> │       │   ├── keystore
->>> │       │   │   └── priv_sk
->>> │       │   ├── signcerts
->>> │       │   │   └── peer0.org1.com-cert.pem
->>> │       │   └── tlscacerts
->>> │       │       └── tlsca.org1.com-cert.pem
->>> │       └── tls
->>> │           ├── ca.crt
->>> │           ├── server.crt
->>> │           └── server.key
->>> └── peer1.org1.com
->>>     └── peer1.org1.com
->>>         ├── msp
->>>         │   ├── admincerts
->>>         │   ├── cacerts
->>>         │   │   └── ca.pem
->>>         │   ├── config.yaml
->>>         │   ├── keystore
->>>         │   │   └── priv_sk
->>>         │   ├── signcerts
->>>         │   │   └── peer1.org1.com-cert.pem
->>>         │   └── tlscacerts
->>>         │       └── tlsca.org1.com-cert.pem
->>>         └── tls
->>>             ├── ca.crt
->>>             ├── server.crt
->>>             └── server.key
->>> ```
->>> ```bash
->>> org2.com/
->>> ├── peer0.org2.com
->>> │   └── peer0.org2.com
->>> │       ├── msp
->>> │       │   ├── admincerts
->>> │       │   ├── cacerts
->>> │       │   │   └── ca.pem
->>> │       │   ├── config.yaml
->>> │       │   ├── keystore
->>> │       │   │   └── priv_sk
->>> │       │   ├── signcerts
->>> │       │   │   └── peer0.org2.com-cert.pem
->>> │       │   └── tlscacerts
->>> │       │       └── tlsca.org2.com-cert.pem
->>> │       └── tls
->>> │           ├── ca.crt
->>> │           ├── server.crt
->>> │           └── server.key
->>> └── peer1.org2.com
->>>     └── peer1.org2.com
->>>         ├── msp
->>>         │   ├── admincerts
->>>         │   ├── cacerts
->>>         │   │   └── ca.pem
->>>         │   ├── config.yaml
->>>         │   ├── keystore
->>>         │   │   └── priv_sk
->>>         │   ├── signcerts
->>>         │   │   └── peer1.org2.com-cert.pem
->>>         │   └── tlscacerts
->>>         │       └── tlsca.org2.com-cert.pem
->>>         └── tls
->>>             ├── ca.crt
->>>             ├── server.crt
->>>             └── server.key
->>> ```
+>>>> org2.com/
+>>>> ├── peer0.org2.com
+>>>> │   └── peer0.org2.com
+>>>> │       ├── msp
+>>>> │       │   ├── admincerts
+>>>> │       │   ├── cacerts
+>>>> │       │   │   └── ca.pem
+>>>> │       │   ├── config.yaml
+>>>> │       │   ├── keystore
+>>>> │       │   │   └── priv_sk
+>>>> │       │   ├── signcerts
+>>>> │       │   │   └── peer0.org2.com-cert.pem
+>>>> │       │   └── tlscacerts
+>>>> │       │       └── tlsca.org2.com-cert.pem
+>>>> │       └── tls
+>>>> │           ├── ca.crt
+>>>> │           ├── server.crt
+>>>> │           └── server.key
+>>>> └── peer1.org2.com
+>>>>     └── peer1.org2.com
+>>>>         ├── msp
+>>>>         │   ├── admincerts
+>>>>         │   ├── cacerts
+>>>>         │   │   └── ca.pem
+>>>>         │   ├── config.yaml
+>>>>         │   ├── keystore
+>>>>         │   │   └── priv_sk
+>>>>         │   ├── signcerts
+>>>>         │   │   └── peer1.org2.com-cert.pem
+>>>>         │   └── tlscacerts
+>>>>         │       └── tlsca.org2.com-cert.pem
+>>>>         └── tls
+>>>>             ├── ca.crt
+>>>>             ├── server.crt
+>>>>             └── server.key
+>>>> ```
 >>
 >>> 5. 啟動 peer 服務 
->>>    1. docker-compose up -d
+>>>> 1. docker-compose up -d
+>>>> ***`[command]`***
+>>>> ```bash
+>>>> docker-compose up -d
+>>>> ```
 
 ### 12. 創建 channel 以及 join channel
 
@@ -1192,39 +1263,43 @@
 >> 執行 $HOME/workspaces/fabric-lab/workdir/org1-client/scripts/init.sh 
 >>> 1.  複製執行角色的身份識別文件 (MSP/TLS) 到對映位置，
 >>> 2. 複製每一參與機構的 TLS root CA 到對應位置
->>> ```bash
->>> cd $HOME/workspaces/fabric-lab/workdir/org1-client
->>> ./scripts/init.sh
->>> ```
+>>>> ***`[command]`***
+>>>> ```bash
+>>>> cd $HOME/workspaces/fabric-lab/workdir/org1-client
+>>>> ./scripts/init.sh
+>>>> ```
 >> 2. 初始化環境變數
 >>> 1. 設定 MSPID, 操作的節點, 操作的角色 (admin or client) 以及 ORDERER_TLS_CA 的位置
->>> ```script
->>> export MSP=Org1MSP
->>> export HOST=$1
->>> export DOMAIN=org1.com
->>> export PORT=$2
->>> export CORE_PEER_TLS_ENABLED=true
->>> export CORE_PEER_LOCALMSPID=$MSP
->>> export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/users/Admin@$DOMAIN/tls/ca.crt
->>> export CORE_PEER_MSPCONFIGPATH=${PWD}/users/Admin@$DOMAIN/msp
->>> # export CORE_PEER_TLS_CLIENTAUTHREQUIRED=true
->>> # export CORE_PEER_TLS_CLIENTCERT_FILE=${PWD}/users/Admin@$DOMAIN/tls/client.crt
->>> # export CORE_PEER_TLS_CLIENTKEY_FILE=${PWD}/users/Admin@$DOMAIN/tls/client.key
->>> export CORE_PEER_ADDRESS=$HOST.$DOMAIN:$PORT
->>> export FABRIC_CFG_PATH=$GOPATH/config
->>> export ORDERER_TLS_CA=$PWD/tlsca/tlsca.org4.com-cert.pem
->>> ``` 
+>>>> `[設定檔內容]`
+>>>> ```script
+>>>> export MSP=Org1MSP
+>>>> export HOST=$1
+>>>> export DOMAIN=org1.com
+>>>> export PORT=$2
+>>>> export CORE_PEER_TLS_ENABLED=true
+>>>> export CORE_PEER_LOCALMSPID=$MSP
+>>>> export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/users/Admin@$DOMAIN/tls/ca.crt
+>>>> export CORE_PEER_MSPCONFIGPATH=${PWD}/users/Admin@$DOMAIN/msp
+>>>> # export CORE_PEER_TLS_CLIENTAUTHREQUIRED=true
+>>>> # export CORE_PEER_TLS_CLIENTCERT_FILE=${PWD}/users/Admin@$DOMAIN/tls/client.crt
+>>>> # export CORE_PEER_TLS_CLIENTKEY_FILE=${PWD}/users/Admin@$DOMAIN/tls/client.key
+>>>> export CORE_PEER_ADDRESS=$HOST.$DOMAIN:$PORT
+>>>> export FABRIC_CFG_PATH=$GOPATH/config
+>>>> export ORDERER_TLS_CA=$PWD/tlsca/tlsca.org4.com-cert.pem
+>>>> ``` 
 >>> 2. 初始化身 Admin@org1.com 的身份
->>>    ```bash
->>>    source admin.env peer0 1051
->>>       ```
+>>>> ***`[command]`***
+>>>> ```bash
+>>>> source admin.env peer0 1051
+>>>> ```
 >>
 >> 3. 創建 Application channel - channel1
 >>> **工作目錄: $HOME/workspaces/fabric-lab/workdir/org1-client/tmp**
->>> ```bash
->>> cd $HOME/workspaces/fabric-lab/workdir/org1-client/tmp
->>> peer channel create -f ../../channel-artifacts/channel1.tx -c channel1 -o orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA
->>> ```
+>>>> ***`[command]`***
+>>>> ```bash
+>>>> cd $HOME/workspaces/fabric-lab/workdir/org1-client/tmp
+>>>> peer channel create -f ../../channel-artifacts/channel1.tx -c channel1 -o orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA
+>>>> ```
 >>> 系統回應:
 >>>> ```bash
 >>>> 2023-11-11 08:45:10.206 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
@@ -1243,6 +1318,7 @@
 >>>> 2023-11-11 08:45:11.428 UTC [cli.common] readBlock -> INFO 00e Received block: 0
 >>>> ```
 >>> 檢查 orderer node 的 log 是否創建 channel1 的 log, 並完成 leader election?
+>>>> ***`[command]`***
 >>>>```bash
 >>>> docker logs -f orderer0.org4.com
 >>>>```
@@ -1266,6 +1342,7 @@
 >>>> 2023-11-11 08:45:11.234 UTC [orderer.consensus.etcdraft] run -> INFO 061 Raft leader changed: 0 -> 2 channel=channel1 node=1
 >>>> ```
 >>> ***PS:*** 在 create channel 成功後，在當下目錄會有一創世區塊的檔案，<channel_name>.block
+>>>> ***`[command]`***
 >>>> ```bash
 >>>> ls
 >>>> ```
@@ -1276,6 +1353,7 @@
 >>
 >> 4. Org1 Join  channel
 >>> 1. 執行指令加入 channel1
+>>>> ***`[command]`***
 >>>> ```bash
 >>>> peer channel join -b channel1.block
 >>>> ```
@@ -1285,6 +1363,11 @@
 >>>> 2023-11-11 09:29:59.428 UTC [channelCmd] executeJoin -> INFO 002 Successfully submitted proposal to join channel
 >>>> ```
 >>> `檢查 peero.org1.com log`
+>>>> ***`[command]`***
+>>>> ```bash
+>>>> docker logs -f peer0.org1.com
+>>>> ```
+>>>> `System Response:`
 >>>> ```log
 >>>> 2023-11-11 09:37:57.473 UTC [gossip.gossip] JoinChan -> INFO 01b Joining gossip network of channel channel1 with 2 organizations
 >>>> 2023-11-11 09:37:57.473 UTC [gossip.gossip] learnAnchorPeers -> INFO 01c No configured anchor peers of Org1MSP for channel channel1 to learn about
@@ -1298,6 +1381,8 @@
 >>> 執行 $HOME/workspaces/fabric-lab/workdir/org2-client/scripts/init.sh 
 >>>> 1.  複製執行角色的身份識別文件 (MSP/TLS) 到對映位置，
 >>>> 2. 複製每一參與機構的 TLS root CA 到對應位置
+>>>>
+>>>> ***`[command]`***
 >>>> ```bash
 >>>> cd $HOME/workspaces/fabric-lab/workdir/org2-client
 >>>> ./scripts/init.sh
@@ -1306,6 +1391,8 @@
 >>> 2. 初始化環境變數
 
 >>>> 1. 設定 MSPID, 操作的節點, 操作的角色 (admin or client) 以及 ORDERER_TLS_CA 的位置
+>>>>
+>>>> `[設定檔內容]`
 >>>> ```script
 >>>> export MSP=Org2MSP
 >>>> export HOST=$1
@@ -1323,43 +1410,50 @@
 >>>> export ORDERER_TLS_CA=$PWD/tlsca/tlsca.org4.com-cert.pem
 >>>> ``` 
 >>> 2. 初始化身 Admin@org2.com 的身份
->>>    ```bash
->>>    source admin.env peer0 2051
->>>    ```
+>>>> ***`[command]`***
+>>>> ```bash
+>>>> source admin.env peer0 2051
+>>>> ```
 >>> 3. Fetching channel1 config block
->>>    ```bash
->>>    cd $HOME/workspaces/fabric-lab/workdir/org2-client/tmp
->>>    peer channel fetch config -c channel1 -o orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA
->>>>    ```
+>>>> ***`[command]`***
+>>>> ```bash
+>>>> cd $HOME/workspaces/fabric-lab/workdir/org2-client/tmp
+>>>> peer channel fetch config -c channel1 -o orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA
+>>>> ```
 
->>> `System response:`
+>>>> `System response:`
 
->>>    ```bash
->>>    2023-11-11 09:58:37.371 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
->>>    2023-11-11 09:58:37.372 UTC [cli.common] readBlock -> INFO 002 Received block: 0
->>>    2023-11-11 09:58:37.373 UTC [channelCmd] fetch -> INFO 003 Retrieving last config block: 0
->>>    2023-11-11 09:58:37.373 UTC [cli.common] readBlock -> INFO 004 Received block: 0
->>>    ```
+>>>> ```bash
+>>>> 2023-11-11 09:58:37.371 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
+>>>> 2023-11-11 09:58:37.372 UTC [cli.common] readBlock -> INFO 002 Received block: 0
+>>>> 2023-11-11 09:58:37.373 UTC [channelCmd] fetch -> INFO 003 Retrieving last config block: 0
+>>>> 2023-11-11 09:58:37.373 UTC [cli.common] readBlock -> INFO 004 Received block: 0
+>>>> ```
 >>> 4. Join channel
->>>    ```bash
->>>    ls
->>>    ```
->>>`   System response:`
->>>    ```bash
->>>    channel1_config.block
->>>    ```
->>>    ```bash
->>>    peer channel join -b channel1_config.block 
->>>    ```
->>>    ```bash
->>>    2023-11-11 10:05:50.089 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
->>>    2023-11-11 10:05:50.151 UTC [channelCmd] executeJoin -> INFO 002 Successfully submitted proposal to join channel
->>>    ```
->>>    `檢查 peer0.org2.com docker  log`
->>>    ```docker 
->>>    docker logs -f peer0.org2.com
->>>    ```
->>>>```log
+>>>> ***`[command]`***
+>>>> ```bash
+>>>> ls
+>>>> ```
+>>>> `System response:`
+>>>> ```bash
+>>>> channel1_config.block
+>>>> ```
+>>>> ***`[command]`***
+>>>> ```bash
+>>>> peer channel join -b channel1_config.block 
+>>>> ```
+>>>> `System Response:`
+>>>> ```bash
+>>>> 2023-11-11 10:05:50.089 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
+>>>> 2023-11-11 10:05:50.151 UTC [channelCmd] executeJoin -> INFO 002 Successfully submitted proposal to join channel
+>>>> ```
+>>>> `檢查 peer0.org2.com docker log`
+>>>>
+>>>> ***`[command]`***
+>>>> ```docker 
+>>>> docker logs -f peer0.org2.com
+>>>> ```
+>>>> ```log
 >>>> 2023-11-11 10:05:50.093 UTC [ledgermgmt] CreateLedger -> INFO 01f Creating ledger [channel1] with genesis block
 >>>> 2023-11-11 10:05:50.095 UTC [blkstorage] newBlockfileMgr -> INFO 020 Getting block information from block storage
 >>>> 2023-11-11 10:05:50.108 UTC [couchdb] createDatabaseIfNotExist -> INFO 021 Created state database channel1_
@@ -1377,15 +1471,19 @@
 >> 6. Set Anchor Peer
 >>> 1. 設定 peer0.org2.com 為 org2.com 的 anchor Peer
 >>> **工作目錄: $HOME/workspaces/fabric-lab/workdir/org2-client**
+>>>
+>>> ***`[command]`***
 >>> ```bash
 >>> cd $HOME/workspaces/fabric-lab/workdir/org2-client
 >>> source admin.env peer0 2051
 >>> ```
 >>> 操作 anchor peer 的設定會有許多檔案產生，所以將在 $HOME/workspaces/fabric-lab/workdir/org2-client/tmp 目錄操作
->>>> ```bash
->>>> cd $HOME/workspaces/fabric-lab/workdir/org2-client/tmp
->>>> ../scripts/setAnchorPeer.sh channel1
->>>> ```
+>>> 
+>>> ***`[command]`***
+>>> ```bash
+>>> cd $HOME/workspaces/fabric-lab/workdir/org2-client/tmp
+>>> ../scripts/setAnchorPeer.sh channel1
+>>> ```
 >>> `System response:`
 >>>>```log
 >>>>2023-11-11 10:38:44.922 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
@@ -1396,6 +1494,8 @@
 >>>>2023-11-11 10:38:45.012 UTC [channelCmd] update -> INFO 002 Successfully submitted channel update
 >>>>```
 >>> `檢查 channel1 的config block`
+>>>
+>>>> ***`[command]`***
 >>>> ```bash
 >>>> rm -rf *
 >>>> peer channel fetch config -c channel1 -o orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA
@@ -1407,10 +1507,12 @@
 >>>> 2023-11-11 10:42:32.773 UTC [cli.common] readBlock -> INFO 004 Received block: 1
 >>>> ```
 >>> `將 protobuf 的格式轉換成 json`
+>>>> ***`[command]`***
 >>>> ```bash
 >>>> configtxlator proto_decode --input channel1_config.block --type common.Block|jq .data.data[].payload.data.config > chonfig.json
 >>>> ```
 >>> 檢查  `config.json` 是否在 Org2 加入 anchor peer:
+>>>> `[設定檔內容]`
 >>>> ```json
 >>>> "AnchorPeers": {
 >>>>   "mod_policy": "Admins",
@@ -1426,6 +1528,7 @@
 >>>> },
 >>>> ```
 >>> `檢查 peer0.org1.com log`
+>>>> ***`[command]`***
 >>>> ```bash
 >>>> docker logs -f peer0.org1.com
 >>>> ```
@@ -1441,6 +1544,7 @@
 >>>> 2023-11-11 10:38:47.474 UTC [gossip.channel] reportMembershipChanges -> INFO 030 [[channel1] Membership view has changed. peers went online:  [[peer0.org2.com:2051 ]] , current view:  [[peer0.org2.com:2051 ]]]
 >>>> ```
 >>> `檢查 peer0.org2.com log`
+>>>> ***`[command]`***
 >>>> ```bash
 >>>> docker logs -f peer0.org2.com
 >>>>```
@@ -1463,11 +1567,13 @@
 
 >>> 2. 設定 peer0.org1.com 為 org1.com 的 anchor Peer
 >>> **工作目錄: $HOME/workspaces/fabric-lab/workdir/org1-client**
+>>>> ***`[command]`***
 >>> ```bash
 >>> cd $HOME/workspaces/fabric-lab/workdir/org1-client
 >>> source admin.env peer0 1051
 >>> ```
 >>> 操作 anchor peer 的設定會有許多檔案產生，所以將在 $HOME/workspaces/fabric-lab/workdir/or12-client/tmp 目錄操作
+>>>> ***`[command]`***
 >>>> ```bash
 >>>> cd $HOME/workspaces/fabric-lab/workdir/org1-client/tmp
 >>>> ../scripts/setAnchorPeer.sh channel1
@@ -1482,6 +1588,7 @@
 >>>> 2023-11-11 11:12:40.687 UTC [channelCmd] update -> INFO 002 Successfully submitted channel update
 >>>> ```
 >>> `檢查 channel1 的config block`
+>>>> ***`[command]`***
 >>>> ```bash
 >>>> rm -rf *
 >>>> peer channel fetch config -c channel1 -o orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA
@@ -1494,10 +1601,12 @@
 >>>> 2023-11-11 11:22:19.724 UTC [cli.common] readBlock -> INFO 004 Received block: 2
 >>>> ```
 >>> `將 protobuf 的格式轉換成 json`
+>>>> ***`[command]`***
 >>>> ```bash
 >>>> configtxlator proto_decode --input channel1_config.block --type common.Block|jq .data.data[].payload.data.config > chonfig.json
 >>>> ```
 >>> 檢查  `config.json` 是否在 Org1 加入 anchor peer:
+>>>> `[設定檔內容]`
 >>>> ```json
 >>>> "AnchorPeers": {
 >>>>   "mod_policy": "Admins",
@@ -1513,6 +1622,7 @@
 >>>> },
 >>>> ```
 >>> `檢查 peer0.org1.com log`
+>>>> ***`[command]`***
 >>>> ```bash
 >>>> docker logs -f peer0.org1.com
 >>>> ```
@@ -1531,6 +1641,7 @@
 >>>> 2023-11-11 11:12:40.720 UTC [kvledger] CommitLegacy -> INFO 03b [channel1] Committed block [2] with 1 transaction(s) in 20ms (state_validation=0ms block_and_pvtdata_commit=4ms state_commit=14ms) commitHash=[5f88b61407b149a48413433f4670c46531e5c4a8febdc339a9536ff8716a559e]
 >>>> ```
 >>> `檢查 peer0.org2.com log`
+>>>> ***`[command]`***
 >>>> ```bash
 >>>> docker logs -f peer0.org2.com
 >>>> ```
