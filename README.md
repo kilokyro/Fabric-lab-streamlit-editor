@@ -1106,7 +1106,7 @@
 >>> ***`[command]`***
 >>>> ```bash
 >>>> mkdir -p $HOME/workspaces/fabric-lab/service/peers/org1.com/{peer0.org1.com,peer1.org1.com}
->>>> mkdir -p $HOME/workspaces/fabric-lab/service/peers/org2.com/{peer0.org2.com,peer1.org2.c> 
+>>>> mkdir -p $HOME/workspaces/fabric-lab/service/peers/org2.com/{peer0.org2.com,peer1.org2.com}
 >>>> ```
 >>> 2. 複製每一 peer organizations 的 peers/pee{0,1}/ 到對應的目錄位置
 >>>
