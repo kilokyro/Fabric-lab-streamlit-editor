@@ -1250,6 +1250,7 @@
 >>
 >>> 5. 啟動 peer 服務 
 >>>> 1. docker-compose up -d
+>>>
 >>>> ***`[command]`***
 >>>> ```bash
 >>>> docker-compose up -d
