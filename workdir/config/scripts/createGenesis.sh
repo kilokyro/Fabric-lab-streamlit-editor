@@ -16,4 +16,4 @@ configtxgen -inspectChannelCreateTx ../channel-artifacts/channel1.tx > ../channe
 
 # configtxgen -profile AllChannel -configPath . -channelID channel3 -outputCreateChannelTx ../channel-artifacts/channel3.tx
 # 將應用頻道 的設定區塊 檔案格式由 protobuf 轉換成 json
-# configtxgen -inspectChannelCreateTx ../channel-artifacts/channel3.tx > ../channel-artifacts/channel3.json
+# configtxgen -inspectChannelCreateTx ../channel-artifacts/channel3.tx > ../channel-artifacts/channel3.json 

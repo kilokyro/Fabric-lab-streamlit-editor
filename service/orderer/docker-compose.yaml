@@ -8,7 +8,7 @@ version: '2.1'
 networks:
 
   fabric:
-    name: orderer_network
+    name: lab_network
 
 services:
 

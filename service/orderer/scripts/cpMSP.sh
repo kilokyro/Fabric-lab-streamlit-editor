@@ -9,8 +9,8 @@ ORG_NAMES=$(ls $SRC_DIR)
 
 # 遍歷每一個組織和節點
 for org in $ORG_NAMES; do
-    PEER_NAMES=$(ls $SRC_DIR/$org/orderers)
-    for orderer in $PEER_NAMES; do
+    NODE_NAMES=$(ls $SRC_DIR/$org/orderers)
+    for orderer in $NODE_NAMES_NAMES; do
         # 確保目的地目錄存在
         mkdir -p $DST_DIR/$org/$orderer/$orderer
 
