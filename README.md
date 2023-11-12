@@ -1496,10 +1496,7 @@
 >>>> cd $HOME/workspaces/fabric-lab/workdir/org1-client/tmp
 >>>> peer channel create -f ../../channel-artifacts/channel1.tx -c channel1 -o orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA
 >>>> ```
->>>>
->>>
->>> 系統回應:
->>>
+>>> `System response:`
 >>>> ```bash
 >>>> 2023-11-11 08:45:10.206 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
 >>>> 2023-11-11 08:45:10.214 UTC [cli.common] readBlock -> INFO 002 Expect block, but got status: &{NOT_FOUND}
@@ -1516,8 +1513,6 @@
 >>>> 2023-11-11 08:45:11.226 UTC [channelCmd] InitCmdFactory -> INFO 00d Endorser and orderer connections initialized
 >>>> 2023-11-11 08:45:11.428 UTC [cli.common] readBlock -> INFO 00e Received block: 0
 >>>> ```
->>>>
->>>
 >>> 檢查 orderer node 的 log 是否創建 channel1 的 log, 並完成 leader election?
 >>>
 >>>> ***`[command]`***
@@ -1549,8 +1544,6 @@
 >>>> 2023-11-11 08:45:11.234 UTC [orderer.consensus.etcdraft] run -> INFO 060 raft.node: 1 elected leader 2 at term 2 channel=channel1 node=1
 >>>> 2023-11-11 08:45:11.234 UTC [orderer.consensus.etcdraft] run -> INFO 061 Raft leader changed: 0 -> 2 channel=channel1 node=1
 >>>> ```
->>>>
->>>
 >>> ***PS:*** 在 create channel 成功後，在當下目錄會有一創世區塊的檔案，<channel_name>.block
 >>>
 >>>> ***`[command]`***
@@ -1558,35 +1551,24 @@
 >>>> ```bash
 >>>> ls
 >>>> ```
->>>>
->>>
 >>> 系統 response:
 >>>
 >>>> ```bash
 >>>> channel1.block
 >>>> ```
->>>>
->>>
->>
 >> 4. Org1 Join  channel
 >>
 >>> 1. 執行指令加入 channel1
 >>>
 >>>> ***`[command]`***
->>>>
 >>>> ```bash
 >>>> peer channel join -b channel1.block
 >>>> ```
->>>>
->>>
->>> Response:
->>>
+>>> `System Response:``
 >>>> ```bash
 >>>> 2023-11-11 09:29:59.371 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
 >>>> 2023-11-11 09:29:59.428 UTC [channelCmd] executeJoin -> INFO 002 Successfully submitted proposal to join channel
 >>>> ```
->>>>
->>>
 >>> `檢查 peero.org1.com log`
 >>>
 >>>> ***`[command]`***
@@ -1602,13 +1584,7 @@
 >>>> 2023-11-11 09:37:57.473 UTC [gossip.gossip] learnAnchorPeers -> INFO 01c No configured anchor peers of Org1MSP for channel channel1 to learn about
 >>>> 2023-11-11 09:37:57.473 UTC [gossip.gossip] learnAnchorPeers -> INFO 01d No configured anchor peers of Org2MSP for channel channel1 to learn about
 >>>> ```
->>>>
->>>
->>
-
 >> 5. Org2 join channel
->>
-
 >>> **工作目錄: $HOME/workspaces/fabric-lab/workdir/org2-client**
 >>> 1 啟始環境部署配置
 >>> 執行 $HOME/workspaces/fabric-lab/workdir/org2-client/scripts/init.sh
@@ -1622,13 +1598,7 @@
 >>>> cd $HOME/workspaces/fabric-lab/workdir/org2-client
 >>>> ./scripts/init.sh
 >>>> ```
->>>>
->>>
->>
-
 >>> 2. 初始化環境變數
->>>
->>
 
 >>>> 1. 設定 MSPID, 操作的節點, 操作的角色 (admin or client) 以及 ORDERER_TLS_CA 的位置
 >>>>
@@ -1650,8 +1620,6 @@
 >>>> export FABRIC_CFG_PATH=$GOPATH/config
 >>>> export ORDERER_TLS_CA=$PWD/tlsca/tlsca.org4.com-cert.pem
 >>>> ```
->>>>
->>>
 >>> 2. 初始化身 Admin@org2.com 的身份
 >>>
 >>>> ***`[command]`***
@@ -1659,8 +1627,6 @@
 >>>> ```bash
 >>>> source admin.env peer0 2051
 >>>> ```
->>>>
->>>
 >>> 3. Fetching channel1 config block
 >>>
 >>>> ***`[command]`***
@@ -1669,15 +1635,7 @@
 >>>> cd $HOME/workspaces/fabric-lab/workdir/org2-client/tmp
 >>>> peer channel fetch config -c channel1 -o orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA
 >>>> ```
->>>>
->>>
->>
-
 >>>> `System response:`
->>>>
->>>
->>
-
 >>>> ```bash
 >>>> 2023-11-11 09:58:37.371 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
 >>>> 2023-11-11 09:58:37.372 UTC [cli.common] readBlock -> INFO 002 Received block: 0
@@ -1872,7 +1830,7 @@
 >>>>
 >>>
 >>
-
+>>
 >>> 2. 設定 peer0.org1.com 為 org1.com 的 anchor Peer
 >>>    **工作目錄: $HOME/workspaces/fabric-lab/workdir/org1-client**
 >>>
@@ -2199,20 +2157,20 @@
 >> cd $HOME/workspaces/fabric-lab/workdir/org1-client/tmp
 >> ``````
 >>> 1. package chaincode
->>> ***`[command]`***
->>> ```bash
+>>>> ***`[command]`***
+>>>> ```bash
 >>> peer lifecycle chaincode package basic.tar.gz --path ../../chaincode/asset-transfer-basic/chaincode-go/ --lang golang --label basic_1.0
->>> ```
+>>>> ```
 >>> 2. install chaincode
->>> ***`[command]`***
->>> ```bash
->>> peer lifecycle chaincode install basic.tar.gz 
->>> ```
->>> `System Response`
->>> ```bash
->>> 2023-11-12 03:20:52.617 UTC [cli.lifecycle.chaincode] submitInstallProposal -> INFO 001 Installed remotely: response:<status:200 payload:"\nJbasic_1.0:cada8480a2f0cafe5acc135e17803f622780a350d438d2bf67383a4ebd92d172\022\tbasic_1.0" > 
->>> 2023-11-12 03:20:52.617 UTC [cli.lifecycle.chaincode] submitInstallProposal -> INFO 002 Chaincode code package identifier: basic_1.0:cada8480a2f0cafe5acc135e17803f622780a350d438d2bf67383a4ebd92d172
->>>```
+>>>> ***`[command]`***
+>>>> ```bash
+>>>> peer lifecycle chaincode install basic.tar.gz 
+>>>> ```
+>>>> `System Response`
+>>>> ```bash
+>>>> 2023-11-12 03:20:52.617 UTC [cli.lifecycle.chaincode] submitInstallProposal -> INFO 001 Installed remotely: response:<status:200 payload:"\nJbasic_1.0:cada8480a2f0cafe5acc135e17803f622780a350d438d2bf67383a4ebd92d172\022\tbasic_1.0" > 
+>>>> 2023-11-12 03:20:52.617 UTC [cli.lifecycle.chaincode] submitInstallProposal -> INFO 002 Chaincode code package identifier: basic_1.0:cada8480a2f0cafe5acc135e17803f622780a350d438d2bf67383a4ebd92d172
+>>>>```
 >>>> 1. 在完成 lifecycle chaincode install 後，檢查 `$HOME/workspaces/fabric-lab/service/peers/org1.com/peer0-data/lifecycle/
 >>>> ***`[command]`***
 >>>> ```bash
@@ -2225,7 +2183,7 @@
 >>>>     └── basic_1.0.cada8480a2f0cafe5acc135e17803f622780a350d438d2bf67383a4ebd92d172.tar.gz
 >>>> ```
 >>>> 2. 檢查 peer0.org1.com 的 docker logs
-
+>>>
 >>>> ***`[command]`***
 >>>> ```bash
 >>>> docker logs peer0.org1.com
@@ -2250,7 +2208,7 @@
 >>>> ```
 >>>> `System Response:`
 >>>> ```bash
->>>> basid_1.0:cada8480a2f0cafe5acc135e17803f622780a350d438d2bf67383a4ebd92d172
+>>>> basic_1.0:cada8480a2f0cafe5acc135e17803f622780a350d438d2bf67383a4ebd92d172
 >>>> ```
 >>> 3. Approve chaincode
 >>>
@@ -2274,6 +2232,7 @@
 >>>> Org2MSP: false
 >>>> ```
 >>>> 未滿足 Lifecycle Endorsement (在  configtx.yaml 中定義 lifecycle endorsement 的Policy 是 MAJORITY)，目前只有一個 Organization approve，所以要等 org2.com approve 後才能  commit (提交)
->>
->> 5. org2.com 部署 chaincode
->>> 1. 
+>>>
+>>> 5. org2.com 部署 chaincode
+>>> ***`工作目錄: $HOME/workspaces/fabric-lab/workdir/org2-client`***
+>>>> 1. 
