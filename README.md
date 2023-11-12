@@ -1381,7 +1381,7 @@
 >>>
 >>> `System Response:`
 >>>
->>> ```bash
+>>>> ```bash
 >>>> org2.com/
 >>>> ├── peer0.org2.com
 >>>> │   └── peer0.org2.com
@@ -1418,7 +1418,6 @@
 >>>>             ├── server.crt
 >>>>             └── server.key
 >>>> ```
->>> ```
 >>>
 >>
 >>> 5. 啟動 peer 服務
