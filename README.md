@@ -2151,6 +2151,7 @@
 >> source admin.env peer0 1051
 >> ``` 
 >> 切換工作目錄到 $HOME/workspaces/fabric-lab/workdir/org1-client/tmp
+>>
 >> ***`[command]`***
 >> 
 >> ```bash
@@ -2162,6 +2163,7 @@
 >>> peer lifecycle chaincode package basic.tar.gz --path ../../chaincode/asset-transfer-basic/chaincode-go/ --lang golang --label basic_1.0
 >>>> ```
 >>> 2. install chaincode
+>>>
 >>>> ***`[command]`***
 >>>> ```bash
 >>>> peer lifecycle chaincode install basic.tar.gz 
@@ -2235,4 +2237,106 @@
 >>>
 >>> 5. org2.com 部署 chaincode
 >>> ***`工作目錄: $HOME/workspaces/fabric-lab/workdir/org2-client`***
->>>> 1. 
+>>>> ***`[command]`***
+>>>> ```bash
+>>>> cd $HOME/workspaces/fabric-lab/workdir/org2-client
+>>>> source admin peer0 2051
+>>>> ```
+>>> 切換工作目錄 $HOME/workspaces/fabric-lab/workdor/org2-client/tmp
+>>>
+>>>> ***`[command]`***
+>>>> ```bash
+>>>> cd $HOME/workspaces/fabric-lab/workdir/org1-client/tmp
+>>>> ```
+>>>> 1. package chaincode
+>>>
+>>>> ***`[command]`***
+>>>> ```bash
+>>>> peer lifecycle chaincode package basic.tar.gz --path ../../chaincode/asset-transfer-basic/chaincode-go/ --lang golang --label basic_1.0
+>>>> ```
+>>>> 2. install package
+>>>>
+>>>> ***`[command]`***
+>>>> ```bash
+>>>> peer lifecycle chaincode install basic.tar.gz
+>>>> ```
+>>>> `System Response:`
+>>>> ```bash
+2023-11-12 06:57:59.397 UTC [cli.lifecycle.chaincode] submitInstallProposal -> INFO 001 Installed remotely: response:<status:200 payload:"\nJbasic_1.0:1f4749caf72871f38e43a65861a31f1708c541d306143287ecbfe068fa7dd5bb\022\tbasic_1.0" > 
+2023-11-12 06:57:59.397 UTC [cli.lifecycle.chaincode] submitInstallProposal -> INFO 002 Chaincode code package identifier: basic_1.0:1f4749caf72871f38e43a65861a31f1708c541d306143287ecbfe068fa7dd5bb
+>>>> ```
+>>>>>
+>>>>> 1. 在完成 lifecycle chaincode install 後，檢查 $HOME/workspaces/fabric-lab/service/peers/org1.com/peer0-data/lifecycle/
+>>>>>
+>>>>> ***`[command]`***
+>>>>> ```bash
+>>>>> sudo tree $HOME//workspaces/fabric-lab/service/peers/org2.com/peer0.org2.com/peer0-data/lifecycle/
+>>>>> ```
+>>>>> `System Response:`
+>>>>> ```bash
+>>>>> $HOME/workspaces/fabric-lab/service/peers/org2.com/peer0.org2.com/peer0-data/lifecycle/
+>>>>> └── chaincodes
+>>>>>     └── basic_1.0.1f4749caf72871f38e43a65861a31f1708c541d306143287ecbfe068fa7dd5bb.tar.gz
+>>>>> ```
+>>>
+>>>>> 2. 檢查 peer0.org2.com 的 docker logs
+>>>>> 
+>>>>> ***`[command]`***
+>>>>> ```bash
+>>>>> docker logs -f peer0.org2.com
+>>>>> ```
+>>>>> `System Response:`
+>>>>> ```bash
+>>>>> 2023-11-12 06:57:59.396 UTC [lifecycle] InstallChaincode -> INFO 04b Successfully installed chaincode with package ID 'basic_1.0:1f4749caf72871f38e43a65861a31f1708c541d306143287ecbfe068fa7dd5bb'
+>>>>> 2023-11-12 06:57:59.396 UTC [endorser] callChaincode -> INFO 04c finished chaincode: _lifecycle duration: 6688ms channel= txID=3abd53e6
+>>>>> 2023-11-12 06:57:59.396 UTC [comm.grpc.server] 1 -> INFO 04d unary call completed grpc.service=protos.Endorser grpc.method=ProcessProposal grpc.peer_address=192.168.2.201:49782 grpc.code=OK grpc.call_duration=6.701520868s
+>>>>> ```
+>>>> 3. 執行 peer lifecycle chaincode queryinstalled 取得 chaincode 的 package id
+>>>>
+>>>>> ***`[command]`***
+>>>>> ```bash
+>>>>> export CC_PACKAGE_ID=$(peer lifecycle chaincode queryinstalled -O json | jq -r '.installed_chaincodes[] | select(.label=="basic_1.0").package_id')
+>>>>> ```
+>>>>> ***`[command]`***
+>>>>> ```bash
+>>>>> echo $CC_PACKAGE_ID 
+>>>>> ```
+>>>>> `System Response:`
+>>>>> ```bash 
+>>>>> basic_1.0:1f4749caf72871f38e43a65861a31f1708c541d306143287ecbfe068fa7dd5bb
+>>>>> ```
+>>>> 4. Approve chaincode
+>>>>>
+>>>>> ***`[command]`***
+>>>>> ```bash
+>>>>> peer lifecycle chaincode approveformyorg -C channel1 -n basic --version 1.0 --sequence 1 --orderer orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA --package-id $CC_PACKAGE_ID
+>>>>> ```
+>>>>> `System Response:`
+>>>>> ***`[command]`***
+>>>>> ```bash
+>>>>> 202
+3-11-12 07:19:56.483 UTC [chaincodeCmd] ClientWait -> INFO 001 txid [f28e5b78e6e249288807b9fc4dbada61761abd1103a328a466eaf184ea49458d] committed with status (VALID) at peer0.org2.com:2051
+>>>>> ```
+>>>> 5. 檢查提交準備狀況 (chack commit readiness)
+>>>>>
+>>>>> ***`[command]`***
+>>>>> ```bash
+>>>>> peer lifecycle chaincode checkcommitreadiness -C channel1  -n basic --version 1.0 --sequence 1 --orderer orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA
+>>>>> ```
+>>>>> `System Response:`
+>>>>> ```bash
+>>>>> Chaincode definition for chaincode 'basic', version '1.0', sequence '1' on channel 'channel1' approval status by org:
+>>>>> Org1MSP: true
+>>>>> Org2MSP: true
+>>>>> ```
+>>>> 已達到 過半數的參與機構同意，執行 commit 提交到 orderer 
+>>>>> 
+>>>>> ***`[command]`***
+>>>>> ```bash
+>>>>> peer lifecycle chaincode commit -C channel1  -n basic --version 1.0 --sequence 1 --orderer orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA --peerAddresses peer0.org1.com:1051 --tlsRootCertFiles $PWD/../tlsca/tlsca.org1.com-cert.pem --peerAddresses peer0.org2.com:2051 --tlsRootCertFiles $PWD/../tlsca/tlsca.org2.com-cert.pem
+>>>>> ```
+>>>>> `System Response:`
+>>>>> ```bash
+>>>>> 2023-11-12 08:07:30.685 UTC [chaincodeCmd] ClientWait -> INFO 001 txid [477baa7dee7a66b272367c8af4b6a4859c95c13ab62c242b2f2de38fca7c7b4a] committed with status (VALID) at peer0.org2.com:2051
+>>>>> 2023-11-12 08:07:30.689 UTC [chaincodeCmd] ClientWait -> INFO 002 txid [477baa7dee7a66b272367c8af4b6a4859c95c13ab62c242b2f2de38fca7c7b4a] committed with status (VALID) at peer0.org1.com:1051
+>>>>> ```
