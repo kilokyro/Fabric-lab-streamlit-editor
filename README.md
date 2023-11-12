@@ -2240,7 +2240,7 @@
 >>>> ***`[command]`***
 >>>> ```bash
 >>>> cd $HOME/workspaces/fabric-lab/workdir/org2-client
->>>> source admin peer0 2051
+>>>> source admin.env peer0 2051
 >>>> ```
 >>> 切換工作目錄 $HOME/workspaces/fabric-lab/workdor/org2-client/tmp
 >>>
@@ -2262,9 +2262,9 @@
 >>>> ```
 >>>> `System Response:`
 >>>> ```bash
-2023-11-12 06:57:59.397 UTC [cli.lifecycle.chaincode] submitInstallProposal -> INFO 001 Installed remotely: response:<status:200 payload:"\nJbasic_1.0:1f4749caf72871f38e43a65861a31f1708c541d306143287ecbfe068fa7dd5bb\022\tbasic_1.0" > 
-2023-11-12 06:57:59.397 UTC [cli.lifecycle.chaincode] submitInstallProposal -> INFO 002 Chaincode code package identifier: basic_1.0:1f4749caf72871f38e43a65861a31f1708c541d306143287ecbfe068fa7dd5bb
->>>> ```
+>>>> 2023-11-12 06:57:59.397 UTC [cli.lifecycle.chaincode] submitInstallProposal -> INFO 001 Installed remotely: response:<status:200 payload:"\nJbasic_1.0:1f4749caf72871f38e43a65861a31f1708c541d306143287ecbfe068fa7dd5bb\022\tbasic_1.0" > 
+>>>> 2023-11-12 06:57:59.397 UTC [cli.lifecycle.chaincode] submitInstallProposal -> INFO 002 Chaincode code package identifier: basic_1.0:1f4749caf72871f38e43a65861a31f1708c541d306143287ecbfe068fa7dd5bb
+>>>> >>>> ```
 >>>>>
 >>>>> 1. 在完成 lifecycle chaincode install 後，檢查 $HOME/workspaces/fabric-lab/service/peers/org1.com/peer0-data/lifecycle/
 >>>>>
