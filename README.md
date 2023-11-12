@@ -83,7 +83,7 @@
 >
 > ```bash
 > cd $HOME/fabric-lab/fabric-samples/test-network
-> ./network up createChannel -c channel1 -s couchdb -ca
+> ./network.sh up createChannel -c channel1 -s couchdb -ca
 > ```
 >
 > 最終啟動成功的結果:
