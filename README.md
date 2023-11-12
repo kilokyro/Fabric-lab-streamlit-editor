@@ -264,7 +264,7 @@
 >>
 >> ```bash
 >> cd  $HOME/workspaces/fabric-lab/workdir/ca/msp
->> ../scropts/networkgen.sh -t organizations.json -o org4.json -p org1.json -p org2.json -O ../network.json
+>> ../scripts/networkgen.sh -t organizations.json -o org4.json -p org1.json -p org2.json -O ../network.json
 >> ```
 >>
 >> **-t [template]: 檔案架構的框架**
