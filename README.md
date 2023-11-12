@@ -239,7 +239,8 @@
 >
 >> ```bash
 >> cd $HOME/workspaces/fabric-lab/workdir/ca/msp
->> cp ../msp-template/orrderer.json org4.com
+>> cp ../msp-template/organizations.json organizations.json
+>> cp ../msp-template/orderer.json org4.com
 >> cp ../msp-template/peer.json org1.json
 >> cp ../msp-template/peer.json org2.json
 >> ```
@@ -288,6 +289,7 @@
 >> ```
 >>
 >> 執行完成後，在 $HOME/workspaces/fabric-lab/workdir/ca 會產生 出 Organizations 目錄，結構如下
+>>
 >> ***`[command]`***
 >>
 >>> ```bash
