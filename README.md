@@ -137,6 +137,7 @@
 > ***`[command]`***
 >
 > ```bash
+> cd $HOME/workspaces/fabric-lab/ca
 > tree config/
 > ```
 
@@ -921,8 +922,6 @@
 >>>             Endorsement:
 >>>                 Type: Signature
 >>>                 Rule: "OR('Org2MSP.peer')"
->
->
 >>> Capabilities:
 >>>  Channel: &ChannelCapabilities
 >>>      V2_0: true
