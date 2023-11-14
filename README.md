@@ -82,7 +82,7 @@
 > ***`[command]`***
 >
 > ```bash
-> cd $HOME/fabric-lab/fabric-samples/test-network
+> cd $HOME/workspaces/fabric-lab/fabric-samples/test-network
 > ./network.sh up createChannel -c channel1 -s couchdb -ca
 > ```
 >
@@ -921,8 +921,6 @@
 >>>             Endorsement:
 >>>                 Type: Signature
 >>>                 Rule: "OR('Org2MSP.peer')"
->
->
 >>> Capabilities:
 >>>  Channel: &ChannelCapabilities
 >>>      V2_0: true
@@ -930,7 +928,6 @@
 >>>      V2_0: true
 >>>  Application: &ApplicationCapabilities
 >>>      V2_0: true
->
 >>> Application: &ApplicationDefaults
 >>>  Organizations:
 >>>  Policies:
@@ -951,42 +948,32 @@
 >>>          Rule: "MAJORITY Endorsement"
 >>>  Capabilities:
 >>>      <<: *ApplicationCapabilities
->
 >>> Orderer: &OrdererDefaults
->
 >>>     OrdererType: etcdraft
->
 >>>     Addresses:
 >>>         - orderer0.org4.com:4050
 >>>         - orderer1.org4.com:4150
 >>>         - orderer2.org4.com:4250
->
 >>>     EtcdRaft:
 >>>         Consenters:
 >>>         - Host: orderer0.org4.com
 >>>           Port: 4050
 >>>           ClientTLSCert: ./organizations/ordererOrganizations/org4.com/orderers/orderer0.org4.com/tls/server.crt
 >>>           ServerTLSCert: ./organizations/ordererOrganizations/org4.com/orderers/orderer0.org4.com/tls/server.crt
->
 >>>         - Host: orderer1.org4.com
 >>>           Port: 4150
 >>>           ClientTLSCert: ./organizations/ordererOrganizations/org4.com/orderers/orderer1.org4.com/tls/server.crt
 >>>           ServerTLSCert: ./organizations/ordererOrganizations/org4.com/orderers/orderer1.org4.com/tls/server.crt
->
 >>>         - Host: orderer2.org4.com
 >>>           Port: 4250
 >>>           ClientTLSCert: ./organizations/ordererOrganizations/org4.com/orderers/orderer2.org4.com/tls/server.crt
 >>>           ServerTLSCert: ./organizations/ordererOrganizations/org4.com/orderers/orderer2.org4.com/tls/server.crt
->
 >>>     BatchTimeout: 2s
->
 >>>     BatchSize:
 >>>         MaxMessageCount: 100
 >>>         AbsoluteMaxBytes: 99 MB
 >>>         PreferredMaxBytes: 512 KB
->
 >>>     Organizations:
->
 >>>     Policies:
 >>>         Readers:
 >>>             Type: ImplicitMeta
@@ -1000,9 +987,7 @@
 >>>         BlockValidation:
 >>>             Type: ImplicitMeta
 >>>             Rule: "ANY Writers"
->
 >>> Channel: &ChannelDefaults
->
 >>>     Policies:
 >>>         Readers:
 >>>             Type: ImplicitMeta
@@ -1013,10 +998,8 @@
 >>>         Admins:
 >>>             Type: ImplicitMeta
 >>>             Rule: "MAJORITY Admins"
->
 >>>     Capabilities:
 >>>         <<: *ChannelCapabilities
->
 >>> Profiles:
 >>>  OrdererGenesis:
 >>>      <<: *ChannelDefaults
@@ -1031,7 +1014,6 @@
 >>>                 Organizations:
 >>>                     - *Org1
 >>>                     - *Org2
->
 >>>     Channel12:
 >>>         Consortium: financeConsortium
 >>>         <<: *ChannelDefaults
@@ -1043,7 +1025,6 @@
 >>>             Capabilities:
 >>>                 <<: *ApplicationCapabilities
 >>>     ```
->
 >
 >> #### 8-3 由 configtx.yaml 中的 OrdererGenesis profile 生成 system-channel 的創世區塊
 >
@@ -1160,7 +1141,8 @@
 >>> ***`[command]`***
 >
 >>> ```bash
->>> $HOME/workspaces/fabric-lab/service/orderer/scripts/cpMSP.sh 
+>>> cd $HOME/workspaces/fabric-lab/service/orderer
+>>> ./scripts/cpMSP.sh 
 >>> ```
 >
 >
@@ -1429,6 +1411,7 @@
 >>>> ***`[command]`***
 >
 >>>> ```bash
+>>>> cd $HOME/workspaces/fabric-lab/service/peers
 >>>> docker-compose up -d
 >>>> ```
 >
