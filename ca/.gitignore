@@ -1,5 +1,5 @@
-!fabric-ca-server-config.yaml
 */msp/*
+**/fabric-ca-server-config.yaml
 IssuerPublicKey
 IssuerSecretKey
 IssuerRevocationPublicKey
