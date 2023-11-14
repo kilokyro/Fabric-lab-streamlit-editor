@@ -75,7 +75,7 @@
 
 ### 5. 測試下載套件及材料的可用性及完整性
 
-> **工作目錄: $HOME/fabric-lab/fabric-samples/test-network**
+> **工作目錄: $HOME/workspaces/fabric-lab/fabric-samples/test-network**
 >
 > #### 5-1 啟動 test network
 >
