@@ -30,8 +30,8 @@ services:
       - FABRIC_CA_SERVER_PORT=3354
       - FABRIC_CA_SERVER_OPERATIONS_LISTENADDRESS=0.0.0.0:13354
     ports:
-      - "3354:3354"
-      - "13354:13354"
+      - "3154:3354"
+      - "13154:13354"
     command: sh -c 'fabric-ca-server start -d'
     volumes:
       - ./config/org3.com/tls:/etc/hyperledger/fabric-ca-server
