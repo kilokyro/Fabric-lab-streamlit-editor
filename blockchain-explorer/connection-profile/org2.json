@@ -23,11 +23,6 @@
 			"peers": {
 				"peer0.org2.com": {}
 			}
-		},
-		"channel2": {
-			"peers": {
-				"peer0.org2.com": {}
-			}
 		}
 	},
 	"organizations": {
