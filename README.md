@@ -241,7 +241,7 @@
 >> ```bash
 >> cd $HOME/workspaces/fabric-lab/workdir/ca/msp
 >> cp ../msp-template/organizations.json organizations.json
->> cp ../msp-template/orderer.json org4.com
+>> cp ../msp-template/orderer.json org4.json
 >> cp ../msp-template/peer.json org1.json
 >> cp ../msp-template/peer.json org2.json
 >> ```
@@ -395,7 +395,6 @@
 >
 >>> ```bash
 >>> Error: Response from server: Error Code: 63 - Failed to get User: sql: no rows in result set
->
 >>> 2023/11/10 23:55:45 [INFO] Configuration file location: /home/hyperledger/workspaces/fabric-lab/workdir/ca/Organizations/ordererOrganizations/org4.com/ca/fabric-ca-client-config.yaml
 >>> 2023/11/10 23:55:45 [INFO] TLS Enabled
 >>> 2023/11/10 23:55:45 [INFO] TLS Enabled
@@ -408,7 +407,6 @@
 >>> 2023/11/10 23:55:45 [INFO] Stored Issuer public key at /home/hyperledger/workspaces/fabric-lab/workdir/ca/Organizations/ordererOrganizations/org4.com/orderers/orderer0.org4.com/msp/IssuerPublicKey
 >>> 2023/11/10 23:55:45 [INFO] Stored Issuer revocation public key at /home/hyperledger/workspaces/fabric-lab/workdir/ca/Organizations/ordererOrganizations/org4.com/orderers/orderer0.org4.com/msp/IssuerRevocationPublicKey
 >>> Error: Response from server: Error Code: 63 - Failed to get User: sql: no rows in result set
->
 >>> 2023/11/10 23:55:45 [INFO] Configuration file location: /home/hyperledger/workspaces/fabric-lab/workdir/ca/Organizations/ordererOrganizations/org4.com/tls/fabric-ca-client-config.yaml
 >>> 2023/11/10 23:55:45 [INFO] TLS Enabled
 >>> 2023/11/10 23:55:45 [INFO] TLS Enabled
@@ -1406,14 +1404,15 @@
 >
 >>> 5. 啟動 peer 服務
 >
->>>> 1. docker-compose up -d
+>>>> 1. docker-compose up -d peer0.org1.com peer1.org1.com peer0.org2.com peer1.org2.com
 >
 >
 >>>> ***`[command]`***
 >
 >>>> ```bash
 >>>> cd $HOME/workspaces/fabric-lab/service/peers
->>>> docker-compose up -d
+>>>> docker-compose up -d peer0.org1.com peer1.org1.com peer0.org2.com peer1.org2.com
+>
 >>>> ```
 >
 > 
