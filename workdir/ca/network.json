@@ -130,7 +130,7 @@
           }
         },
         {
-          "org1MSP": {
+          "org2MSP": {
             "domain": "org2.com",
             "csrname": "C=TW,ST=Taiwan,O=org2.com,OU=Fabric",
             "caServer": {
