@@ -125,6 +125,7 @@
 > ***`[command]`***
 >
 > ```bash
+> cd $HOME/workspaces/fabric-lab/fabric-samples/test-network
 > ./network.sh down
 > ```
 
@@ -385,6 +386,7 @@
 >> ***`[command]`***
 >
 >>> ```bash
+>>> cd $HOME/workspaces/fabric-lab/workdir/ca
 >>> ./scripts/crypto.sh network.json
 >>> ```
 >
@@ -1307,6 +1309,7 @@
 >>>> ***`[command]`***
 >
 >>>> ```bash
+>>>> cd $HOME/workspaces/fabric-lab/service/peers
 >>>> $HOME/workspaces/fabric-lab/service/peers/scripts/cpMSP.sh
 >>>> ```
 >
@@ -1412,7 +1415,6 @@
 >>>> ```bash
 >>>> cd $HOME/workspaces/fabric-lab/service/peers
 >>>> docker-compose up -d peer0.org1.com peer1.org1.com peer0.org2.com peer1.org2.com
->
 >>>> ```
 >
 > 
@@ -1980,9 +1982,6 @@
 >>>> 2023-11-11 11:12:40.720 UTC [kvledger] CommitLegacy -> INFO 045 [channel1] Committed block [2] with 1 transaction(s) in 20ms (state_validation=0ms block_and_pvtdata_commit=4ms state_commit=14ms) commitHash=[5f88b61407b149a48413433f4670c46531e5c4a8febdc339a9536ff8716a559e]
 >>>> ```
 >
->
->
-
 ### 13. Deploy chaincode
 
 1. 準備 chaincode source code
@@ -1995,6 +1994,7 @@
 >> ***`[command]`***
 >
 >> ```bash
+>> cd $HOME/workspaces/fabric-lab/workdir/chaincode/asset-transfer-basic/chaincode-go
 >> go mod tidy
 >> ```
 >
@@ -2181,11 +2181,8 @@
 >>>> ***`[command]`***
 >
 >>>> ```bash
->
+>>>> peer lifecycle chaincode package basic.tar.gz --path ../../chaincode/asset-transfer-basic/chaincode-go/ --lang golang --label basic_1.0
 >>>> ```
->
->
->>> peer lifecycle chaincode package basic.tar.gz --path ../../chaincode/asset-transfer-basic/chaincode-go/ --lang golang --label basic_1.0
 >
 >>> 2. install chaincode
 >
@@ -2306,16 +2303,12 @@
 >
 >>>> ***`[command]`***
 >
->>>> ```bash
->>>> cd $HOME/workspaces/fabric-lab/workdir/org1-client/tmp
->>>> ```
->
 >>>> 1. package chaincode
->
 >
 >>>> ***`[command]`***
 >
 >>>> ```bash
+>>>> cd $HOME/workspaces/fabric-lab/workdir/org1-client/tmp
 >>>> peer lifecycle chaincode package basic.tar.gz --path ../../chaincode/asset-transfer-basic/chaincode-go/ --lang golang --label basic_1.0
 >>>> ```
 >
@@ -2436,10 +2429,6 @@
 >>>>> 2023-11-12 08:07:30.689 UTC [chaincodeCmd] ClientWait -> INFO 002 txid [477baa7dee7a66b272367c8af4b6a4859c95c13ab62c242b2f2de38fca7c7b4a] committed with status (VALID) at peer0.org1.com:1051
 >>>>> ```
 >
-> 
->
-> 
-
 ### 14. 與 channel1 互動
 
 ### 15. 加入新 Organization (Org3MSP, org3.com) 到現有的 Application Channel
