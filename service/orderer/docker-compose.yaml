@@ -9,7 +9,6 @@ networks:
 
   fabric:
     name: lab_network
-    external: true
 
 services:
 
