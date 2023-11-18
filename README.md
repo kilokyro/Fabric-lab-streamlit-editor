@@ -2430,6 +2430,168 @@
 >>>>> ```
 >
 ### 14. 與 channel1 互動
+>
+> 啟始化環境變數，以 peer0.org1.com, 操作者 Admin@org1.com 為例
+>> ***`[command]`***
+>> ```bash
+>> cd $HOME/workspaces/fabric-lab/workdir/org1-client/
+>> source admin.env peer0 1051
+>> ```
+>
+1. chaincode 佈署過程查詢 
+> 1. 查詢 peer node 安裝的 chaincode
+>> ***`[command]`***
+>>
+>> ```bash
+>> peer lifecycle chaincode queryinstalled
+>> ```
+>>
+>> `System Response:`
+>>
+>> ```bash
+>> Installed chaincodes on peer:
+>> Package ID: basic_1.0:1f4749caf72871f38e43a65861a31f1708c541d306143287ecbfe068fa7dd5bb, Label: basic_1.0
+>> ```
+> 2. 查詢機構 approved chaincode
+>>
+>> ***`[command]`***
+>> ```bash
+>> peer lifecycle chaincode queryapproved -C channel1 -n basic -O json
+>> ```
+>
+>> `System Response:`
+>> ```bash
+>> {
+>>         "sequence": 1,
+>>         "version": "1.0",
+>>         "endorsement_plugin": "escc",
+>>         "validation_plugin": "vscc",
+>>         "validation_parameter": "EiAvQ2hhbm5lbC9BcHBsaWNhdGlvbi9FbmRvcnNlbWVudA==",
+>>         "collections": {},
+>>         "source": {
+>>                 "Type": {
+>>                         "LocalPackage": {
+>>                                 "package_id": "basic_1.0:1f4749caf72871f38e43a65861a31f1708c541d306143287ecbfe068fa7dd5bb"
+>>                         }
+>>                 }
+>>         }
+>> }
+>> ```
+>
+> 3. 查詢該 channel 被 committed 的 chaincode
+>
+>> ***`[command]`***
+>> ```bash
+>> peer lifecycle chaincode querycommitted -C channel1
+>> ```
+>> `System Response:`
+>> ```bash
+>> {
+>>         "chaincode_definitions": [
+>>                 {
+>>                         "name": "basic",
+>>                         "sequence": 1,
+>>                         "version": "1.0",
+>>                         "endorsement_plugin": "escc",
+>>                         "validation_plugin": "vscc",
+>>                         "validation_parameter": "EiAvQ2hhbm5lbC9BcHBsaWNhdGlvbi9FbmRvcnNlbWVudA==",
+>>                         "collections": {}
+>>                 }
+>>         ]
+>> }
+>> ```
+> 4. 查詢特定 committed chaincode 的 approve 機構
+>>
+>> ***`[command]`***
+>> ```bash
+>> peer lifecycle chaincode querycommitted -C channel1 -n basic -O json
+>> ```
+>> `System Response:`
+>> ```bash
+>> {
+>>         "sequence": 1,
+>>         "version": "1.0",
+>>         "endorsement_plugin": "escc",
+>>         "validation_plugin": "vscc",
+>>         "validation_parameter": "EiAvQ2hhbm5lbC9BcHBsaWNhdGlvbi9FbmRvcnNlbWVudA==",
+>>         "collections": {},
+>>         "approvals": {
+>>                 "Org1MSP": true,
+>>                 "Org2MSP": true
+>>         }
+>> }
+>> ```
+
+2. Invoke
+>
+>> ***`[command referance]'***
+>> ```bash
+>> peer chaincode invoke -C channel1 -n basic -c '{"function":"InitLedger","Args":[]}' -o orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA --peerAddresses peer0.org1.com:1051 --tlsRootCertFiles $PWD/../tlsca/tlsca.org1.com-cert.pem --peerAddresses peer0.org2.com:2051 --tlsRootCertFiles $PWD/../tlsca/tlsca.org2.com-cert.pem
+>> ```
+>> `System Response:`
+>> ```bash
+>> 2023-11-18 00:18:08.912 UTC [chaincodeCmd] chaincodeInvokeOrQuery -> INFO 001 Chaincode invoke successful. result: status:200 
+>> ```
+
+3. Query
+>
+>> ```bash
+>> peer chaincode invoke -C channel1 -n basic -c '{"function":"InitLedger","Args":[]}'
+>> ```
+>> `System Response:`
+>> ```bash
+>> [{"ID":"asset1","color":"blue","size":5,"owner":"Tomoko","appraisedValue":300},{"ID":"asset2","color":"red","size":5,"owner":"Brad","appraisedValue":400},{"ID":"asset3","color":"green","size":10,"owner":"Jin Soo","appraisedValue":500},{"ID":"asset4","color":"yellow","size":10,"owner":"Max","appraisedValue":600},{"ID":"asset5","color":"black","size":15,"owner":"Adriana","appraisedValue":700},{"ID":"asset6","color":"white","size":15,"owner":"Michel","appraisedValue":800}]
+>>```
+>> ```bash
+>> peer chaincode query -C channel1 -n basic -c '{"function":"GetAllAssets","Args":[]}'|jq
+>> ```
+>> `System Response:`
+>> ```bash
+>> [
+>>   {
+>>     "ID": "asset1",
+>>     "color": "blue",
+>>     "size": 5,
+>>     "owner": "Tomoko",
+>>     "appraisedValue": 300
+>>   },
+>>   {
+>>     "ID": "asset2",
+>>     "color": "red",
+>>     "size": 5,
+>>     "owner": "Brad",
+>>     "appraisedValue": 400
+>>   },
+>>   {
+>>     "ID": "asset3",
+>>     "color": "green",
+>>     "size": 10,
+>>     "owner": "Jin Soo",
+>>     "appraisedValue": 500
+>>   },
+>>   {
+>>     "ID": "asset4",
+>>     "color": "yellow",
+>>     "size": 10,
+>>     "owner": "Max",
+>>     "appraisedValue": 600
+>>   },
+>>   {
+>>     "ID": "asset5",
+>>     "color": "black",
+>>     "size": 15,
+>>     "owner": "Adriana",
+>>     "appraisedValue": 700
+>>   },
+>>   {
+>>     "ID": "asset6",
+>>     "color": "white",
+>>     "size": 15,
+>>     "owner": "Michel",
+>>     "appraisedValue": 800
+>>   }
+>> ]
+>> ```
 
 ### 15. 加入新 Organization (Org3MSP, org3.com) 到現有的 Application Channel
 
