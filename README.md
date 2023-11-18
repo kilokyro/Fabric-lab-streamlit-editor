@@ -57,7 +57,7 @@
 > #### 4-1 由 vscode 圖形介面開啟資料夾
 >
 >> **工作目錄: $HOME/workspaces/fabric-lab**
->
+>>
 
 > #### 4-2 測試 docker 指令是否可以正常運作
 >
@@ -166,7 +166,7 @@
 >   │   └── fabric-ca-server-config.yaml
 >   └── tls
 >       └── fabric-ca-server-config.yaml
-> 
+>
 > 12 directories, 8 files
 > ```
 >
@@ -181,17 +181,20 @@
 > 1. 修改密碼
 >
 >> 第 132 行, 將 adminpw 修改為較強密碼
+>>
 >
 >> ***`[command]`***
+>>
 >
 >> ```bash
 >> openssl rand -hex 10|base64
 >> ```
->
+>>
 >
 > **`[編輯設定檔內容]`**
 >
 >> 第 310 行，修改 csr
+>>
 >
 >> ```yaml
 >> csr:
@@ -212,7 +215,7 @@
 >>    expiry: 131400h
 >>    pathlength: 1
 >> ```
->
+>>
 >
 > ***重覆操作，修改 ca.org1.com, tls.org1.com, ca.org2.com, tls.org2.com, ca.org3.com, tls.org3.com, ca.org4.com, tls.org4.com 共 8 個服務***
 >
@@ -224,7 +227,7 @@
 >> cd $HOME/workspaces/fabric-lab/ca/
 >> docker-compose up -d
 >> ```
->
+>>
 
 ### 7. 登錄以及註冊所有加密材料 (MSP/TLS crypto material)
 
@@ -233,7 +236,7 @@
 > #### 7.1 編輯各機構的個體基本資料
 >
 >> **工作目錄: $HOME/workspaces/fabric-lab/workdir/ca/msp**
->
+>>
 >
 > #### 7.2 將範本檔複製到工作目錄
 >
@@ -246,7 +249,7 @@
 >> cp ../msp-template/peer.json org1.json
 >> cp ../msp-template/peer.json org2.json
 >> ```
->
+>>
 >
 > #### 7.3 編輯修改個別機構資料
 >
@@ -257,49 +260,62 @@
 >> 3. secret (密碼):
 >>    1. ca, tls server的 admin 密碼，必須要和 section 6-1 的密碼相符
 >>    2. 每 一 entity 的密碼 (是選項，但強烈建議修改)
->
+>>
 
 > #### 7-4 組合
 >
 >> 執行 ../script/networkgen.sh 將三個機構的設定檔組合成一個檔案
+>>
 >
 >> ***`[command]`***
+>>
 >
 >> ```bash
 >> cd  $HOME/workspaces/fabric-lab/workdir/ca/msp
 >> ../scripts/networkgen.sh -t organizations.json -o org4.json -p org1.json -p org2.json -O ../network.json
 >> ```
+>>
 >
 >> **-t [template]: 檔案架構的框架**
+>>
 >
 >> **-o [orderer]: orderer 機構的設定檔**
+>>
 >
 >> **-p [peer]: peer 機構設定檔**
+>>
 >
 >> **-O [Output]: 輸出檔案的位置**
->
+>>
 
 > #### 7-5 註冊 fabric-ca server 的 admin 管理者
 >
 >> **工作目錄: $HOME/workspaces/fabric-lab/workdir/ca**
+>>
 >
 >> ***`[command]`***
+>>
 >
 >> ```bash
 >> cd $HOME/workspaces/fabric-lab/workdir/ca/
 >> ./scripts/enroll.sh ./network.json
 >> ```
+>>
 >
 >> 執行完成後，在 $HOME/workspaces/fabric-lab/workdir/ca 會產生 出 Organizations 目錄，結構如下
+>>
 >
 >> ***`[command]`***
+>>
 >
 >>> ```bash
 >>> tree -d Organizations
 >>> ```
->
+>>>
+>>
 >
 >> `System Response:`
+>>
 >
 >>> ```bash
 >>> Organizations/
@@ -345,19 +361,24 @@
 >>>              ├── signcerts
 >>>              └── user
 >>> ```
->
+>>>
+>>
 >
 >> 每一 organization 目錄下，有二個目錄 (ca,tls), 分別代表 每一 organization 的 ca 以笗 tls 的管理者 admin 的 identity (身份識別)加密文件
 >> 檢查每一個 admin 的檔案架構，以 `$HOME/workspaces/fabric-lab/workdir/ca/Organizations/ordererOrganizations/org4.com/ca` 為例
+>>
 >
 >> ***`[command]`***
+>>
 >
 >>> ```bash
 >>> tree Organizations/ordererOrganizations/org4.com/ca/
 >>> ```
->
+>>>
+>>
 >
 >> `System Response:`
+>>
 >
 >>> ```bash
 >>> Organizations/ordererOrganizations/org4.com/ca/
@@ -374,26 +395,33 @@
 >>> │   └── user
 >>> └── tls-cert.pem
 >>> ```
->
-> 
+>>>
+>>
 
 > #### 7-6 生成加密材料
 >
 >> 登錄以及註冊 Fabric Network 所有 Organizations 以及每一 Organization 的參與者的 identity (身份識別) 加密文件 MSP, TLS
+>>
 >
 >> **工作目錄: $HOME/workspaces/fabric-lab/workdir/ca**
+>>
 >
 >> ***`[command]`***
+>>
 >
 >>> ```bash
 >>> cd $HOME/workspaces/fabric-lab/workdir/ca
 >>> ./scripts/crypto.sh network.json
 >>> ```
->
+>>>
+>>
 >
 >> 第一次登錄，會出現 `Error: Response from server: Error Code: 63 - Failed to get User: sql: no rows in result set` 的錯誤訊息，這是因為在登錄前 script 先檢查該 entity 是否已登錄，若沒登錄會收到這個錯誤，並重新登錄。
+>>
 >
 >>> `System Response:`
+>>>
+>>
 >
 >>> ```bash
 >>> Error: Response from server: Error Code: 63 - Failed to get User: sql: no rows in result set
@@ -421,19 +449,23 @@
 >>> 2023/11/10 23:55:45 [INFO] Stored Issuer public key at /home/hyperledger/workspaces/fabric-lab/workdir/ca/Organizations/ordererOrganizations/org4.com/orderers/orderer0.org4.com/tls/IssuerPublicKey
 >>> 2023/11/10 23:55:45 [INFO] Stored Issuer revocation public key at /home/hyperledger/workspaces/fabric-lab/workdir/ca/Organizations/ordererOrganizations/org4.com/orderers/orderer0.org4.com/tls/IssuerRevocationPublicKey
 >>> ```
->
-> 
+>>>
+>>
 
 >> 執行後，Organization 的目錄結構如下
+>>
 >
 >> ***`[command]`***
+>>
 >
 >>> ```bash
 >>> tree -d Organizations
 >>> ```
->
+>>>
+>>
 >
 >> `System Response:`
+>>
 >
 >>> ```bash
 >>> Organizations/
@@ -629,18 +661,26 @@
 >>>                  ├── tlscacerts
 >>>                  └── user
 >>> ```
->
+>>>
+>>
 >
 >> 執行完成後， script 會依 Organizations 目錄內容產出 channelMSP, localMSP 二個目錄，channelMSP 為提供區塊鏈設定以及其他機構驗證我機構的 entity 使用， localMSP 為我方各 entity (orderer,peer, admin, client) 參與 Fabric network 的身份識別、簽章使用
 >> 檢查 channelMSP 的檔案內容
+>>
 >
 >>> ***`[command]`***
+>>>
+>>
 >
 >>> ```bash
 >>> tree channelMSP
 >>> ```
+>>>
+>>
 >
 >>> `System Response:`
+>>>
+>>
 >
 >>> ```bash
 >>> channelMSP
@@ -681,18 +721,23 @@
 >>>          └── tlscacerts
 >>>              └── tlsca.org2.com-cert.pem
 >>> ```
->
+>>>
+>>
 >
 >> 檢查 localMSP 的內容
+>>
 >
 >> ***`[command]`***
+>>
 >
 >>> ```bash
 >>> tree -d localMSP/
 >>> ```
->
+>>>
+>>
 >
 >> `System Response:`
+>>
 >
 >>> ```bash
 >>> localMSP/
@@ -816,18 +861,23 @@
 >>>              │   └── tlscacerts
 >>>              └── tls
 >>> ```
->
+>>>
+>>
 >
 >> 檢查 localMSP 目錄下每一 entity 的加密文件是否齊全完整
+>>
 >
 >> ***`[command]`***
+>>
 >
 >>> ```bash
 >>> tree localMSP/peerOrganizations/org1.com/peers/peer0.org1.com/
 >>> ```
->
+>>>
+>>
 >
 >> `System Response:`
+>>
 >
 >>> ```bash
 >>> localMSP/peerOrganizations/org1.com/peers/peer0.org1.com/
@@ -847,26 +897,32 @@
 >>>  ├── server.crt
 >>>  └── server.key
 >>> ```
->
->
+>>>
+>>
 
 ### 8. Hyperldger Fabric Network configuration
 
 > **工作目錄: $HOME/workspaces/fabric-lab/workdir/config**
 
 >> #### 8-1 將 section 7 產出的  `channelMSP` 複製到工作目錄 organizations
+>>
 >
 >>> ***`[command]`***
+>>>
+>>
 >
 >>> ```bash
 >>> cd $HOME/workspaces/fabric-lab/workdir/config
 >>> cp -a $HOME/workspaces/fabric-lab/workdir/ca/channelMSP $HOME/workspaces/fabric-lab/workdir/config/organizations
 >>> ```
->
+>>>
+>>
 >
 >> #### 8-2 編輯 configtx.yaml
+>>
 >
 >> **`[設定檔內容]`**`
+>>
 >
 >>> ```yaml
 >>> Organizations:
@@ -1026,87 +1082,117 @@
 >>>             Capabilities:
 >>>                 <<: *ApplicationCapabilities
 >>>     ```
+>>> ```
+>>>
+>>
 >
 >> #### 8-3 由 configtx.yaml 中的 OrdererGenesis profile 生成 system-channel 的創世區塊
+>>
 >
 >> **工作目錄: $HOWM/workspaces/fabric-lab/workdir/config**
 >> 執行下列指令生成 創世區塊
+>>
 >
 >> ***`[command]`***
+>>
 >
 >>> ```bash
 >>> cd $HOWM/workspaces/fabric-lab/workdir/config
 >>> configtxgen -profile OrdererGenesis -configPath $PWD -channelID system-channel -outputBlock ../system-genesis-block/genesis.block
 >>> ```
->
+>>>
+>>
 >
 >> 將 protobuf 檔案格式 轉換成 json 格式 (option)
+>>
 >
 >> ***`[command]`***
+>>
 >
 >>> ```bash
 >>> configtxgen -inspectBlock ../system-genesis-block/genesis.block > ../system-genesis-block/genesis.json
 >>> ```
->
->
+>>>
+>>
 
 ### 9. Application channel 的 configure block
 
 > **工作目錄: $HOME/workspaces/fabric-lab/workdir/config**
 >
 >> 使用 configtx.yaml 中的 Channel12 profile 生成 channel1 的 config block
+>>
 >
 >> ***`[command]`***
+>>
 >
 >>> ```bash
 >>> configtxgen -profile Channel12 -configPath $PWD  -channelID channel1 -outputCreateChannelTx ../channel-artifacts/channel1.tx
 >>> ```
->
+>>>
+>>
 >
 >> 將 protobuf 檔案格式 轉換成 json 格式 (option)
+>>
 >
 >> ***`[command]`***
+>>
 >
 >>> ```bash
 >>> configtxgen -inspectChannelCreateTx ../channel-artifacts/channel1.tx > ../channel-artifacts/channel1.json
 >>> ```
->
-> 
+>>>
+>>
 
 ### 10. 啟動 orderer service
 
 > **工作目錄: $HOME/workspaces/fabric-lab/service/orderer**
 >
 >> 10-1 環境部署
+>>
 >
 >> 1. 創建每一orderer 服務的工作目錄
+>>
 >
 >>> ***`[command]`***
+>>>
+>>
 >
 >>> ```bash
 >>> cd $HOME/workspaces/fabric-lab/service/orderer
 >>> mkdir -p $HOME/workspaces/fabric-lab/service/orderer/org4.com/{orderer0.org4.com,orderer1.org4.com,orderer2.org4.com}
 >>> ```
->
+>>>
+>>
 >
 >> 2. 複製創世區塊
+>>
 >
 >>> ***`[command]`***
+>>>
+>>
 >
 >>> ```bash
 >>> cp $HOME/workspaces/fabric-lab/workdir/system-genesis-block/genesis.block $HOME/workspaces/fabric-lab/service/orderer
 >>> ```
->
+>>>
+>>
 >
 >> 3. 由 $HOME/workspaces/fabric-lab/workdir/ca/localMSP/ordererOrganizations/org4.com/orderers/ 複製 每一 orderer 服務的 `localMSP` 的資料夾到對應的工作目錄
+>>
 >
 >>> ***`[command]`***
+>>>
+>>
 >
 >>> ```bash
 >>> tree -d $HOME/workspaces/fabric-lab/workdir/ca/localMSP/ordererOrganizations/org4.com/orderers/
 >>> ```
+>>>
+>>
 >
 >>> `System Response:`
+>>>
+>>
 >
 >>> ```bash
 >>> $HOME/workspaces/fabric-lab/workdir/ca/localMSP/ordererOrganizations/org4.com/orderers/
@@ -1135,27 +1221,40 @@
 >>>  │   └── tlscacerts
 >>>  └── tls
 >>> ```
->
+>>>
+>>
 >
 >> 4. 或直接執行以下 script 完成
+>>
 >
 >>> ***`[command]`***
+>>>
+>>
 >
 >>> ```bash
 >>> cd $HOME/workspaces/fabric-lab/service/orderer
 >>> ./scripts/cpMSP.sh 
 >>> ```
->
+>>>
+>>
 >
 >> 5. 最終部署完成的架構
+>>
 >
 >>> ***`[command]`***
+>>>
+>>
 >
 >>> ```bash
 >>> tree -d $HOME/workspaces/fabric-lab/service/orderer
 >>> ```
+>>>
+>>
 >
 >>>> `System Response:`
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> $HOME/workspaces/fabric-lab/service/orderer
@@ -1189,31 +1288,44 @@
 >>>> │           └── tls
 >>>> └── scripts
 >>>> ```
->
-> 
+>>>>
+>>>
+>>
 >
 >> 10-2 啟動 orderer service
+>>
 >
 >>> ***`[command]`***
+>>>
+>>
 >
 >>> ```bash
 >>> cd $HOME/workspaces/fabric-lab/service/orderer
 >>> docker-compose up -d
 >>> ```
->
-> 
+>>>
+>>
 
 >> 10-3 檢查 各 orderer 服務的 docker instance 是否正常啟動
+>>
 >
 >>> 檢查每一 orderer 服務的 log 是否選舉 leader 完成
+>>>
+>>
 >
 >>> ***`[command]`***
+>>>
+>>
 >
 >>> ```bash
 >>> docker logs -f orderer0.org4.com
 >>> ```
+>>>
+>>
 >
 >>> `System Response:`
+>>>
+>>
 >
 >>> ```bash
 >>> 2023-11-11 03:35:38.005 UTC [orderer.consensus.etcdraft] campaign -> INFO 030 1 [logterm: 1, index: 3] sent MsgVote request to 2 at term 2 channel=system-channel node=1
@@ -1225,34 +1337,49 @@
 >>> 2023-11-11 03:35:38.006 UTC [orderer.consensus.etcdraft] run -> INFO 036 Leader 1 is present, quit campaign channel=system-channel node=1
 >>> 2023-11-11 03:35:38.006 UTC [orderer.consensus.etcdraft] run -> INFO 037 Raft leader changed: 0 -> 1 channel=system-channel node=1
 >>> ```
->
->
+>>>
+>>
 
 ### 11. 啟動 peer service
 
 > **工作目錄: $HOME/workspaces/fabric-lab/service/peers**
 >
 >> 11-1 環境部署配置
+>>
 >
 >>> 1. 創建每一organization 的 peer node 的工作目錄
+>>>
+>>
 >
 >>> ***`[command]`***
+>>>
+>>
 >
 >>>> ```bash
 >>>> mkdir -p $HOME/workspaces/fabric-lab/service/peers/org1.com/{peer0.org1.com,peer1.org1.com}
 >>>> mkdir -p $HOME/workspaces/fabric-lab/service/peers/org2.com/{peer0.org2.com,peer1.org2.com}
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> 2. 複製每一 peer organizations 的 peers/pee{0,1}/ 到對應的目錄位置
+>>>
+>>
 >
 >>> ***`[command]`***
+>>>
+>>
 >
 >>> ```bash
 >>> tree -d $HOME/workspaces/fabric-lab/workdir/ca/localMSP/peerOrganizations/*/peers/peer*
 >>> ```
+>>>
+>>
 >
 >>> `System Response:`
+>>>
+>>
 >
 >>> ```bash
 >>> $homeworkspaces/fabric-lab/workdir/ca/localMSP/peerOrganizations/org1.com/peers/peer0.org1.com
@@ -1264,8 +1391,12 @@
 >>> │   └── tlscacerts
 >>> └── tls
 >>> ```
+>>>
+>>
 >
 >>> `System Response:`
+>>>
+>>
 >
 >>> ```bash
 >>> $homeworkspaces/fabric-lab/workdir/ca/localMSP/peerOrganizations/org1.com/peers/peer1.org1.com
@@ -1277,8 +1408,12 @@
 >>> │   └── tlscacerts
 >>> └── tls
 >>> ```
+>>>
+>>
 >
 >>> `System Response:`
+>>>
+>>
 >
 >>> ```bash
 >>> $homeworkspaces/fabric-lab/workdir/ca/localMSP/peerOrganizations/org2.com/peers/peer0.org2.com
@@ -1290,8 +1425,12 @@
 >>> │   └── tlscacerts
 >>> └── tls
 >>> ```
+>>>
+>>
 >
 >>> `System Response:`
+>>>
+>>
 >
 >>> ```bash
 >>> $homeworkspaces/fabric-lab/workdir/ca/localMSP/peerOrganizations/org2.com/peers/peer1.org2.com
@@ -1303,26 +1442,44 @@
 >>> │   └── tlscacerts
 >>> └── tls
 >>> ```
+>>>
+>>
 >
 >>> 3. 替代方案, 執行 $HOME/workspaces/fabric-lab/service/peers/scripts/cpMSP.sh
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> cd $HOME/workspaces/fabric-lab/service/peers
 >>>> $HOME/workspaces/fabric-lab/service/peers/scripts/cpMSP.sh
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> 4. 檢查結果:
+>>>
+>>
 >
 >>> ***`[command]`***
+>>>
+>>
 >
 >>> ```bash
 >>> tree */
 >>> ```
+>>>
+>>
 >
 >>>> `System Response:`
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> org1.com/
@@ -1361,9 +1518,13 @@
 >>>>          ├── server.crt
 >>>>          └── server.key
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> `System Response:`
+>>>
+>>
 >
 >>>> ```bash
 >>>> org2.com/
@@ -1402,23 +1563,31 @@
 >>>>          ├── server.crt
 >>>>          └── server.key
 >>>> ```
->
-> 
+>>>>
+>>>
+>>
 >
 >>> 5. 啟動 peer 服務
+>>>
+>>
 >
 >>>> 1. docker-compose up -d peer0.org1.com peer1.org1.com peer0.org2.com peer1.org2.com
->
+>>>>
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> cd $HOME/workspaces/fabric-lab/service/peers
 >>>> docker-compose up -d peer0.org1.com peer1.org1.com peer0.org2.com peer1.org2.com
 >>>> ```
->
-> 
->
+>>>>
+>>>
+>>
 
 ### 12. 創建 channel 以及 join channel
 
@@ -1426,24 +1595,37 @@
 
 >> 1. 啟始環境部署配置
 >>    執行 $HOME/workspaces/fabric-lab/workdir/org1-client/scripts/init.sh
+>>
 >
 >>> 1. 複製執行角色的身份識別文件 (MSP/TLS) 到對映位置，
 >>> 2. 複製每一參與機構的 TLS root CA 到對應位置
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> cd $HOME/workspaces/fabric-lab/workdir/org1-client
 >>>> ./scripts/init.sh
 >>>> ```
->
->
+>>>>
+>>>
+>>
 >
 >> 2. 初始化環境變數
+>>
 >
 >>> 1. 設定 MSPID, 操作的節點, 操作的角色 (admin or client) 以及 ORDERER_TLS_CA 的位置
+>>>
+>>
 >
 >>>> `[設定檔內容]`
+>>>>
+>>>
+>>
 >
 >>>> ```script
 >>>> export MSP=Org1MSP
@@ -1461,31 +1643,49 @@
 >>>> export FABRIC_CFG_PATH=$GOPATH/config
 >>>> export ORDERER_TLS_CA=$PWD/tlsca/tlsca.org4.com-cert.pem
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> 2. 初始化身 Admin@org1.com 的身份
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> source admin.env peer0 1051
 >>>> ```
->
->
+>>>>
+>>>
+>>
 >
 >> 3. 創建 Application channel - channel1
+>>
 >
 >>> **工作目錄: $HOME/workspaces/fabric-lab/workdir/org1-client/tmp**
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> cd $HOME/workspaces/fabric-lab/workdir/org1-client/tmp
 >>>> peer channel create -f ../../channel-artifacts/channel1.tx -c channel1 -o orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> `System response:`
+>>>
+>>
 >
 >>>> ```bash
 >>>> 2023-11-11 08:45:10.206 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
@@ -1503,20 +1703,34 @@
 >>>> 2023-11-11 08:45:11.226 UTC [channelCmd] InitCmdFactory -> INFO 00d Endorser and orderer connections initialized
 >>>> 2023-11-11 08:45:11.428 UTC [cli.common] readBlock -> INFO 00e Received block: 0
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> 檢查 orderer node 的 log 是否創建 channel1 的 log, 並完成 leader election?
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> docker logs -f orderer0.org4.com
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> 系統回應 (僅列出關鍵列)
+>>>
+>>
 >
 >>>> `以下 log 在 system-channel create 一個區塊, 接收到 config transaction 的請求`
+>>>>
+>>>
+>>
 >
 >>>> ```log
 >>>> 2023-11-11 08:45:10.213 UTC [orderer.consensus.etcdraft] propose -> INFO 039 Created block [1], there are 0 blocks in flight channel=system-channel node=1
@@ -1525,8 +1739,14 @@
 >>>> 2023-11-11 08:45:10.214 UTC [comm.grpc.server] 1 -> INFO 03c streaming call completed grpc.service=orderer.AtomicBroadcast grpc.method=Deliver grpc.peer_address=172.21.0.1:36272 grpc.code=OK grpc.call_duration=7.813752ms
 >>>> 2023-11-11 08:45:10.219 UTC [orderer.consensus.etcdraft] writeBlock -> INFO 03d Writing block [1] (Raft index: 5) to ledger channel=system-channel node=1
 >>>> ```
+>>>>
+>>>
+>>
 >
 >>>> `開始 leader election, 最終選出第二個 orderer node (orderer1.org4.com) 為 leader`
+>>>>
+>>>
+>>
 >
 >>>> ```log
 >>>> 2023-11-11 08:45:11.232 UTC [orderer.consensus.etcdraft] Step -> INFO 05c 1 [logterm: 1, index: 3, vote: 0] cast MsgPreVote for 2 [logterm: 1, index: 3] at term 1 channel=channel1 node=1
@@ -1536,86 +1756,139 @@
 >>>> 2023-11-11 08:45:11.234 UTC [orderer.consensus.etcdraft] run -> INFO 060 raft.node: 1 elected leader 2 at term 2 channel=channel1 node=1
 >>>> 2023-11-11 08:45:11.234 UTC [orderer.consensus.etcdraft] run -> INFO 061 Raft leader changed: 0 -> 2 channel=channel1 node=1
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> ***PS:*** 在 create channel 成功後，在當下目錄會有一創世區塊的檔案，<channel_name>.block
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> ls
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> 系統 response:
+>>>
+>>
 >
 >>>> ```bash
 >>>> channel1.block
 >>>> ```
->
->
+>>>>
+>>>
+>>
 >
 >> 4. Org1 Join  channel
+>>
 >
 >>> 1. 執行指令加入 channel1
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> peer channel join -b channel1.block
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> `System Response:``
+>>>
+>>
 >
 >>>> ```bash
 >>>> 2023-11-11 09:29:59.371 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
 >>>> 2023-11-11 09:29:59.428 UTC [channelCmd] executeJoin -> INFO 002 Successfully submitted proposal to join channel
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> `檢查 peero.org1.com log`
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> docker logs -f peer0.org1.com
 >>>> ```
+>>>>
+>>>
+>>
 >
 >>>> `System Response:`
+>>>>
+>>>
+>>
 >
 >>>> ```log
 >>>> 2023-11-11 09:37:57.473 UTC [gossip.gossip] JoinChan -> INFO 01b Joining gossip network of channel channel1 with 2 organizations
 >>>> 2023-11-11 09:37:57.473 UTC [gossip.gossip] learnAnchorPeers -> INFO 01c No configured anchor peers of Org1MSP for channel channel1 to learn about
 >>>> 2023-11-11 09:37:57.473 UTC [gossip.gossip] learnAnchorPeers -> INFO 01d No configured anchor peers of Org2MSP for channel channel1 to learn about
 >>>> ```
->
->
+>>>>
+>>>
+>>
 >
 >> 5. Org2 join channel
+>>
 >
 >>> **工作目錄: $HOME/workspaces/fabric-lab/workdir/org2-client**
 >>> 1 啟始環境部署配置
 >>> 執行 $HOME/workspaces/fabric-lab/workdir/org2-client/scripts/init.sh
+>>>
+>>
 >
 >>>> 1. 複製執行角色的身份識別文件 (MSP/TLS) 到對映位置，
 >>>> 2. 複製每一參與機構的 TLS root CA 到對應位置
+>>>>
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> cd $HOME/workspaces/fabric-lab/workdir/org2-client
 >>>> ./scripts/init.sh
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> 2. 初始化環境變數
->
->
+>>>
+>>
 
 >>>> 1. 設定 MSPID, 操作的節點, 操作的角色 (admin or client) 以及 ORDERER_TLS_CA 的位置
+>>>>
+>>>
+>>
 >
 >>>> `[設定檔內容]`
+>>>>
+>>>
+>>
 >
 >>>> ```script
 >>>> export MSP=Org2MSP
@@ -1633,27 +1906,47 @@
 >>>> export FABRIC_CFG_PATH=$GOPATH/config
 >>>> export ORDERER_TLS_CA=$PWD/tlsca/tlsca.org4.com-cert.pem
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> 2. 初始化身 Admin@org2.com 的身份
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> source admin.env peer0 2051
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> 3. Fetching channel1 config block
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> cd $HOME/workspaces/fabric-lab/workdir/org2-client/tmp
 >>>> peer channel fetch config -c channel1 -o orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA
 >>>> ```
+>>>>
+>>>
+>>
 >
 >>>> `System response:`
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> 2023-11-11 09:58:37.371 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
@@ -1661,42 +1954,79 @@
 >>>> 2023-11-11 09:58:37.373 UTC [channelCmd] fetch -> INFO 003 Retrieving last config block: 0
 >>>> 2023-11-11 09:58:37.373 UTC [cli.common] readBlock -> INFO 004 Received block: 0
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> 4. Join channel
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> ls
 >>>> ```
+>>>>
+>>>
+>>
 >
 >>>> `System response:`
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> channel1_config.block
 >>>> ```
+>>>>
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> peer channel join -b channel1_config.block 
 >>>> ```
+>>>>
+>>>
+>>
 >
 >>>> `System Response:`
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> 2023-11-11 10:05:50.089 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
 >>>> 2023-11-11 10:05:50.151 UTC [channelCmd] executeJoin -> INFO 002 Successfully submitted proposal to join channel
 >>>> ```
+>>>>
+>>>
+>>
 >
 >>>> `檢查 peer0.org2.com docker log`
+>>>>
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```docker
 >>>> docker logs -f peer0.org2.com
 >>>> ```
+>>>>
+>>>
+>>
 >
 >>>> ```log
 >>>> 2023-11-11 10:05:50.093 UTC [ledgermgmt] CreateLedger -> INFO 01f Creating ledger [channel1] with genesis block
@@ -1713,31 +2043,47 @@
 >>>> 2023-11-11 10:05:50.151 UTC [deliveryClient] StartDeliverForChannel -> INFO 02a This peer will retrieve blocks from ordering service and disseminate to other peers in the organization channel=channel1
 >>>> 2023-11-11 10:05:50.151 UTC [endorser] callChaincode -> INFO 02b finished chaincode: cscc duration: 59ms channel= txID=d196f1bb
 >>>> ```
->
->
+>>>>
+>>>
+>>
 >
 >> 6. Set Anchor Peer
+>>
 >
 >>> 1. 設定 peer0.org2.com 為 org2.com 的 anchor Peer
 >>>    **工作目錄: $HOME/workspaces/fabric-lab/workdir/org2-client**
+>>>
+>>
 >
 >>> ***`[command]`***
+>>>
+>>
 >
 >>> ```bash
 >>> cd $HOME/workspaces/fabric-lab/workdir/org2-client
 >>> source admin.env peer0 2051
 >>> ```
+>>>
+>>
 >
 >>> 操作 anchor peer 的設定會有許多檔案產生，所以將在 $HOME/workspaces/fabric-lab/workdir/org2-client/tmp 目錄操作
+>>>
+>>
 >
 >>> ***`[command]`***
+>>>
+>>
 >
 >>> ```bash
 >>> cd $HOME/workspaces/fabric-lab/workdir/org2-client/tmp
 >>> ../scripts/setAnchorPeer.sh channel1
 >>> ```
+>>>
+>>
 >
 >>> `System response:`
+>>>
+>>
 >
 >>>> ```log
 >>>> 2023-11-11 10:38:44.922 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
@@ -1747,39 +2093,64 @@
 >>>> 2023-11-11 10:38:45.006 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
 >>>> 2023-11-11 10:38:45.012 UTC [channelCmd] update -> INFO 002 Successfully submitted channel update
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> `檢查 channel1 的config block`
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> rm -rf *
 >>>> peer channel fetch config -c channel1 -o orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> `System Response:`
+>>>
+>>
 >
 >>>> ```bash
 >>>> 2023-11-11 10:42:32.772 UTC [cli.common] readBlock -> INFO 002 Received block: 1
 >>>> 2023-11-11 10:42:32.772 UTC [channelCmd] fetch -> INFO 003 Retrieving last config block: 1
 >>>> 2023-11-11 10:42:32.773 UTC [cli.common] readBlock -> INFO 004 Received block: 1
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> `將 protobuf 的格式轉換成 json`
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> configtxlator proto_decode --input channel1_config.block --type common.Block|jq .data.data[].payload.data.config > chonfig.json
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> 檢查  `config.json` 是否在 Org2 加入 anchor peer:
+>>>
+>>
 >
 >>>> `[設定檔內容]`
+>>>>
+>>>
+>>
 >
 >>>> ```json
 >>>> "AnchorPeers": {
@@ -1795,18 +2166,29 @@
 >>>> "version": "0"
 >>>> },
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> `檢查 peer0.org1.com log`
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> docker logs -f peer0.org1.com
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> `System response:`
+>>>
+>>
 >
 >>>> ```bash
 >>>> 2023-11-11 10:38:45.022 UTC [gossip.privdata] StoreBlock -> INFO 029 Received block [1] from buffer channel=channel1
@@ -1818,18 +2200,29 @@
 >>>> 2023-11-11 10:38:45.042 UTC [kvledger] CommitLegacy -> INFO 02f [channel1] Committed block [1] with 1 transaction(s) in 17ms (state_validation=0ms block_and_pvtdata_commit=2ms state_commit=14ms) commitHash=[47dc540c94ceb704a23875c11273e16bb0b8a87aed84de911f2133568115f254]
 >>>> 2023-11-11 10:38:47.474 UTC [gossip.channel] reportMembershipChanges -> INFO 030 [[channel1] Membership view has changed. peers went online:  [[peer0.org2.com:2051 ]] , current view:  [[peer0.org2.com:2051 ]]]
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> `檢查 peer0.org2.com log`
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> docker logs -f peer0.org2.com
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> `System Response:`
+>>>
+>>
 >
 >>>> ```bash
 >>>> 2023-11-11 10:38:45.022 UTC [gossip.privdata] StoreBlock -> INFO 02e Received block [1] from buffer channel=channel1
@@ -1846,31 +2239,47 @@
 >>>> 2023-11-11 10:38:45.040 UTC [kvledger] CommitLegacy -> INFO 039 [channel1] Committed block [1] with 1 transaction(s) in 15ms (state_validation=0ms block_and_pvtdata_commit=3ms state_commit=11ms) commitHash=[47dc540c94ceb704a23875c11273e16bb0b8a87aed84de911f2133568115f254]
 >>>> 2023-11-11 10:38:50.151 UTC [gossip.channel] reportMembershipChanges -> INFO 03a [[channel1] Membership view has changed. peers went online:  [[peer0.org1.com:1051 ]] , current view:  [[peer0.org1.com:1051 ]]]
 >>>> ```
->
->
+>>>>
+>>>
+>>
 >
 >>> 2. 設定 peer0.org1.com 為 org1.com 的 anchor Peer
 >>>    **工作目錄: $HOME/workspaces/fabric-lab/workdir/org1-client**
+>>>
+>>
 >
 >>>> ***`[command]`***
->
+>>>>
+>>>
+>>
 >
 >>> ```bash
 >>> cd $HOME/workspaces/fabric-lab/workdir/org1-client
 >>> source admin.env peer0 1051
 >>> ```
+>>>
+>>
 >
 >>> 操作 anchor peer 的設定會有許多檔案產生，所以將在 $HOME/workspaces/fabric-lab/workdir/or12-client/tmp 目錄操作
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> cd $HOME/workspaces/fabric-lab/workdir/org1-client/tmp
 >>>> ../scripts/setAnchorPeer.sh channel1
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> `System response:`
+>>>
+>>
 >
 >>>> ```bash
 >>>> 2023-11-11 11:12:40.595 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
@@ -1880,19 +2289,30 @@
 >>>> 2023-11-11 11:12:40.681 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
 >>>> 2023-11-11 11:12:40.687 UTC [channelCmd] update -> INFO 002 Successfully submitted channel update
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> `檢查 channel1 的config block`
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> rm -rf *
 >>>> peer channel fetch config -c channel1 -o orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> `System Response:`
+>>>
+>>
 >
 >>>> ```bash
 >>>> 2023-11-11 11:22:19.722 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
@@ -1900,20 +2320,34 @@
 >>>> 2023-11-11 11:22:19.724 UTC [channelCmd] fetch -> INFO 003 Retrieving last config block: 2
 >>>> 2023-11-11 11:22:19.724 UTC [cli.common] readBlock -> INFO 004 Received block: 2
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> `將 protobuf 的格式轉換成 json`
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> configtxlator proto_decode --input channel1_config.block --type common.Block|jq .data.data[].payload.data.config > chonfig.json
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> 檢查  `config.json` 是否在 Org1 加入 anchor peer:
+>>>
+>>
 >
 >>>> `[設定檔內容]`
+>>>>
+>>>
+>>
 >
 >>>> ```json
 >>>> "AnchorPeers": {
@@ -1929,18 +2363,29 @@
 >>>> "version": "0"
 >>>> },
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> `檢查 peer0.org1.com log`
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> docker logs -f peer0.org1.com
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> `System response:`
+>>>
+>>
 >
 >>>> ```bash
 >>>> 2023-11-11 11:12:40.697 UTC [gossip.privdata] StoreBlock -> INFO 031 Received block [2] from buffer channel=channel1
@@ -1955,18 +2400,29 @@
 >>>> 2023-11-11 11:12:40.703 UTC [comm.grpc.server] 1 -> INFO 03a streaming call completed grpc.service=gossip.Gossip grpc.method=GossipStream grpc.request_deadline=2023-11-11T11:12:50.702Z grpc.peer_address=172.23.0.11:53462 grpc.peer_subject="CN=peer0.org2.com,OU=client,O=org2.com,ST=Taiwan,C=TW" grpc.code=OK grpc.call_duration=416.791µs
 >>>> 2023-11-11 11:12:40.720 UTC [kvledger] CommitLegacy -> INFO 03b [channel1] Committed block [2] with 1 transaction(s) in 20ms (state_validation=0ms block_and_pvtdata_commit=4ms state_commit=14ms) commitHash=[5f88b61407b149a48413433f4670c46531e5c4a8febdc339a9536ff8716a559e]
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> `檢查 peer0.org2.com log`
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> docker logs -f peer0.org2.com
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> `System Response:`
+>>>
+>>
 >
 >>>> ```bash
 >>>> 2023-11-11 11:12:40.698 UTC [gossip.privdata] StoreBlock -> INFO 03b Received block [2] from buffer channel=channel1
@@ -1981,7 +2437,10 @@
 >>>> 2023-11-11 11:12:40.702 UTC [comm.grpc.server] 1 -> INFO 044 streaming call completed grpc.service=gossip.Gossip grpc.method=GossipStream grpc.request_deadline=2023-11-11T11:12:50.701Z grpc.peer_address=172.23.0.10:54994 grpc.peer_subject="CN=peer0.org1.com,OU=client,O=org1.com,ST=Taiwan,C=TW" grpc.code=OK grpc.call_duration=1.205016ms
 >>>> 2023-11-11 11:12:40.720 UTC [kvledger] CommitLegacy -> INFO 045 [channel1] Committed block [2] with 1 transaction(s) in 20ms (state_validation=0ms block_and_pvtdata_commit=4ms state_commit=14ms) commitHash=[5f88b61407b149a48413433f4670c46531e5c4a8febdc339a9536ff8716a559e]
 >>>> ```
->
+>>>>
+>>>
+>>
+
 ### 13. Deploy chaincode
 
 1. 準備 chaincode source code
@@ -1990,31 +2449,44 @@
 > 2. 下載 Go chaincode 的相依套件 (dependency package)
 >
 >> 1. go mod tidy
+>>
 >
 >> ***`[command]`***
+>>
 >
 >> ```bash
 >> cd $HOME/workspaces/fabric-lab/workdir/chaincode/asset-transfer-basic/chaincode-go
 >> go mod tidy
 >> ```
+>>
 >
 >> 2. go mod vendor
+>>
 >
 >> ***`[command]`***
+>>
 >
 >> ```bash
 >> go mod vendor
 >> ```
+>>
 >
 >> 3. 檢查 $PWD/vendor 目錄內容
+>>
 >
 >>> ***`[command]`***
+>>>
+>>
 >
 >>> ```bash
 >>> tree -d vendor
 >>> ```
+>>>
+>>
 >
 >>> `System Response`
+>>>
+>>
 >
 >>> ```bash
 >>> vendor/
@@ -2155,291 +2627,551 @@
 >>> └── gopkg.in
 >>>  └── yaml.v2
 >>> ```
->
+>>>
+>>
 >
 >> 4. org1.com 部署 chaincode
+>>
 >
 >> ***`工作目錄： $HOME/workspaces/fabric-lab/workdir/org1-client`***
+>>
 >
 >> ***`[command]`***
+>>
 >
 >> ```bash
 >> cd $HOME/workspaces/fabric-lab/workdir/org1-client
 >> source admin.env peer0 1051
 >> ```
+>>
 >
 >> 切換工作目錄到 $HOME/workspaces/fabric-lab/workdir/org1-client/tmp
+>>
 >
 >> ***`[command]`***
+>>
 >
 >> ```bash
 >> cd $HOME/workspaces/fabric-lab/workdir/org1-client/tmp
 >> ```
+>>
 >
 >>> 1. package chaincode
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> peer lifecycle chaincode package basic.tar.gz --path ../../chaincode/asset-transfer-basic/chaincode-go/ --lang golang --label basic_1.0
 >>>> ```
+>>>>
+>>>
+>>
 >
 >>> 2. install chaincode
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> peer lifecycle chaincode install basic.tar.gz 
 >>>> ```
+>>>>
+>>>
+>>
 >
 >>>> `System Response`
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> 2023-11-12 03:20:52.617 UTC [cli.lifecycle.chaincode] submitInstallProposal -> INFO 001 Installed remotely: response:<status:200 payload:"\nJbasic_1.0:cada8480a2f0cafe5acc135e17803f622780a350d438d2bf67383a4ebd92d172\022\tbasic_1.0" > 
 >>>> 2023-11-12 03:20:52.617 UTC [cli.lifecycle.chaincode] submitInstallProposal -> INFO 002 Chaincode code package identifier: basic_1.0:cada8480a2f0cafe5acc135e17803f622780a350d438d2bf67383a4ebd92d172
 >>>> ```
+>>>>
+>>>
+>>
 >
 >>>> 1. 在完成 lifecycle chaincode install 後，檢查 `$HOME/workspaces/fabric-lab/service/peers/org1.com/peer0-data/lifecycle/ ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> sudo tree $HOME//workspaces/fabric-lab/service/peers/org1.com/peer0.org1.com/peer0-data/lifecycle/
 >>>> ```
+>>>>
+>>>
+>>
 >
 >>>> `System Response`
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> $HOME/workspaces/fabric-lab/service/peers/org1.com/peer0.org1.com/peer0-data/lifecycle/
 >>>> └── chaincodes
 >>>>  └── basic_1.0.cada8480a2f0cafe5acc135e17803f622780a350d438d2bf67383a4ebd92d172.tar.gz
 >>>> ```
+>>>>
+>>>
+>>
 >
 >>>> 2. 檢查 peer0.org1.com 的 docker logs
->
+>>>>
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> docker logs peer0.org1.com
 >>>> ```
+>>>>
+>>>
+>>
 >
 >>>> `System Response:`
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> 2023-11-12 03:20:52.617 UTC [lifecycle] InstallChaincode -> INFO 03c Successfully installed chaincode with package ID 'basic_1.0:cada8480a2f0cafe5acc135e17803f622780a350d438d2bf67383a4ebd92d172'
 >>>> 2023-11-12 03:20:52.617 UTC [endorser] callChaincode -> INFO 03d finished chaincode: _lifecycle duration: 19627ms channel= txID=e6cdca84
 >>>> 2023-11-12 03:20:52.617 UTC [comm.grpc.server] 1 -> INFO 03e unary call completed grpc.service=protos.Endorser grpc.method=ProcessProposal grpc.peer_address=192.168.2.201:56082 grpc.code=OK grpc.call_duration=19.639528404s
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> 3. 執行 `peer lifecycle chaincode queryinstalled` 取得 chaincode 的 package id
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> export CC_PACKAGE_ID=$(peer lifecycle chaincode queryinstalled -O json | jq -r '.installed_chaincodes[] | select(.label=="basic_1.0").package_id')
 >>>> ```
+>>>>
+>>>
+>>
 >
 >>>> 檢查自定環境變數 CC_PACKAGE_ID 的數值
+>>>>
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> echo $CC_PACKAGE_ID
 >>>> ```
+>>>>
+>>>
+>>
 >
 >>>> `System Response:`
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> basic_1.0:cada8480a2f0cafe5acc135e17803f622780a350d438d2bf67383a4ebd92d172
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> 3. Approve chaincode
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> peer lifecycle chaincode approveformyorg -C channel1 -n basic --version 1.0 --sequence 1 --orderer orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA --package-id $CC_PACKAGE_ID
 >>>> ```
+>>>>
+>>>
+>>
 >
 >>>> `System Response:`
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> 2023-11-12 03:59:12.313 UTC [chaincodeCmd] ClientWait -> INFO 001 txid [43ac023332b22820f489d2abd17e24498605c96da1636d07067215d808b2739d] committed with status (VALID) at peer0.org1.com:1051
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> 4. 檢查提交準備狀況 (chack commit readiness)
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> peer lifecycle chaincode checkcommitreadiness -C channel1  -n basic --version 1.0 --sequence 1 --orderer orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA
 >>>> ```
+>>>>
+>>>
+>>
 >
 >>>> `System Response:`
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> Chaincode definition for chaincode 'basic', version '1.0', sequence '1' on >>>> channel 'channel1' approval status by org:
 >>>> Org1MSP: true
 >>>> Org2MSP: false
 >>>> ```
+>>>>
+>>>
+>>
 >
 >>>> 未滿足 Lifecycle Endorsement (在  configtx.yaml 中定義 lifecycle endorsement 的Policy 是 MAJORITY)，目前只有一個 Organization approve，所以要等 org2.com approve 後才能  commit (提交)
->
+>>>>
+>>>
+>>
 >
 >>> 5. org2.com 部署 chaincode
 >>>    ***`工作目錄: $HOME/workspaces/fabric-lab/workdir/org2-client`***
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> cd $HOME/workspaces/fabric-lab/workdir/org2-client
 >>>> source admin.env peer0 2051
 >>>> ```
->
+>>>>
+>>>
+>>
 >
 >>> 切換工作目錄 $HOME/workspaces/fabric-lab/workdor/org2-client/tmp
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> 1. package chaincode
+>>>>
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> cd $HOME/workspaces/fabric-lab/workdir/org1-client/tmp
 >>>> peer lifecycle chaincode package basic.tar.gz --path ../../chaincode/asset-transfer-basic/chaincode-go/ --lang golang --label basic_1.0
 >>>> ```
+>>>>
+>>>
+>>
 >
 >>>> 2. install package
+>>>>
+>>>
+>>
 >
 >>>> ***`[command]`***
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> peer lifecycle chaincode install basic.tar.gz
 >>>> ```
+>>>>
+>>>
+>>
 >
 >>>> `System Response:`
+>>>>
+>>>
+>>
 >
 >>>> ```bash
 >>>> 2023-11-12 06:57:59.397 UTC [cli.lifecycle.chaincode] submitInstallProposal -> INFO 001 Installed remotely: response:<status:200 payload:"\nJbasic_1.0:1f4749caf72871f38e43a65861a31f1708c541d306143287ecbfe068fa7dd5bb\022\tbasic_1.0" > 
 >>>> 2023-11-12 06:57:59.397 UTC [cli.lifecycle.chaincode] submitInstallProposal -> INFO 002 Chaincode code package identifier: basic_1.0:1f4749caf72871f38e43a65861a31f1708c541d306143287ecbfe068fa7dd5bb
 >>>>>>>> ```
+>>>> ```
+>>>>
+>>>
+>>
 >
 >>>>> 1. 在完成 lifecycle chaincode install 後，檢查 $HOME/workspaces/fabric-lab/service/peers/org1.com/peer0-data/lifecycle/
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>>> ***`[command]`***
+>>>>>
 >>>>> ```bash
 >>>>> sudo tree $HOME//workspaces/fabric-lab/service/peers/org2.com/peer0.org2.com/peer0-data/lifecycle/
 >>>>> ```
+>>>>>
 >>>>> `System Response:`
+>>>>>
 >>>>> ```bash
 >>>>> $HOME/workspaces/fabric-lab/service/peers/org2.com/peer0.org2.com/peer0-data/lifecycle/
 >>>>> └── chaincodes
 >>>>>  └── basic_1.0.1f4749caf72871f38e43a65861a31f1708c541d306143287ecbfe068fa7dd5bb.tar.gz
 >>>>> ```
+>>>>>
 >>>>
->>>>```
->
+>>>> ```
+>>>>
+>>>> ```
+>>>>
+>>>
+>>
 >
 >>>>> 2. 檢查 peer0.org2.com 的 docker logs
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>>> ***`[command]`***
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>>> ```bash
 >>>>> docker logs -f peer0.org2.com
 >>>>> ```
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>>> `System Response:`
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>>> ```bash
 >>>>> 2023-11-12 06:57:59.396 UTC [lifecycle] InstallChaincode -> INFO 04b Successfully installed chaincode with package ID 'basic_1.0:1f4749caf72871f38e43a65861a31f1708c541d306143287ecbfe068fa7dd5bb'
 >>>>> 2023-11-12 06:57:59.396 UTC [endorser] callChaincode -> INFO 04c finished chaincode: _lifecycle duration: 6688ms channel= txID=3abd53e6
 >>>>> 2023-11-12 06:57:59.396 UTC [comm.grpc.server] 1 -> INFO 04d unary call completed grpc.service=protos.Endorser grpc.method=ProcessProposal grpc.peer_address=192.168.2.201:49782 grpc.code=OK grpc.call_duration=6.701520868s
 >>>>> ```
->
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>> 3. 執行 peer lifecycle chaincode queryinstalled 取得 chaincode 的 package id
+>>>>
+>>>
+>>
 >
 >>>>> ***`[command]`***
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>>> ```bash
 >>>>> export CC_PACKAGE_ID=$(peer lifecycle chaincode queryinstalled -O json | jq -r '.installed_chaincodes[] | select(.label=="basic_1.0").package_id')
 >>>>> ```
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>>> ***`[command]`***
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>>> ```bash
 >>>>> echo $CC_PACKAGE_ID 
 >>>>> ```
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>>> `System Response:`
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>>> ```bash
 >>>>> basic_1.0:1f4749caf72871f38e43a65861a31f1708c541d306143287ecbfe068fa7dd5bb
 >>>>> ```
->
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>> 4. Approve chaincode
+>>>>
+>>>
+>>
 >
 >>>>> ***`[command]`***
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>>> ```bash
 >>>>> peer lifecycle chaincode approveformyorg -C channel1 -n basic --version 1.0 --sequence 1 --orderer orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA --package-id $CC_PACKAGE_ID
 >>>>> ```
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>>> `System Response:`
 >>>>> ***`[command]`***
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>>> ```bash
 >>>>> 2023-11-12 07:19:56.483 UTC [chaincodeCmd] ClientWait -> INFO 001 txid [f28e5b78e6e249288807b9fc4dbada61761abd1103a328a466eaf184ea49458d] committed with status (VALID) at peer0.org2.com:2051
 >>>>> ```
->
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>> 5. 檢查提交準備狀況 (chack commit readiness)
+>>>>
+>>>
+>>
 >
 >>>>> ***`[command]`***
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>>> ```bash
 >>>>> peer lifecycle chaincode checkcommitreadiness -C channel1  -n basic --version 1.0 --sequence 1 --orderer orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA
 >>>>> ```
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>>> `System Response:`
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>>> ```bash
 >>>>> Chaincode definition for chaincode 'basic', version '1.0', sequence '1' on channel 'channel1' approval status by org:
 >>>>> Org1MSP: true
 >>>>> Org2MSP: true
 >>>>> ```
->
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>> 已達到 過半數的參與機構同意，執行 commit 提交到 orderer
+>>>>
+>>>
+>>
 >
 >>>>> ***`[command]`***
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>>> ```bash
 >>>>> peer lifecycle chaincode commit -C channel1  -n basic --version 1.0 --sequence 1 --orderer orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA --peerAddresses peer0.org1.com:1051 --tlsRootCertFiles $PWD/../tlsca/tlsca.org1.com-cert.pem --peerAddresses peer0.org2.com:2051 --tlsRootCertFiles $PWD/../tlsca/tlsca.org2.com-cert.pem
 >>>>> ```
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>>> `System Response:`
+>>>>>
+>>>>
+>>>
+>>
 >
 >>>>> ```bash
 >>>>> 2023-11-12 08:07:30.685 UTC [chaincodeCmd] ClientWait -> INFO 001 txid [477baa7dee7a66b272367c8af4b6a4859c95c13ab62c242b2f2de38fca7c7b4a] committed with status (VALID) at peer0.org2.com:2051
 >>>>> 2023-11-12 08:07:30.689 UTC [chaincodeCmd] ClientWait -> INFO 002 txid [477baa7dee7a66b272367c8af4b6a4859c95c13ab62c242b2f2de38fca7c7b4a] committed with status (VALID) at peer0.org1.com:1051
 >>>>> ```
->
+>>>>>
+>>>>
+>>>
+>>
+
 ### 14. 與 channel1 互動
->
+
 > 啟始化環境變數，以 peer0.org1.com, 操作者 Admin@org1.com 為例
+>
 >> ***`[command]`***
+>>
 >> ```bash
 >> cd $HOME/workspaces/fabric-lab/workdir/org1-client/
 >> source admin.env peer0 1051
 >> ```
->
-1. chaincode 佈署過程查詢 
+>>
+
+1. chaincode 佈署過程查詢
+
 > 1. 查詢 peer node 安裝的 chaincode
+>
 >> ***`[command]`***
 >>
 >> ```bash
@@ -2452,14 +3184,19 @@
 >> Installed chaincodes on peer:
 >> Package ID: basic_1.0:1f4749caf72871f38e43a65861a31f1708c541d306143287ecbfe068fa7dd5bb, Label: basic_1.0
 >> ```
-> 2. 查詢機構 approved chaincode
 >>
+>
+> 2. 查詢機構 approved chaincode
+>
 >> ***`[command]`***
+>>
 >> ```bash
 >> peer lifecycle chaincode queryapproved -C channel1 -n basic -O json
 >> ```
+>>
 >
 >> `System Response:`
+>>
 >> ```bash
 >> {
 >>         "sequence": 1,
@@ -2477,14 +3214,18 @@
 >>         }
 >> }
 >> ```
+>>
 >
 > 3. 查詢該 channel 被 committed 的 chaincode
 >
 >> ***`[command]`***
+>>
 >> ```bash
 >> peer lifecycle chaincode querycommitted -C channel1
 >> ```
+>>
 >> `System Response:`
+>>
 >> ```bash
 >> {
 >>         "chaincode_definitions": [
@@ -2500,13 +3241,18 @@
 >>         ]
 >> }
 >> ```
-> 4. 查詢特定 committed chaincode 的 approve 機構
 >>
+>
+> 4. 查詢特定 committed chaincode 的 approve 機構
+>
 >> ***`[command]`***
+>>
 >> ```bash
 >> peer lifecycle chaincode querycommitted -C channel1 -n basic -O json
 >> ```
+>>
 >> `System Response:`
+>>
 >> ```bash
 >> {
 >>         "sequence": 1,
@@ -2521,31 +3267,41 @@
 >>         }
 >> }
 >> ```
+>>
 
 2. Invoke
->
+
 >> ***`[command referance]'***
+>>
 >> ```bash
 >> peer chaincode invoke -C channel1 -n basic -c '{"function":"InitLedger","Args":[]}' -o orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA --peerAddresses peer0.org1.com:1051 --tlsRootCertFiles $PWD/../tlsca/tlsca.org1.com-cert.pem --peerAddresses peer0.org2.com:2051 --tlsRootCertFiles $PWD/../tlsca/tlsca.org2.com-cert.pem
 >> ```
+>>
 >> `System Response:`
+>>
 >> ```bash
 >> 2023-11-18 00:18:08.912 UTC [chaincodeCmd] chaincodeInvokeOrQuery -> INFO 001 Chaincode invoke successful. result: status:200 
 >> ```
+>>
 
 3. Query
->
+
 >> ```bash
 >> peer chaincode invoke -C channel1 -n basic -c '{"function":"InitLedger","Args":[]}'
 >> ```
+>>
 >> `System Response:`
+>>
 >> ```bash
 >> [{"ID":"asset1","color":"blue","size":5,"owner":"Tomoko","appraisedValue":300},{"ID":"asset2","color":"red","size":5,"owner":"Brad","appraisedValue":400},{"ID":"asset3","color":"green","size":10,"owner":"Jin Soo","appraisedValue":500},{"ID":"asset4","color":"yellow","size":10,"owner":"Max","appraisedValue":600},{"ID":"asset5","color":"black","size":15,"owner":"Adriana","appraisedValue":700},{"ID":"asset6","color":"white","size":15,"owner":"Michel","appraisedValue":800}]
->>```
+>> ```
+>>
 >> ```bash
 >> peer chaincode query -C channel1 -n basic -c '{"function":"GetAllAssets","Args":[]}'|jq
 >> ```
+>>
 >> `System Response:`
+>>
 >> ```bash
 >> [
 >>   {
@@ -2592,6 +3348,7 @@
 >>   }
 >> ]
 >> ```
+>>
 
 ### 15. 加入新 Organization (Org3MSP, org3.com) 到現有的 Application Channel
 
@@ -2602,7 +3359,7 @@
 >> 1. 啟動 docker-compose.yaml
 >> 2. 登錄以及註冊 org3.com 的 MSP, TLS 加密文件
 >> 3. 複製 channelMSP/peerOrganizations/org3/com 到 config/organizations/peerOrganizations/org3.com
->
+>>
 >
 > 2. 產生新機構 (Org3MSP) 的機構文件 (org3.json)
 > 3. 由 channel 原有的成員機構取得 channel config block (config_block.pb)
@@ -2617,7 +3374,7 @@
 >> 7. 將 config_update.pb 轉換成 json 檔案格式 (config_update.json)
 >> 8. 將 config_update.json 加上 "信封" (envelope) 成為 config_update_in_envelope.json
 >> 9. config_update_in_envelope.json 轉換成　pb 檔案格式
->
+>>
 >
 > 5. 執行 peer channel signconfigtx, 簽章、背書
 > 6. 提交給其他機構執行簽章背書，當達到 Channel Admin Policy (MAJORITY)，提交到 orderer 節點
@@ -2627,65 +3384,88 @@
 > 1. 生成 org3 加密文件
 >
 >> 1. 啟動 org3.com 的 ca.org3.com, tls.org3.com 的 docker instances
+>>
 >
->>    請參考 6. 啟動 fabric-ca-server
+>> 請參考 6. 啟動 fabric-ca-server
+>>
 >
 >>> ***`[command]`***
+>>>
+>>
 >
 >>> ```bash
 >>> cd $HOME/workspaces/fabric-lab/ca
 >>> docker-compose -f docker-compose-org3.yaml up -d
 >>> ```
->
+>>>
+>>
 >
 >> 2. 登錄以及註冊 org3.com 的 MSP, TLS 加密文件
+>>
 >
->>    請參閱 7. 登錄以及註冊所有加密材料說明
+>> 請參閱 7. 登錄以及註冊所有加密材料說明
+>>
 >
 >>> ***`[command]`***
+>>>
+>>
 >
 >>> ```bash
 >>> cd $HOME/workspaces/fabric-lab/workdir/ca/msp
 >>> cp ../msp-template/peer.json org3.json
 >>> ```
+>>>
+>>
 >
 >>> 1. 修改org3.json
+>>>
+>>
 >
 >>>> 1. org1 -> org3
 >>>> 2. 1054 -> 3054, 1154 -> 3154
 >>>> 3. caServer.secret 必須與 前一步驟中的 config/org3.com/ca/fabric-ca-server-config.yaml 的 pass 相同
 >>>> 4. tlsServer.secret 必須與 前一步驟中的 config/org3.com/tls/fabric-ca-server-config.yaml 的 pass 相同
->
+>>>>
+>>>
+>>
 >
 >>> ```bash
 >>> ../scripts/networkgen.sh -t organizations.json -p org3.json -O ../org3.json
 >>> ```
+>>>
+>>
 >
 >>> ```bash
 >>> cd $HOME/workspaces/fabric-lab/workdir/ca
 >>> ./scripts/enroll.sh org3.json
 >>> ./scripts/crypto.sh org3.json
 >>> ```
->
+>>>
+>>
 >
 >> 3. 複製 channelMSP/peerOrganizations/org3/com 到 config/organizations/peerOrganizations/org3.com
+>>
 >
 >>> ***工作目錄: $HOME/workspaces/fabric-lab/workdir/config***
 >>> ***`[command]`***
+>>>
+>>
 >
 >>> ```bash
 >>> cd $HOME/workspaces/fabric-lab/workdir/config
 >>> cp -a ../ca/channelMSP/peerOrganizations/org3.com organizations/peerOrganizations/
 >>> ```
->
-> 
+>>>
+>>
 >
 > 2. 產生新機構 (Org3MSP) 的機構文件
 
 >> **工作目錄: $HOME/workspaces/fabric-lab/config**
+>>
 >
 >> 1. 創建一新目錄  $HOME/workspaces/fabric-lab/config/org3
 >> 2. 建立一檔案 configtx.yaml 內容如下:
+>>
 >
 >>> ```yaml
 >>> Organizations:
@@ -2707,9 +3487,11 @@
 >>>                  Type: Signature
 >>>                  Rule: "OR('Org3MSP.peer')"
 >>> ```
->
+>>>
+>>
 >
 >> 3. 執行 configtxgen 產生 org3.json
+>>
 >
 >>> ```bash
 >>> cd /home/hyperledger/workspaces/fabric-lab/workdir/config
@@ -2717,15 +3499,17 @@
 >>> cd org3
 >>> configtxgen -configPath $PWD -printOrg Org3MSP > org3.json
 >>> ```
->
-
->3. 執行 update config 程序
-
->>擷取 application channel (channel1) 的 config block
 >>>
->>1. 由 org1MSP(org1.com) 執行
->>>
->>***工作目錄: $HOME/workspaces/fabric-lab/workdir/org1-client***
+>>
+
+> 3. 執行 update config 程序
+
+>> 擷取 application channel (channel1) 的 config block
+>>
+>> 1. 由 org1MSP(org1.com) 執行
+>>
+>> ***工作目錄: $HOME/workspaces/fabric-lab/workdir/org1-client***
+>>
 
 >>> ***`[command]`***
 >>>
@@ -2735,94 +3519,145 @@
 >>> cd tmp
 >>> peer channel fetch config config_block.pb -c channel1 -o orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA
 >>> ```
+>>>
+>>
 
 > 4. 執行 update config 程序
 >
 >> ***工作目錄: $HOME/workspaces/fabric-lab/workdir/org1.com/tmp***
+>>
 >
 >> ***`[command]`***
 >>
 >> 1. 將 config_block.pb 轉換成 json 文件 (config_block.json)
+>>
 >
->>    ```bash
->>    configtxlator proto_decode --input config_block.pb --type common.Block --output config_block.json
->>    ```
+>> ```bash
+>> configtxlator proto_decode --input config_block.pb --type common.Block --output config_block.json
+>> ```
+>>
 
 >> 2. 由 config_block.json 擷取生成 config 內容 (config.json
+>>
 >
 >> ***`[command]`***
+>>
 >>> ```bash
->>> jq .data.data[].payload.data.config config_block.json >conf
+>>> jq .data.data[].payload.data.config config_block.json >config.json
+>>> ```
+>>>
+>>
+
 ig.json
->>>```
+
 >> 3. 將 org3.json 文件加到 config.json 中，產生 config_modified.json
+>>
 >
 >> ***`[command]`***
+>>
 >>> ```bash
 >>> cp ../../config/org3/org3.json .
 >>> jq -s '.[0] * {"channel_group":{"groups":{"Application":{"groups":{"Org3MSP":.[1]}}}}}' config.json org3.json >config_modified.json
 >>> ```
+>>>
+>>
 >> 4. 將 config.json 轉換成 pb 檔案格式 (config.pb)
+>>
 >
 >> ***`[command]`***
+>>
 >>> ```bash
 >>> configtxlator proto_encode --input config.json --type common.Config --output config.pb
 >>> ```
+>>>
+>>
 
 >> 5. 將 config_modified.json 轉換成 pb 檔案格式 (config_modified.pb)
+>>
 >
 >> ***`[command]`***
+>>
 >>> ```bash
 >>> configtxlator proto_encode --input config_modified.json --type common.Config --output config_modified.pb
 >>> ```
+>>>
+>>
 >> 6. 將 original (config.pb) 與 updated (config_modified.pb) 計算更新差異 (config_update.pb)
+>>
 >
 >> ***`[command]`***
+>>
 >>> ```bash
 >>> configtxlator compute_update --channel_id channel1 --original config.pb --updated config_modified.pb --output config_update.pb
->>>```
+>>> ```
+>>>
+>>
 >> 7. 將 config_update.pb 轉換成 json 檔案格式 (config_update.json)
+>>
 >
 >> ***`[command]`***
+>>
 >>> ```bash
 >>> configtxlator proto_decode --input config_update.pb --type 
-common.ConfigUpdate --output config_update.json
 >>> ```
+>>>
+>>
+
+common.ConfigUpdate --output config_update.json
+
 >> 8. 將 config_update.json 加上 "信封" (envelope) 成為 config_update_in_envelope.json
+>>
 >
 >> ***`[command]`***
+>>
 >>> ```bash
 >>> echo '{"payload":{"header":{"channel_header":{"channel_id":"channel1", "type":2}},"data":{"config_update":'$(cat config_update.json)'}}}'|jq . > config_update_in_envelope.json
->>>```
+>>> ```
+>>>
+>>
 >> 9. config_update_in_envelope.json 轉換成　pb 檔案格式
+>>
 >
 >> ***`[command]`***
+>>
 >>> ```bash
 >>> configtxlator proto_encode --input config_update_in_envelope.json --type common.Envelope --output config_update_in_envelope.pb
 >>> ```
+>>>
+>>
 
 > 5. 執行 peer channel signconfigtx, 簽章、背書
 >
 > ***`[command]`***
+>
 >> ```bash
 >> peer channel signconfigtx -f config_update_in_envelope.pb
 >> ```
+>>
 >> `System Response:`
+>>
 >> ```bash
 >> 2023-11-14 06:45:38.811 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
 >> ```
+>>
+>
 > 6. 由 org2MSP(org2.com) 執行更新指令 (channel1 有二個機構參與，channel 的 admin policy 為 MAJORITY，在執行 channel 的管理 - 以新增 organization 為例，必須有足夠多的 endorse, 才能 channel update - 即 signconfigtx 以及 update channel 的機構總和要符合 channel admin policy)
 >
 >> ***工作目錄: $HOME/workspaces/fabric-lab/workdir/org2-client***
+>>
 >
 > ***`[command]`***
+>
 >> ```bash
 >> cd $HOME/workspaces/fabric-lab/workdir/org2-client
 >> source admin.env peer0 2051
 >> ```
+>>
 >> 切換工作目錄到 $HOME/workspaces/fabric-lab/workdir/org2-client/tmp
 >>
+>
 > ***`[command]`***
+>
 >> ```bash
 >> cd $HOME/workspaces/fabric-lab/workdir/org2-client/tmp
 >> #
@@ -2834,30 +3669,41 @@ common.ConfigUpdate --output config_update.json
 >> #
 >> peer channel update -f config_update_in_envelope.pb -c channel1 -o orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA
 >> ```
+>>
 >> `System Response:`
+>>
 >> ```bash
 >> 2023-11-14 07:01:30.685 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
 >> 2023-11-14 07:01:30.693 UTC [channelCmd] update -> INFO 002 Successfully submitted channel update
 >> ```
+>>
 
 16. 啟動 org3.com peer node 以及加入 channel, 部署 chaincode
 
 > 1. 部署, 啟動 peer0.org3.com, peer1.org3.com
+>
 >> 1. 複製 localMSP 到對應目錄
+>>
 >
 >> ***工作目錄: $HOME/workspaces/fabric-lab/service/peers***
+>>
 >
 >> ***`[command]`***
+>>
 >> ```bash
 >> cd $HOME/workspaces/fabric-lab/service/peers
 >> # 執行 scripts/cpMSP.sh
 >> ./scripts/cpMSP.sh
->>```
+>> ```
+>>
+>
 > **檢查 org3.com/{peer0.org3.com, peer1.org3.com} 是否有 MSP檔案, 目錄
+>
 >> ```bash
 >> tree org3.com
 >> ```
 >> `System Response:`
+>>
 >> ```bash
 >> org3.com/
 >> ├── peer0.org3.com
@@ -2895,37 +3741,52 @@ common.ConfigUpdate --output config_update.json
 >>             ├── server.crt
 >>             └── server.key
 >> ```
+>>
+>
 > 2. 修改 docker-compose.yaml, 將第 241 ~ 最後最前端註解移除
 >
 >> ***`[command]`***
->>>```bash
+>>
+>>> ```bash
 >>> sed -i '241,$ s/^# //' docker-compose.yaml 
->>>```
+>>> ```
+>>>
+>>
+>
 > 3. 啟動 peer 服務
 >
 >> ***`[command]`***
+>>
 >>> ```bash
 >>> docker-compose up -d peer0.org3.com peer1.org3.com
->>>```
+>>> ```
+>>>
+>>
+>
 > 4. 檢查　peer 服務是否啟動成功
 >
 >> ***`[command]`***
+>>
 >>> ```bash
 >>> docker-compose ps peer0.org3.com peer1.org3.com
 >>> ```
 >>> `System Response:`
+>>>
 >>> ```bash
->>>      Name            Command       State                                                Ports                                              
+>>>      Name            Command       State                                                Ports                                            
 >>> -------------------------------------------------------------------------------------------------------------------------------------------
 >>> peer0.org3.com   peer node start   Up      0.0.0.0:13051->13051/tcp,:::13051->13051/tcp, 0.0.0.0:3051->3051/tcp,:::3051->3051/tcp, 7051/tcp
 >>> peer1.org3.com   peer node start   Up      0.0.0.0:13151->13151/tcp,:::13151->13151/tcp, 0.0.0.0:3151->3151/tcp,:::3151->3151/tcp, 7051/tcp
->>>```
+>>> ```
+>>>
 >>
+>
 > 5. 部署 chaincode
 >
 >> ***工作目錄: $HOME/workspaces/fabric-lab/workdir/org3-client***
 >>
 >> ***`[command]`***
+>>
 >>> ```bash
 >>> #
 >>> # 切換目錄
@@ -2939,12 +3800,17 @@ common.ConfigUpdate --output config_update.json
 >>> # 初始化環境變數
 >>> #
 >>> source admin.env peer0 3051 
->>>```
+>>> ```
 >>> 切換工作目錄到 $HOME/workspaces/fabric-lab/workdir/org3-client/tmp
+>>>
+>>
 >
 >> ***`[commaond]`***
+>>
 >>> ```bash
 >>> cd $HOME/workspaces/fabric-lab/workdir/org3-client/tmp
 >>> # Fetch config block (必須是第一個 config block) 
 >>> peer channel fetch 0 channel1_config.block -c channel1 -o orderer0.org4.com:4050 --tls --cafile $ORDERER_TLS_CA 
->>>```
+>>> ```
+>>>
+>>

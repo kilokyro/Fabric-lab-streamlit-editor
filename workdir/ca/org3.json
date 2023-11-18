@@ -1,0 +1,73 @@
+{
+  "Organizations": [
+    {
+      "ordererOrganizations": []
+    },
+    {
+      "peerOrganizations": [
+        {
+          "org1MSP": {
+            "domain": "org3.com",
+            "csrname": "C=TW,ST=Taiwan,O=org3.com,OU=Fabric",
+            "caServer": {
+              "identity": "admin",
+              "secret": "adminpw",
+              "host": "ca.org3.com",
+              "port": 3054,
+              "tlscert": "Organizations/peerOrganizations/org3.com/ca/tls-cert.pem"
+            },
+            "tlsServer": {
+              "identity": "admin",
+              "secret": "adminpw",
+              "host": "tls.org3.com",
+              "port": 3154,
+              "tlscert": "Organizations/peerOrganizations/org3.com/tls/tls-cert.pem"
+            },
+            "peers": [
+              {
+                "peer0": {
+                  "identity": "peer0.org3.com",
+                  "secret": "adminpw",
+                  "type": "peer",
+                  "attrs": "",
+                  "sans": "peer0.org3.com"
+                }
+              },
+              {
+                "peer1": {
+                  "identity": "peer1.org3.com",
+                  "secret": "adminpw",
+                  "type": "peer",
+                  "attrs": "",
+                  "sans": "peer1.org3.com"
+                }
+              }
+            ],
+            "users": [
+              {
+                "Admin": {
+                  "identity": "Admin@org3.com",
+                  "secret": "adminpw",
+                  "affiliation": "",
+                  "attrs": "",
+                  "sans": "",
+                  "type": "admin"
+                }
+              },
+              {
+                "user1": {
+                  "identity": "user1@org3.com",
+                  "secret": "adminpw",
+                  "affiliation": "",
+                  "attrs": "",
+                  "sans": "",
+                  "type": "client"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
